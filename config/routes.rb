@@ -1,4 +1,6 @@
 BraveIndustry::Application.routes.draw do
+  get "blueprints/index"
+  get "blueprints/show"
   get "home/index"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
