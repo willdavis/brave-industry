@@ -5,6 +5,31 @@
 	
 	<div>
 		<br />
+		<b>Required Skills</b>
+		
+		<table class="table table-condensed table-hover table-striped">
+    <tr>
+      <th>Name</th>
+      <th>Level</th>
+    </tr>
+
+		<% @skills.each do |material| %>
+		  <tr class="skill">
+		    <td><%= material['material']['name'] %></td>
+		    <td><%= material['quantity'] %></td>
+		  </tr>
+		<% end %>
+		
+		<% if @skills.empty? %>
+		  <tr class="error">
+		    <td colspan="2">No skills found.</td>
+		  <tr>
+		<% end %>
+		</table>
+	</div>
+	
+	<div>
+		<br />
 		<b>Raw Materials</b>
 		
 		<table class="table table-condensed table-hover table-striped">
@@ -15,8 +40,8 @@
 
 		<% @raw_materials.each do |material| %>
 		  <tr class="material-raw">
-		    <td><%= link_to "#{material}" %></td>
-		    <td></td>
+		    <td><%= material['material']['name'] %></td>
+		    <td><%= material['quantity'] %></td>
 		  </tr>
 		<% end %>
 		
@@ -39,7 +64,7 @@
     </tr>
 
 		<% @extra_materials.each do |material| %>
-		  <tr class="material-raw">
+		  <tr class="material-extra">
 		    <td><%= material['material']['name'] %></td>
 		    <td><%= material['quantity'] %></td>
 		  </tr>
@@ -48,31 +73,6 @@
 		<% if @extra_materials.empty? %>
 		  <tr class="error">
 		    <td colspan="2">No extra materials found.</td>
-		  <tr>
-		<% end %>
-		</table>
-	</div>
-	
-	<div>
-		<br />
-		<b>Required Skills</b>
-		
-		<table class="table table-condensed table-hover table-striped">
-    <tr>
-      <th>Name</th>
-      <th>Level</th>
-    </tr>
-
-		<% @skills.each do |material| %>
-		  <tr class="skill">
-		    <td><%= material['material']['name'] %></td>
-		    <td><%= material['quantity'] %></td>
-		  </tr>
-		<% end %>
-		
-		<% if @skills.empty? %>
-		  <tr class="error">
-		    <td colspan="2">No skills found.</td>
 		  <tr>
 		<% end %>
 		</table>
