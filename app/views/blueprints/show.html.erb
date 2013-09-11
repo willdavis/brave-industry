@@ -36,18 +36,22 @@
     <tr>
       <th>Name</th>
       <th>Quantity</th>
+      <th>Unit Price</th>
+      <th>Total Price</th>
     </tr>
 
 		<% @raw_materials.each do |material| %>
 		  <tr class="material-raw">
 		    <td><img src="<%= material['images']['small'] %>" />&nbsp;<%= material['material']['name'] %></td>
 		    <td><%= material['quantity'] %></td>
+		    <td>N/A</td>
+		    <td>N/A</td>
 		  </tr>
 		<% end %>
 		
 		<% if @raw_materials.empty? %>
 		  <tr class="error">
-		    <td colspan="2">No raw materials found.</td>
+		    <td colspan="4">No raw materials found.</td>
 		  <tr>
 		<% end %>
 		</table>
@@ -61,18 +65,22 @@
     <tr>
       <th>Name</th>
       <th>Quantity</th>
+      <th>Unit Price</th>
+      <th>Total Price</th>
     </tr>
 
 		<% @extra_materials.each do |material| %>
 		  <tr class="material-extra">
-		    <td><img src="<%= material['images']['small'] %>" />&nbsp;<%= material['material']['name'] %></td>
+		    <td><img src="<%= material['images']['small'] %>" />&nbsp;<%= link_to material['material']['name'] %></td>
 		    <td><%= material['quantity'] %></td>
+		    <td>N/A</td>
+		    <td>N/A</td>
 		  </tr>
 		<% end %>
 		
 		<% if @extra_materials.empty? %>
 		  <tr class="error">
-		    <td colspan="2">No extra materials found.</td>
+		    <td colspan="4">No extra materials found.</td>
 		  <tr>
 		<% end %>
 		</table>
