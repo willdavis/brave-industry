@@ -5,6 +5,9 @@ class BlueprintsController < ApplicationController
 
   def show
   	@blueprint = evedata.get("/blueprints/#{params[:id]}").body.first
+  	@raw_materials = []
+  	@extra_materials = evedata.get("/blueprints/#{params[:id]}/requirements?activity_id=1&not_category_id=16").body
+  	@skills = evedata.get("/blueprints/#{params[:id]}/requirements?activity_id=1&category_id=16").body
   end
   
   private
