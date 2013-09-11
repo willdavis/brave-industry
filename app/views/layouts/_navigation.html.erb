@@ -4,7 +4,9 @@
 </ul>
 <form class="navbar-form pull-right" role="search">
   <div class="form-group">
-    <input type="text" class="form-control" placeholder="Search blueprints">
-    <button type="submit" class="btn btn-default">Submit</button>
+  	<%= form_tag("/blueprints", :method => :get) do %>
+      <%= text_field_tag :id, nil, :placeholder => "Search blueprints", :autocomplete => :off, :data => { :provide =>"typeahead" }, :class => "form-control" %>
+      <%= submit_tag "Search", :class => "btn btn-default" %>
+    <% end %>
   </div>
 </form>

@@ -15,7 +15,7 @@
 
 		<% @skills.each do |material| %>
 		  <tr class="skill">
-		    <td><%= material['material']['name'] %></td>
+		    <td><img src="<%= material['images']['small'] %>" />&nbsp;<%= material['material']['name'] %></td>
 		    <td><%= material['quantity'] %></td>
 		  </tr>
 		<% end %>
@@ -40,7 +40,7 @@
 
 		<% @raw_materials.each do |material| %>
 		  <tr class="material-raw">
-		    <td><%= material['material']['name'] %></td>
+		    <td><img src="<%= material['images']['small'] %>" />&nbsp;<%= material['material']['name'] %></td>
 		    <td><%= material['quantity'] %></td>
 		  </tr>
 		<% end %>
@@ -65,7 +65,7 @@
 
 		<% @extra_materials.each do |material| %>
 		  <tr class="material-extra">
-		    <td><%= material['material']['name'] %></td>
+		    <td><img src="<%= material['images']['small'] %>" />&nbsp;<%= material['material']['name'] %></td>
 		    <td><%= material['quantity'] %></td>
 		  </tr>
 		<% end %>

@@ -1,6 +1,10 @@
 class BlueprintsController < ApplicationController
   def index
-  	@blueprints = evedata.get("/blueprints").body
+  	if params[:id]
+  		@blueprints = evedata.get("/blueprints/#{params[:id]}").body
+  	else
+  		@blueprints = evedata.get("/blueprints").body
+  	end
   end
 
   def show
