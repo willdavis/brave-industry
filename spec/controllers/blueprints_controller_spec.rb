@@ -11,7 +11,7 @@ describe BlueprintsController do
 
   describe "GET 'show'" do
     it "returns http success" do
-      get :show, {:id => 1234}
+      get :show, {:id => 3515}
       response.should be_success
     end
   end
