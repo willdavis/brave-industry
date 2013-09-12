@@ -9,6 +9,7 @@ end
 group :production do
   gem 'pg'
   gem 'thin'
+  gem 'rails_12factor'	#needed for heroku.  Serves assets in production
 end
 
 # Use SCSS for stylesheets
