@@ -2,6 +2,8 @@ class BlueprintsController < ApplicationController
   def index
   	if params[:id]
   		@blueprints = evedata.get("/blueprints/#{params[:id]}").body
+  	elsif params[:like_name]
+  		@blueprints = evedata.get("/blueprints?like_name=#{params[:like_name]}").body
   	else
   		@blueprints = evedata.get("/blueprints").body
   	end

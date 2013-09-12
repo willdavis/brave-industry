@@ -77,7 +77,7 @@
 
 		<% @extra_materials.each do |material| %>
 		  <tr id="extra-<%= material['material']['id'] %>" class="extra-material">
-		    <td class="extra-material-name"><img src="<%= material['images']['small'] %>" />&nbsp;<%= link_to material['material']['name'] %></td>
+		    <td class="extra-material-name"><img src="<%= material['images']['small'] %>" />&nbsp;<%= material['material']['name'] %></td>
 		    <td class="extra-material-quantity"><%= material['quantity'] %></td>
 		    <td class="extra-material-unit-price">Loading...</td>
 		    <td class="extra-material-total-price">Loading...</td>

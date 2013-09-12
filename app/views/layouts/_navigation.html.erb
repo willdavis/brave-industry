@@ -5,7 +5,7 @@
 <form class="navbar-form pull-right" role="search">
   <div class="form-group">
   	<%= form_tag("/blueprints", :method => :get) do %>
-      <%= text_field_tag :id, nil, :placeholder => "Search blueprints", :autocomplete => :off, :data => { :provide =>"typeahead" }, :class => "form-control" %>
+      <%= text_field_tag :like_name, nil, :placeholder => "Search blueprints", :autocomplete => :off, :class => "form-control" %>
       <%= submit_tag "Search", :class => "btn btn-default" %>
     <% end %>
   </div>
