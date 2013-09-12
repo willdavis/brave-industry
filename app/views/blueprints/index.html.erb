@@ -1,0 +1,21 @@
+<div id="blueprints-index">
+	<h1>Listing Blueprints</h1>
+	
+	<table class="table table-condensed table-hover table-striped">
+    <tr>
+      <th>Name</th>
+    </tr>
+
+  <% @blueprints.each do |blueprint| %>
+    <tr class="blueprint">
+      <td><img src='<%= blueprint["images"]["small"] %>' />&nbsp;<%= link_to blueprint["name"], blueprint_path(blueprint["id"]) %></td>
+    </tr>
+  <% end %>
+  
+  <% if @blueprints.empty? %>
+    <tr class="warning">
+      <td>Loading blueprints...</td>
+    <tr>
+  <% end %>
+  </table>
+</div>

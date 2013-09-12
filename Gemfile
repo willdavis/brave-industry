@@ -39,6 +39,8 @@ group :doc do
 end
 
 gem "figaro"
+gem "faraday"
+gem "faraday_middleware"
 
 group :development do
   gem "better_errors"

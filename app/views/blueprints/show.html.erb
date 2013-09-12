@@ -1,0 +1,88 @@
+<div id="blueprints-show">
+	<div>
+		<img src="<%= @blueprint['images']['thumb'] %>" />&nbsp;<b><%= @blueprint["name"] %></b>
+	</div>
+	
+	<div>
+		<br />
+		<b>Required Skills</b>
+		
+		<table class="table table-condensed table-hover table-striped">
+    <tr>
+      <th>Name</th>
+      <th>Level</th>
+    </tr>
+
+		<% @skills.each do |material| %>
+		  <tr class="skill">
+		    <td><img src="<%= material['images']['small'] %>" />&nbsp;<%= material['material']['name'] %></td>
+		    <td><%= material['quantity'] %></td>
+		  </tr>
+		<% end %>
+		
+		<% if @skills.empty? %>
+		  <tr class="error">
+		    <td colspan="2">No skills found.</td>
+		  <tr>
+		<% end %>
+		</table>
+	</div>
+	
+	<div>
+		<br />
+		<b>Raw Materials</b>
+		
+		<table class="table table-condensed table-hover table-striped">
+    <tr>
+      <th>Name</th>
+      <th>Quantity</th>
+      <th>Unit Price</th>
+      <th>Total Price</th>
+    </tr>
+
+		<% @raw_materials.each do |material| %>
+		  <tr class="material-raw">
+		    <td><img src="<%= material['images']['small'] %>" />&nbsp;<%= material['material']['name'] %></td>
+		    <td><%= material['quantity'] %></td>
+		    <td>N/A</td>
+		    <td>N/A</td>
+		  </tr>
+		<% end %>
+		
+		<% if @raw_materials.empty? %>
+		  <tr class="error">
+		    <td colspan="4">No raw materials found.</td>
+		  <tr>
+		<% end %>
+		</table>
+	</div>
+	
+	<div>
+		<br />
+		<b>Extra Materials</b>
+		
+		<table class="table table-condensed table-hover table-striped">
+    <tr>
+      <th>Name</th>
+      <th>Quantity</th>
+      <th>Unit Price</th>
+      <th>Total Price</th>
+    </tr>
+
+		<% @extra_materials.each do |material| %>
+		  <tr class="material-extra">
+		    <td><img src="<%= material['images']['small'] %>" />&nbsp;<%= link_to material['material']['name'] %></td>
+		    <td><%= material['quantity'] %></td>
+		    <td>N/A</td>
+		    <td>N/A</td>
+		  </tr>
+		<% end %>
+		
+		<% if @extra_materials.empty? %>
+		  <tr class="error">
+		    <td colspan="4">No extra materials found.</td>
+		  <tr>
+		<% end %>
+		</table>
+	</div>
+</div>
