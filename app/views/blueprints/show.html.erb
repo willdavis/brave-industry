@@ -3,6 +3,10 @@
 		<img src="<%= @blueprint['images']['thumb'] %>" />&nbsp;<b><%= @blueprint["name"] %></b>
 	</div>
 	
+	<div id="total-cost">Total Cost: </div>
+	<div id="jita-sell-price"><span id="<%= @blueprint['product_id'] %>">Sell Price: </span></div>
+	<div id="profit-margin">Profit Margin: </div>
+	
 	<div>
 		<br />
 		<b>Required Skills</b>
@@ -36,16 +40,18 @@
     <tr>
       <th>Name</th>
       <th>Quantity</th>
-      <th>Unit Price</th>
+      <th>Unit Price (Jita)</th>
       <th>Total Price</th>
     </tr>
 
 		<% @raw_materials.each do |material| %>
-		  <tr class="material-raw">
-		    <td><img src="<%= material['images']['small'] %>" />&nbsp;<%= material['material']['name'] %></td>
-		    <td><%= material['quantity'] %></td>
-		    <td>N/A</td>
-		    <td>N/A</td>
+		  <tr id="raw-<%= material['material']['id'] %>" class="raw-material">
+		    <td class="raw-material-name">
+		    	<img src="<%= material['images']['small'] %>" />&nbsp;<%= material['material']['name'] %>
+		    </td>
+		    <td class="raw-material-quantity"><%= material['quantity'] %></td>
+		    <td class="raw-material-unit-price">Loading...</td>
+		    <td class="raw-material-total-price">Loading...</td>
 		  </tr>
 		<% end %>
 		
@@ -70,11 +76,11 @@
     </tr>
 
 		<% @extra_materials.each do |material| %>
-		  <tr class="material-extra">
-		    <td><img src="<%= material['images']['small'] %>" />&nbsp;<%= link_to material['material']['name'] %></td>
-		    <td><%= material['quantity'] %></td>
-		    <td>N/A</td>
-		    <td>N/A</td>
+		  <tr id="extra-<%= material['material']['id'] %>" class="extra-material">
+		    <td class="extra-material-name"><img src="<%= material['images']['small'] %>" />&nbsp;<%= link_to material['material']['name'] %></td>
+		    <td class="extra-material-quantity"><%= material['quantity'] %></td>
+		    <td class="extra-material-unit-price">Loading...</td>
+		    <td class="extra-material-total-price">Loading...</td>
 		  </tr>
 		<% end %>
 		
