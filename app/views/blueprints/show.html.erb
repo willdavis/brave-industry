@@ -3,9 +3,9 @@
 		<img src="<%= @blueprint['images']['thumb'] %>" />&nbsp;<b><%= @blueprint["name"] %></b>
 	</div>
 	
-	<div id="total-cost">Total Cost: </div>
-	<div id="jita-sell-price"><span id="<%= @blueprint['product_id'] %>">Sell Price: </span></div>
-	<div id="profit-margin">Profit Margin: </div>
+	<div>Total Cost: <span class="item-total-cost">0</span></div>
+	<div>Sell Price: <span id="<%= @blueprint['product_id'] %>" class="item-sell-price">0</span></div>
+	<div>Profit Margin: <span class="item-profit-margin">0</span></div>
 	
 	<div>
 		<br />
