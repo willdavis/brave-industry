@@ -3,9 +3,21 @@
 		<img src="<%= @blueprint['images']['thumb'] %>" />&nbsp;<b><%= @blueprint["name"] %></b>
 	</div>
 	
-	<div>Total Cost: <span class="item-total-cost">0</span></div>
-	<div>Sell Price: <span id="<%= @blueprint['product_id'] %>" class="item-sell-price">0</span></div>
-	<div>Profit Margin: <span class="item-profit-margin">0</span></div>
+	<table class="table table-condensed">
+		<tr>
+			<th>Units Produced</th>
+			<th>Unit Sell Price</th>
+			<th>Production Cost</th>
+			<th>Profit Margin</th>
+		</tr>
+		
+		<tr>
+			<td class="item-units-produced"><%= @product["portion_size"] %></td>
+			<td class="item-sell-price" id="<%= @blueprint['product_id'] %>">0</td>
+			<td class="item-total-cost">0</td>
+			<td class="item-profit-margin">0</td>
+		</tr>
+	</table>
 	
 	<div>
 		<br />
