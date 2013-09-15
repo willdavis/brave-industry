@@ -3,6 +3,7 @@ $ ->
 		##Show
 		total_production_cost = 0
 		item_sell_price = 0
+		units_produced = $('.item-units-produced').text()
 		product_id = $('.item-sell-price').attr("id")
 		evecentral_url = "http://api.eve-central.com/api/marketstat?regionlimit=10000002&typeid=#{product_id}"
 		
@@ -49,7 +50,7 @@ $ ->
 		    			$("#extra-#{id}").children('.extra-material-total-price').text(total_price_for_extra_material)
       	)
       	
-      	profit_margin = item_sell_price - total_production_cost
+      	profit_margin = (item_sell_price * units_produced) - total_production_cost
       	
       	$('.item-total-cost').text(total_production_cost)
       	$('.item-profit-margin').text(profit_margin)
