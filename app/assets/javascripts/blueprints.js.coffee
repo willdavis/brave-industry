@@ -54,4 +54,9 @@ $ ->
       	
       	$('.item-total-cost').text(total_production_cost)
       	$('.item-profit-margin').text(profit_margin)
+      	
+      	if profit_margin >= 0
+      		$('.item-profit-margin').css("color", "green")
+      	else
+      		$('.item-profit-margin').css("color", "red")
     )
