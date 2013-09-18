@@ -43,6 +43,8 @@ gem "figaro"
 gem "faraday"
 gem "faraday_middleware"
 
+gem "jqplot-rails"
+
 group :development do
   gem "better_errors"
   gem "binding_of_caller"
