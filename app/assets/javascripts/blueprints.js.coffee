@@ -77,5 +77,8 @@ $ ->
       		'chartdiv'
       		[market_history_data]
       		title:"Average Sell Prices"
+      		series:[
+      			showMarker:false
+      		]
       	)
     )
