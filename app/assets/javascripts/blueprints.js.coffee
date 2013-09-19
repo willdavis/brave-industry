@@ -81,8 +81,9 @@ query_evecentral = () ->
     (data) ->
     	temp = []
     	for obj in data["values"]
-    		market_history_data.push(obj["min"] if obj["min"] != 0)
-    		item_trade_volume.push(obj["volume"] if obj["volume"] != 0)
+    		time = new Date(obj["at"])
+    		market_history_data.push([time, obj["min"]]) if obj["min"] != 0
+    		item_trade_volume.push([time, obj["volume"]]) if obj["volume"] != 0
     	
     	$.jqplot(
     		'min_sell_history_chart'
@@ -91,10 +92,13 @@ query_evecentral = () ->
     		series:[
     			showMarker:false
     		]
+    		highlighter:
+    			show: true
     		axes:
 		      xaxis:
-		        label:'Hours'
-		        labelRenderer: $.jqplot.CanvasAxisLabelRenderer
+		        renderer: $.jqplot.DateAxisRenderer
+		        tickOptions:
+		          formatString:'%b&nbsp;%#d'
 		      yaxis:
 		        label:'Isk per Unit'
 		        labelRenderer: $.jqplot.CanvasAxisLabelRenderer
@@ -107,10 +111,13 @@ query_evecentral = () ->
     		series:[
     			showMarker:false
     		]
+    		highlighter:
+    			show: true
     		axes:
 		      xaxis:
-		        label:'Hours'
-		        labelRenderer: $.jqplot.CanvasAxisLabelRenderer
+		        renderer: $.jqplot.DateAxisRenderer
+		        tickOptions:
+		          formatString:'%b&nbsp;%#d'
 		      yaxis:
 		        label:'Units Sold'
 		        labelRenderer: $.jqplot.CanvasAxisLabelRenderer
