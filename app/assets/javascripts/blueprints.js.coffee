@@ -92,6 +92,10 @@ query_evecentral = () ->
     		series:[
     			showMarker:false
     		]
+    		cursor:
+    			show: true
+    			zoom: true
+    			showTooltip: false
     		highlighter:
     			show: true
     		axes:
@@ -111,6 +115,10 @@ query_evecentral = () ->
     		series:[
     			showMarker:false
     		]
+    		cursor:
+    			show: true
+    			zoom: true
+    			showTooltip: false
     		highlighter:
     			show: true
     		axes:
