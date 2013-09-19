@@ -14,6 +14,6 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require jqplot
-//= require jqplot/plugins/dateAxisRenderer
-//= require jqplot/plugins/ohlcRenderer
+//= require jqplot/plugins/canvasTextRenderer
+//= require jqplot/plugins/canvasAxisLabelRenderer
 //= require_tree .

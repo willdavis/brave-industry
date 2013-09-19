@@ -18,6 +18,7 @@ query_evecentral = () ->
 	evecentral_market_history = "http://api.eve-central.com/api/history/for/type/#{product_id}/region/10000002/bid/0"
 	
 	market_history_data = []
+	item_trade_volume = []
 	
 	$('.raw-material').each(
     (index) ->
@@ -80,14 +81,38 @@ query_evecentral = () ->
     (data) ->
     	temp = []
     	for obj in data["values"]
-    		market_history_data.push(obj["avg"]) if obj["avg"] != 0
+    		market_history_data.push(obj["min"] if obj["min"] != 0)
+    		item_trade_volume.push(obj["volume"] if obj["volume"] != 0)
     	
     	$.jqplot(
-    		'chartdiv'
+    		'min_sell_history_chart'
     		[market_history_data]
-    		title:"Average Sell Prices"
+    		title:"Minimum Sell Price"
     		series:[
     			showMarker:false
     		]
+    		axes:
+		      xaxis:
+		        label:'Hours'
+		        labelRenderer: $.jqplot.CanvasAxisLabelRenderer
+		      yaxis:
+		        label:'Isk per Unit'
+		        labelRenderer: $.jqplot.CanvasAxisLabelRenderer
+    	)
+    	
+    	$.jqplot(
+    		'trade_volume_history_chart'
+    		[item_trade_volume]
+    		title:"Trade Volume"
+    		series:[
+    			showMarker:false
+    		]
+    		axes:
+		      xaxis:
+		        label:'Hours'
+		        labelRenderer: $.jqplot.CanvasAxisLabelRenderer
+		      yaxis:
+		        label:'Units Sold'
+		        labelRenderer: $.jqplot.CanvasAxisLabelRenderer
     	)
   )
