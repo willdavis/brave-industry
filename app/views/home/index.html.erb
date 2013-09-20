@@ -1,1 +1,9 @@
 <h3>Green profit margins for everyone!</h3>
+<form class="navbar-form" role="search">
+  <div class="form-group">
+  	<%= form_tag(blueprints_path, :method => :get) do %>
+      <%= text_field_tag :like_name, nil, :placeholder => "Search blueprints", :autocomplete => :off, :class => "form-control" %>
+      <%= submit_tag "Search", :class => "btn btn-default" %>
+    <% end %>
+  </div>
+</form>

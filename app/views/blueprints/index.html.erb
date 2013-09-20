@@ -1,5 +1,13 @@
 <div id="blueprints-index">
-	<h1>Listing Blueprints</h1>
+	<h1 class="pull-left">Listing Blueprints</h1>
+	<form class="navbar-form pull-right" role="search">
+		<div class="form-group">
+			<%= form_tag("/blueprints", :method => :get) do %>
+		    <%= text_field_tag :like_name, nil, :placeholder => "Search blueprints", :autocomplete => :off, :class => "form-control" %>
+		    <%= submit_tag "Search", :class => "btn btn-default" %>
+		  <% end %>
+		</div>
+	</form>
 	
 	<table class="table table-condensed table-hover table-striped">
     <tr>
