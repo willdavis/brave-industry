@@ -1,110 +1,118 @@
 <div id="blueprints-show">
-	<div>
-		<img src="<%= @blueprint['images']['thumb'] %>" />&nbsp;<b><%= @blueprint["name"] %></b>
+	<div class="row">
+		<div class="span12">
+			<img src="<%= @blueprint['images']['thumb'] %>" />&nbsp;<b><%= @blueprint["name"] %></b>
+		</div>
+	</div>
+	<div class="row">
+		<div class="span6">
+			<table class="table table-condensed">
+				<tr>
+					<th>Units Produced</th>
+					<th>Unit Sell Price</th>
+					<th>Production Cost</th>
+					<th>Profit Margin</th>
+				</tr>
+		
+				<tr>
+					<td class="item-units-produced"><%= @product["portion_size"] %></td>
+					<td class="item-sell-price" id="<%= @blueprint['product_id'] %>">0</td>
+					<td class="item-total-cost">0</td>
+					<td class="item-profit-margin">0</td>
+				</tr>
+			</table>
+		</div>
+		
+		<div class="span6">
+			<table class="table table-condensed table-hover table-striped">
+			<tr>
+			  <th>Required Skill</th>
+			  <th>Level</th>
+			</tr>
+
+			<% @skills.each do |material| %>
+				<tr class="skill">
+					<td><img src="<%= material['images']['small'] %>" />&nbsp;<%= material['material']['name'] %></td>
+					<td><%= material['quantity'] %></td>
+				</tr>
+			<% end %>
+	
+			<% if @skills.empty? %>
+				<tr class="error">
+					<td colspan="2">No skills found.</td>
+				<tr>
+			<% end %>
+			</table>
+		</div>
 	</div>
 	
-	<table class="table table-condensed">
-		<tr>
-			<th>Units Produced</th>
-			<th>Unit Sell Price</th>
-			<th>Production Cost</th>
-			<th>Profit Margin</th>
-		</tr>
+	<div class="row">
+		<div class="span6">
+			<div id="min_sell_history_chart" style="height:300px;width:100%; "></div>
+		</div>
 		
-		<tr>
-			<td class="item-units-produced"><%= @product["portion_size"] %></td>
-			<td class="item-sell-price" id="<%= @blueprint['product_id'] %>">0</td>
-			<td class="item-total-cost">0</td>
-			<td class="item-profit-margin">0</td>
-		</tr>
-	</table>
-	
-	<div id="min_sell_history_chart" style="height:300px;width:600px; "></div>
-	<br />
-	<div id="trade_volume_history_chart" style="height:300px;width:600px; "></div>
-	
-	<div>
-		<br />
-		<b>Required Skills</b>
-		
-		<table class="table table-condensed table-hover table-striped">
-    <tr>
-      <th>Name</th>
-      <th>Level</th>
-    </tr>
-
-		<% @skills.each do |material| %>
-		  <tr class="skill">
-		    <td><img src="<%= material['images']['small'] %>" />&nbsp;<%= material['material']['name'] %></td>
-		    <td><%= material['quantity'] %></td>
-		  </tr>
-		<% end %>
-		
-		<% if @skills.empty? %>
-		  <tr class="error">
-		    <td colspan="2">No skills found.</td>
-		  <tr>
-		<% end %>
-		</table>
+		<div class="span6">
+			<div id="trade_volume_history_chart" style="height:300px;width:100%; "></div>
+		</div>
 	</div>
 	
-	<div>
-		<br />
-		<b>Raw Materials</b>
-		
-		<table class="table table-condensed table-hover table-striped">
-    <tr>
-      <th>Name</th>
-      <th>Quantity</th>
-      <th>Unit Price (Jita)</th>
-      <th>Total Price</th>
-    </tr>
-
-		<% @raw_materials.each do |material| %>
-		  <tr id="raw-<%= material['material']['id'] %>" class="raw-material">
-		    <td class="raw-material-name">
-		    	<img src="<%= material['images']['small'] %>" />&nbsp;<%= material['material']['name'] %>
-		    </td>
-		    <td class="raw-material-quantity"><%= material['quantity'] %></td>
-		    <td class="raw-material-unit-price">Loading...</td>
-		    <td class="raw-material-total-price">Loading...</td>
-		  </tr>
-		<% end %>
-		
-		<% if @raw_materials.empty? %>
-		  <tr class="error">
-		    <td colspan="4">No raw materials found.</td>
-		  <tr>
-		<% end %>
-		</table>
-	</div>
+	<div class="row">
+		<div class="span6">
+			<b>Raw Materials</b>
 	
-	<div>
-		<br />
-		<b>Extra Materials</b>
-		
-		<table class="table table-condensed table-hover table-striped">
-    <tr>
-      <th>Name</th>
-      <th>Quantity</th>
-      <th>Unit Price</th>
-      <th>Total Price</th>
-    </tr>
+			<table class="table table-condensed table-hover table-striped">
+			<tr>
+			  <th>Name</th>
+			  <th>Quantity</th>
+			  <th>Unit Price (Jita)</th>
+			  <th>Total Price</th>
+			</tr>
 
-		<% @extra_materials.each do |material| %>
-		  <tr id="extra-<%= material['material']['id'] %>" class="extra-material">
-		    <td class="extra-material-name"><img src="<%= material['images']['small'] %>" />&nbsp;<%= material['material']['name'] %></td>
-		    <td class="extra-material-quantity"><%= material['quantity'] %></td>
-		    <td class="extra-material-unit-price">Loading...</td>
-		    <td class="extra-material-total-price">Loading...</td>
-		  </tr>
-		<% end %>
+			<% @raw_materials.each do |material| %>
+				<tr id="raw-<%= material['material']['id'] %>" class="raw-material">
+					<td class="raw-material-name">
+						<img src="<%= material['images']['small'] %>" />&nbsp;<%= material['material']['name'] %>
+					</td>
+					<td class="raw-material-quantity"><%= material['quantity'] %></td>
+					<td class="raw-material-unit-price">Loading...</td>
+					<td class="raw-material-total-price">Loading...</td>
+				</tr>
+			<% end %>
+	
+			<% if @raw_materials.empty? %>
+				<tr class="error">
+					<td colspan="4">No raw materials found.</td>
+				<tr>
+			<% end %>
+			</table>
+		</div>
 		
-		<% if @extra_materials.empty? %>
-		  <tr class="error">
-		    <td colspan="4">No extra materials found.</td>
-		  <tr>
-		<% end %>
-		</table>
+		<div class="span6">
+			<b>Extra Materials</b>
+	
+			<table class="table table-condensed table-hover table-striped">
+			<tr>
+			  <th>Name</th>
+			  <th>Quantity</th>
+			  <th>Unit Price</th>
+			  <th>Total Price</th>
+			</tr>
+
+			<% @extra_materials.each do |material| %>
+				<tr id="extra-<%= material['material']['id'] %>" class="extra-material">
+					<td class="extra-material-name"><img src="<%= material['images']['small'] %>" />&nbsp;<%= material['material']['name'] %></td>
+					<td class="extra-material-quantity"><%= material['quantity'] %></td>
+					<td class="extra-material-unit-price">Loading...</td>
+					<td class="extra-material-total-price">Loading...</td>
+				</tr>
+			<% end %>
+	
+			<% if @extra_materials.empty? %>
+				<tr class="error">
+					<td colspan="4">No extra materials found.</td>
+				<tr>
+			<% end %>
+			</table>
+		</div>
 	</div>
 </div>
