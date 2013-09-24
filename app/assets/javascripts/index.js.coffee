@@ -20,7 +20,8 @@ $ ->
 					$.getJSON(
 						evedata_url
 						(data) ->
+							console.log "recieved data from evedata...\ncreating HTML..."
 							for blueprint in data
-								group.children(".group-blueprints").append("<div class='blueprint'><img src='#{blueprint['images']['small']}' />&nbsp;<a href='blueprints/#{blueprint['id']}'>#{blueprint['name']}</a></div>")
+								group.children(".group-blueprints").append("<div class='blueprint'><a href='blueprints/#{blueprint['id']}'><img src='#{blueprint['images']['small']}' /></a>&nbsp;<a href='blueprints/#{blueprint['id']}'>#{blueprint['name']}</a></div>").fadeIn("slow")
 					)
 		)
