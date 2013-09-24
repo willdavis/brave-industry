@@ -1,0 +1,28 @@
+.group {
+	background: {
+		color: lightgray;
+	}
+	margin: {
+		bottom: 3px;
+	}
+	border: {
+		style: solid;
+		width: 1px;
+	}
+}
+
+.group-name {
+	margin: 5px;
+}
+
+.blueprint {
+	background: {
+		color: white;
+	}
+	border: {
+		top: {
+			width: 1px;
+			style: solid;
+		}
+	}
+}
