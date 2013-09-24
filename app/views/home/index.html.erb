@@ -1,3 +1,15 @@
-<h3>Green profit margins for everyone!</h3>
+<div id="main-index">
+	<h3>Green profit margins for everyone!</h3>
 
-<b>Browse blueprints by category:</b>
+	<b>Select a group to expand:</b>
+	<div class="row">
+		<div class="span6">
+			<% @blueprint_groups.each do |group| %>
+				<div id="<%= group['id'] %>" class="group">
+					<div class="group-name"><%= group["name"] %></div>
+					<div class="group-blueprints"></div>
+				</div>
+			<% end %>
+		</div>
+	</div>
+</div>

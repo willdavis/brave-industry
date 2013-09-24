@@ -1,13 +1,6 @@
 $ ->
 	if $('#blueprints-show').length != 0
 		query_evecentral()
-    
-$(window).bind(
-	'page:change'
-	() ->
-		if $('#blueprints-show').length != 0
-			query_evecentral()
-)
 
 query_evecentral = () ->
 	total_production_cost = 0
