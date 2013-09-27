@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery.turbolinks
 //= require jquery_ujs
+//= require bootstrap
 //= require jqplot
 //= require jqplot/plugins/cursor
 //= require jqplot/plugins/highlighter
