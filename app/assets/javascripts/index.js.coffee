@@ -16,7 +16,7 @@ $ ->
 					)
 				else
 					console.log "looking up blueprints within group: #{id}"
-					evedata_url = "http://evedata.herokuapp.com/blueprints?group_id=#{id}"
+					evedata_url = "http://evedata.herokuapp.com/blueprints?group_id=#{id}&limit=100"
 					$.getJSON(
 						evedata_url
 						(data) ->
