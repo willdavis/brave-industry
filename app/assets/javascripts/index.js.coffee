@@ -3,7 +3,7 @@ $ ->
 		$('.blueprint-toggle').click(
 			() ->
 				panel_title = $(this)
-				group_panel = panel_title.parent().parent().parent()
+				group_panel = panel_title.parent().parent().parent().parent().parent().parent().parent()
 				group_id = group_panel.attr("id")
 				group_blueprints = group_panel.children("##{group_id}-collapse").children(".panel-body")
 				

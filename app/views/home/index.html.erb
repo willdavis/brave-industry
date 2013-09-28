@@ -11,12 +11,16 @@
 				<% @blueprint_groups.each do |group| %>
 					<div id="<%= group['id'] %>" class="panel panel-primary">
 						<div class="panel-heading">
-							<h4 class="panel-title">
-								<a class="blueprint-toggle" data-toggle="collapse" data-parent="#blueprint-groups" href="#<%= group['id'] %>-collapse">
-									<span class="glyphicon glyphicon-expand"></span>
-									<%= group["name"] %>
-								</a>
-							</h4>
+							<table>
+								<tr>
+									<td><span class="glyphicon glyphicon-expand"></span></td>
+									<td>
+										<h4 class="panel-title">
+											<a class="blueprint-toggle" data-toggle="collapse" data-parent="#blueprint-groups" href="#<%= group['id'] %>-collapse"><%= group["name"] %></a>
+										</h4>
+									</td>
+								</tr>
+							</table>
 						</div>
 						<div id="<%= group['id'] %>-collapse" class="panel-collapse collapse">
 							<div class="panel-body"></div>
