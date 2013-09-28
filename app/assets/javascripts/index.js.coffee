@@ -1,27 +1,21 @@
 $ ->
 	if $('#main-index').length != 0
-		$('.group-name').click(
+		$('.blueprint-toggle').click(
 			() ->
-				group = $(this).parent()
+				obj = $(this)
+				icon = obj.children(".glyphicon")
+				group = obj.parent().parent().parent()
 				id = group.attr("id")
 				
-				console.log "clicked group: #{id}"
+				console.log "clicked: #{obj.text()} ID:#{id}"
 				
-				if group.children(".group-blueprints").children().length != 0
-					console.log "minimizing group: #{id}"
-					group.children(".group-blueprints").fadeOut(
-						"slow"
-						() ->
-							group.children(".group-blueprints").empty()
-					)
-				else
-					console.log "looking up blueprints within group: #{id}"
-					evedata_url = "http://evedata.herokuapp.com/blueprints?group_id=#{id}&limit=100"
-					$.getJSON(
-						evedata_url
-						(data) ->
-							console.log "recieved data from evedata...\ncreating HTML..."
-							for blueprint in data
-								group.children(".group-blueprints").append("<div class='blueprint'><a href='blueprints/#{blueprint['id']}'><img src='#{blueprint['images']['small']}' /></a>&nbsp;<a href='blueprints/#{blueprint['id']}'>#{blueprint['name']}</a></div>").fadeIn("slow")
-					)
+				evedata_url = "http://evedata.herokuapp.com/blueprints?group_id=#{id}&limit=100"
+				$.getJSON(
+					evedata_url
+					(data) ->
+						console.log "recieved data from evedata...\ncreating HTML..."
+						group.children("##{id}-collapse").children(".panel-body").empty()
+						for blueprint in data
+							group.children("##{id}-collapse").children(".panel-body").append("<div class='blueprint'><a href='blueprints/#{blueprint['id']}'><img src='#{blueprint['images']['small']}' /></a>&nbsp;<a href='blueprints/#{blueprint['id']}'>#{blueprint['name']}</a></div>")
+				)
 		)
