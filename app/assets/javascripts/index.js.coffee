@@ -19,6 +19,6 @@ $ ->
 						(data) ->
 							console.log "recieved data from evedata...\ncreating HTML..."
 							for blueprint in data
-								group_panel.children("##{group_id}-collapse").children(".panel-body").append("<div class='blueprint'><a href='blueprints/#{blueprint['id']}'><img src='#{blueprint['images']['small']}' /></a>&nbsp;<a href='blueprints/#{blueprint['id']}'>#{blueprint['name']}</a></div>")
+								group_panel.children("##{group_id}-collapse").children(".panel-body").append("<table class='blueprint'><tr><td width='32' height='32'><a href='blueprints/#{blueprint['id']}'><img src='#{blueprint['images']['small']}' /></a></td><td><a href='blueprints/#{blueprint['id']}'>#{blueprint['name']}</a></td></table>")
 					)
 		)
