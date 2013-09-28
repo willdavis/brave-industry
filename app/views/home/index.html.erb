@@ -1,15 +1,29 @@
 <div id="main-index">
-	<h3>Green profit margins for everyone!</h3>
-
-	<b>Select a group to expand:</b>
 	<div class="row">
-		<div class="col-md-6 col-xs-12">
-			<% @blueprint_groups.each do |group| %>
-				<div id="<%= group['id'] %>" class="group">
-					<div class="group-name"><%= group["name"] %></div>
-					<div class="group-blueprints"></div>
-				</div>
-			<% end %>
+		<div class="col-md-8 col-md-offset-2 col-xs-12">
+			<h1>Green profit margins for everyone!</h1>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2 col-xs-12">
+			<div class="panel-group" id="blueprint-groups">
+				<% @blueprint_groups.each do |group| %>
+					<div id="<%= group['id'] %>" class="panel panel-primary">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								<a class="blueprint-toggle" data-toggle="collapse" data-parent="#blueprint-groups" href="#<%= group['id'] %>-collapse">
+									<span class="glyphicon glyphicon-expand"></span>
+									<%= group["name"] %>
+								</a>
+							</h4>
+						</div>
+						<div id="<%= group['id'] %>-collapse" class="panel-collapse collapse">
+							<div class="panel-body"></div>
+						</div>
+					</div>
+				<% end %>
+			</div>
 		</div>
 	</div>
 </div>
