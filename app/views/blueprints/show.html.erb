@@ -42,7 +42,7 @@
 					</table>
 				</div>
 			</div>
-		</div>
+		</div> <!-- end home -->
 		
 		<div class="tab-pane" id="materials">
 			<div class="row">
@@ -69,7 +69,7 @@
 					<% end %>
 	
 					<% if @raw_materials.empty? %>
-						<tr class="error">
+						<tr class="danger">
 							<td colspan="4">No raw materials found.</td>
 						<tr>
 					<% end %>
@@ -97,14 +97,14 @@
 					<% end %>
 	
 					<% if @extra_materials.empty? %>
-						<tr class="error">
+						<tr class="danger">
 							<td colspan="4">No extra materials found.</td>
 						<tr>
 					<% end %>
 					</table>
 				</div>
 			</div>
-		</div>
+		</div> <!-- end materials -->
 		
 		<div class="tab-pane" id="history">
 			<div class="row">
@@ -116,28 +116,33 @@
 					<div id="trade_volume_history_chart"></div>
 				</div>
 			</div>
-		</div>
+		</div> <!-- end history -->
 		
 		<div class="tab-pane" id="skills">
-			<table class="table table-condensed table-hover table-striped">
-			<tr>
-			  <th>Required Skill</th>
-			  <th>Level</th>
-			</tr>
+			<div class="row">
+				<div class="col-xs-6 col-md-4">
+					<div class="panel panel-primary">
+						<div class="panel-heading">Manufacturing Skills</div>
+						<div class="panel-body">
+							<table>
+							<% @skills.each do |material| %>
+								<tr class="skill">
+									<td class="skill-image"><img src="<%= material['images']['small'] %>" /></td>
+									<td class="skill-name"><%= material['material']['name'] %></td>
+									<td class="skill-level"><%= material['quantity'] %></td>
+								</tr>
+							<% end %>
 
-			<% @skills.each do |material| %>
-				<tr class="skill">
-					<td><img src="<%= material['images']['small'] %>" />&nbsp;<%= material['material']['name'] %></td>
-					<td><%= material['quantity'] %></td>
-				</tr>
-			<% end %>
-	
-			<% if @skills.empty? %>
-				<tr class="error">
-					<td colspan="2">No skills found.</td>
-				<tr>
-			<% end %>
-			</table>
-		</div>
+							<% if @skills.empty? %>
+								<tr class="danger">
+									<td colspan="3">No skills found.</td>
+								<tr>
+							<% end %>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div> <!-- end skills -->
 	</div>
 </div>
