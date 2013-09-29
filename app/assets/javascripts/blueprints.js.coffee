@@ -1,6 +1,75 @@
 $ ->
 	if $('#blueprints-show').length != 0
 		query_evecentral()
+	
+	$('.nav-history-title').click(
+		() ->
+			$('#min_sell_history_chart').empty()
+			$('#trade_volume_history_chart').empty()
+			
+			#lookup market history
+			market_history_data = []
+			item_trade_volume = []
+			
+			product_id = $('.item-sell-price').attr("id")
+			evecentral_market_history = "http://api.eve-central.com/api/history/for/type/#{product_id}/region/10000002/bid/0"
+			
+			$.getJSON(
+				evecentral_market_history
+				(data) ->
+					temp = []
+					for obj in data["values"]
+						time = new Date(obj["at"])
+						market_history_data.push([time, obj["min"]]) if obj["min"] != 0
+						item_trade_volume.push([time, obj["volume"]]) if obj["volume"] != 0
+					
+					$.jqplot(
+						'min_sell_history_chart'
+						[market_history_data]
+						title:"Minimum Sell Price"
+						series:[
+							showMarker:false
+						]
+						cursor:
+							show: true
+							zoom: true
+							showTooltip: false
+						highlighter:
+							show: true
+						axes:
+						  xaxis:
+						    renderer: $.jqplot.DateAxisRenderer
+						    tickOptions:
+						      formatString:'%b&nbsp;%#d'
+						  yaxis:
+						    label:'Isk per Unit'
+						    labelRenderer: $.jqplot.CanvasAxisLabelRenderer
+					)
+					
+					$.jqplot(
+						'trade_volume_history_chart'
+						[item_trade_volume]
+						title:"Trade Volume"
+						series:[
+							showMarker:false
+						]
+						cursor:
+							show: true
+							zoom: true
+							showTooltip: false
+						highlighter:
+							show: true
+						axes:
+						  xaxis:
+						    renderer: $.jqplot.DateAxisRenderer
+						    tickOptions:
+						      formatString:'%b&nbsp;%#d'
+						  yaxis:
+						    label:'Units Sold'
+						    labelRenderer: $.jqplot.CanvasAxisLabelRenderer
+					)
+			)
+	)
 
 query_evecentral = () ->
 	total_production_cost = 0
@@ -8,10 +77,6 @@ query_evecentral = () ->
 	units_produced = $('.item-units-produced').text()
 	product_id = $('.item-sell-price').attr("id")
 	evecentral_url = "http://api.eve-central.com/api/marketstat?regionlimit=10000002&typeid=#{product_id}"
-	evecentral_market_history = "http://api.eve-central.com/api/history/for/type/#{product_id}/region/10000002/bid/0"
-	
-	market_history_data = []
-	item_trade_volume = []
 	
 	$('.raw-material').each(
     (index) ->
@@ -66,61 +131,4 @@ query_evecentral = () ->
     		$('.item-profit-margin').css("color", "green")
     	else
     		$('.item-profit-margin').css("color", "red")
-  )
-  
-  #lookup market history
-  $.getJSON(
-    evecentral_market_history
-    (data) ->
-    	temp = []
-    	for obj in data["values"]
-    		time = new Date(obj["at"])
-    		market_history_data.push([time, obj["min"]]) if obj["min"] != 0
-    		item_trade_volume.push([time, obj["volume"]]) if obj["volume"] != 0
-    	
-    	$.jqplot(
-    		'min_sell_history_chart'
-    		[market_history_data]
-    		title:"Minimum Sell Price"
-    		series:[
-    			showMarker:false
-    		]
-    		cursor:
-    			show: true
-    			zoom: true
-    			showTooltip: false
-    		highlighter:
-    			show: true
-    		axes:
-		      xaxis:
-		        renderer: $.jqplot.DateAxisRenderer
-		        tickOptions:
-		          formatString:'%b&nbsp;%#d'
-		      yaxis:
-		        label:'Isk per Unit'
-		        labelRenderer: $.jqplot.CanvasAxisLabelRenderer
-    	)
-    	
-    	$.jqplot(
-    		'trade_volume_history_chart'
-    		[item_trade_volume]
-    		title:"Trade Volume"
-    		series:[
-    			showMarker:false
-    		]
-    		cursor:
-    			show: true
-    			zoom: true
-    			showTooltip: false
-    		highlighter:
-    			show: true
-    		axes:
-		      xaxis:
-		        renderer: $.jqplot.DateAxisRenderer
-		        tickOptions:
-		          formatString:'%b&nbsp;%#d'
-		      yaxis:
-		        label:'Units Sold'
-		        labelRenderer: $.jqplot.CanvasAxisLabelRenderer
-    	)
   )
