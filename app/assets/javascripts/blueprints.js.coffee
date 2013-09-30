@@ -99,19 +99,21 @@ query_evecentral = () ->
 	product_id = $('.item-sell-price').attr("id")
 	evecentral_url = "http://api.eve-central.com/api/marketstat?regionlimit=10000002&typeid=#{product_id}"
 	
-	$('.raw-material').each(
-    (index) ->
-      id_attr = $($('.raw-material').get(index)).attr("id")
-      id = id_attr.match(/\d+/)
-      evecentral_url += "&typeid=#{id}"
+	console.log "Looking up material IDs..."
+	
+	$('#raw-materials').children(".panel-heading").each(
+    () ->
+      id = $(this).attr("id").match(/\d+/)
+      evecentral_url += "&typeid=#{id}" if !evecentral_url.match(id)
   )
   
-  $('.extra-material').each(
-    (index) ->
-      id_attr = $($('.extra-material').get(index)).attr("id")
-      id = id_attr.match(/\d+/)
-      evecentral_url += "&typeid=#{id}"
+  $('#extra-materials').children(".panel-heading").each(
+    () ->
+      id = $(this).attr("id").match(/\d+/)
+      evecentral_url += "&typeid=#{id}" if !evecentral_url.match(id)
   )
+  
+  console.log evecentral_url
   
   #lookup current market data
   $.get(
@@ -127,11 +129,11 @@ query_evecentral = () ->
     				item_sell_price = min_sell
     				$(".item-sell-price").text(min_sell)
     			else
-	    			$("#raw-#{id}").children('.raw-material-unit-price').text(min_sell)
-	    			$("#extra-#{id}").children('.extra-material-unit-price').text(min_sell)
+	    			$("#raw-#{id}-unit-price").text(min_sell)
+	    			$("#extra-#{id}-unit-price").text(min_sell)
 	    			
-	    			raw_quantity = $("#raw-#{id}").children('.raw-material-quantity').text()
-	    			extra_quantity = $("#extra-#{id}").children('.extra-material-quantity').text()
+	    			raw_quantity = $("#raw-#{id}-quantity").text()
+	    			extra_quantity = $("#extra-#{id}-quantity").text()
 	    			
 	    			total_price_for_raw_material = min_sell * raw_quantity
 	    			total_price_for_extra_material = min_sell * extra_quantity
@@ -139,9 +141,12 @@ query_evecentral = () ->
 	    			total_production_cost += total_price_for_raw_material
 	    			total_production_cost += total_price_for_extra_material
 	    			
-	    			$("#raw-#{id}").children('.raw-material-total-price').text(total_price_for_raw_material.toFixed(2))
-	    			$("#extra-#{id}").children('.extra-material-total-price').text(total_price_for_extra_material.toFixed(2))
+	    			$("#raw-#{id}-total-price").text(total_price_for_raw_material.toFixed(2))
+	    			$("#extra-#{id}-total-price").text(total_price_for_extra_material.toFixed(2))
     	)
+    	
+    	console.log "Calculating profit margin..."
+    	console.log "Reticulating splines..."
     	
     	profit_margin = (item_sell_price * units_produced) - total_production_cost
     	

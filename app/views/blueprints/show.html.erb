@@ -57,17 +57,17 @@
 						<div class="panel-body">
 							<div id="raw-materials" class="panel panel-default">
 								<% @raw_materials.each do |material| %>
-									<div class="panel-heading">
+									<div id="raw-<%= material['material']['id'] %>" class="panel-heading">
 										<div class="row">
 											<div class="col-xs-1"><img src="<%= material['images']['small'] %>" /></div>
 											<div class="col-xs-10"><a class="material-toggle" data-toggle="collapse" data-parent="#raw-materials" href="#raw-<%= material['material']['id'] %>-collapse"><%= material['material']['name'] %></a></div>
-											<div class="col-xs-1"><span class="badge pull-right"><%= material['quantity'] %></span></div>
+											<div class="col-xs-1"><span id="raw-<%= material['material']['id'] %>-quantity" class="pull-right"><%= material['quantity'] %></span></div>
 										</div>
 									</div>
 									<div id="raw-<%= material['material']['id'] %>-collapse" class="panel-collapse collapse">
 										<div class="panel-body">
-											<div class="raw-material-unit-price">Loading...</div>
-											<div class="raw-material-total-price">Loading...</div>
+											<div id="raw-<%= material['material']['id'] %>-unit-price">Loading...</div>
+											<div id="raw-<%= material['material']['id'] %>-total-price">Loading...</div>
 										</div>
 									</div>
 								<% end %>
@@ -91,13 +91,13 @@
 										<div class="row">
 											<div class="col-xs-1"><img src="<%= material['images']['small'] %>" /></div>
 											<div class="col-xs-10"><a class="material-toggle" data-toggle="collapse" data-parent="#extra-materials" href="#extra-<%= material['material']['id'] %>-collapse"><%= material['material']['name'] %></a></div>
-											<div class="col-xs-1"><span class="badge pull-right"><%= material['quantity'] %></span></div>
+											<div class="col-xs-1"><span id="extra-<%= material['material']['id'] %>-quantity" class="pull-right"><%= material['quantity'] %></span></div>
 										</div>
 									</div>
 									<div id="extra-<%= material['material']['id'] %>-collapse" class="panel-collapse collapse">
 										<div class="panel-body">
-											<div class="extra-material-unit-price">Loading...</div>
-											<div class="extra-material-total-price">Loading...</div>
+											<div id="extra-<%= material['material']['id'] %>-unit-price">Loading...</div>
+											<div id="extra-<%= material['material']['id'] %>-total-price">Loading...</div>
 										</div>
 									</div>
 								<% end %>
