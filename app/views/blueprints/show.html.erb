@@ -24,29 +24,34 @@
 	<div class="tab-content">
 		<div class="tab-pane active" id="home">
 			<div class="row">
-				<div class="col-xs-12">
-					<table class="table table-condensed">
-						<tr>
-							<th>Units Produced</th>
-							<th>Unit Sell Price</th>
-							<th>Production Cost</th>
-							<th>Profit Margin</th>
-						</tr>
+				<div class="col-xs-12 col-md-10 col-md-offset-1">
+					<div class="panel panel-primary">
+						<div class="panel-heading">Production Details</div>
+						<div class="panel-body">
+							<table class="table table-condensed">
+								<tr>
+									<th>Units Produced</th>
+									<th>Unit Sell Price</th>
+									<th>Production Cost</th>
+									<th>Profit Margin</th>
+								</tr>
 		
-						<tr>
-							<td class="item-units-produced"><%= @product["portion_size"] %></td>
-							<td class="item-sell-price" id="<%= @blueprint['product_id'] %>">0</td>
-							<td class="item-total-cost">0</td>
-							<td class="item-profit-margin">0</td>
-						</tr>
-					</table>
+								<tr>
+									<td class="item-units-produced"><%= @product["portion_size"] %></td>
+									<td class="item-sell-price" id="<%= @blueprint['product_id'] %>">0</td>
+									<td class="item-total-cost">0</td>
+									<td class="item-profit-margin">0</td>
+								</tr>
+							</table>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div> <!-- end home -->
 		
 		<div class="tab-pane" id="materials">
 			<div class="row">
-				<div class="col-md-6">
+				<div class="col-xs-12 col-md-6">
 					<div class="panel panel-primary">
 						<div class="panel-heading">Raw Materials</div>
 						<div class="panel-body">
@@ -79,7 +84,7 @@
 					</div>
 				</div>
 		
-				<div class="col-md-6">
+				<div class="col-xs-12 col-md-6">
 					<div class="panel panel-primary">
 						<div class="panel-heading">Extra Materials</div>
 						<div class="panel-body">
