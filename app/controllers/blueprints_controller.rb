@@ -12,7 +12,6 @@ class BlueprintsController < ApplicationController
   	@product = evedata.get("/items/#{@blueprint['product_id']}").body.first
   	@raw_materials = evedata.get("/items/#{@blueprint['product_id']}/materials").body
   	@extra_materials = evedata.get("/blueprints/#{params[:id]}/requirements?activity_id=1&not_category_id=16").body
-  	@skills = evedata.get("/blueprints/#{params[:id]}/requirements?activity_id=1&category_id=16").body
   end
   
   private
