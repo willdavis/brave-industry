@@ -52,6 +52,7 @@
 						<div class="panel-body">
 							<table class="table table-condensed table-hover table-striped">
 								<tr>
+									<th></th>
 									<th>Name</th>
 									<th>Quantity</th>
 									<th>Unit Price</th>
@@ -60,9 +61,8 @@
 
 								<% @raw_materials.each do |material| %>
 									<tr id="raw-<%= material['material']['id'] %>" class="raw-material">
-										<td class="raw-material-name">
-											<img src="<%= material['images']['small'] %>" />&nbsp;<%= material['material']['name'] %>
-										</td>
+										<td class="raw-material-image"><img src="<%= material['images']['small'] %>" /></td>
+										<td class="raw-material-name"><%= material['material']['name'] %></td>
 										<td class="raw-material-quantity"><%= material['quantity'] %></td>
 										<td class="raw-material-unit-price">Loading...</td>
 										<td class="raw-material-total-price">Loading...</td>
@@ -71,7 +71,7 @@
 	
 								<% if @raw_materials.empty? %>
 									<tr class="danger">
-										<td colspan="4">No raw materials found.</td>
+										<td colspan="5">No raw materials found.</td>
 									<tr>
 								<% end %>
 								</table>
@@ -85,6 +85,7 @@
 						<div class="panel-body">
 							<table class="table table-condensed table-hover table-striped">
 								<tr>
+									<th></th>
 									<th>Name</th>
 									<th>Quantity</th>
 									<th>Unit Price</th>
@@ -93,7 +94,8 @@
 
 								<% @extra_materials.each do |material| %>
 									<tr id="extra-<%= material['material']['id'] %>" class="extra-material">
-										<td class="extra-material-name"><img src="<%= material['images']['small'] %>" />&nbsp;<%= material['material']['name'] %></td>
+										<td class="extra-material-image"><img src="<%= material['images']['small'] %>" /></td>
+										<td class="extra-material-name"><%= material['material']['name'] %></td>
 										<td class="extra-material-quantity"><%= material['quantity'] %></td>
 										<td class="extra-material-unit-price">Loading...</td>
 										<td class="extra-material-total-price">Loading...</td>
@@ -102,7 +104,7 @@
 	
 								<% if @extra_materials.empty? %>
 									<tr class="danger">
-										<td colspan="4">No extra materials found.</td>
+										<td colspan="5">No extra materials found.</td>
 									<tr>
 								<% end %>
 								</table>
@@ -126,7 +128,7 @@
 		
 		<div class="tab-pane" id="skills">
 			<div class="row">
-				<div class="col-xs-6 col-md-4">
+				<div class="col-xs-4 col-md-3">
 					<div class="panel panel-primary">
 						<div class="panel-heading">Manufacturing Skills</div>
 						<div class="panel-body">

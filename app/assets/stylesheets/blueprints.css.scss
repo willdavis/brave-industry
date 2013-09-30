@@ -15,3 +15,10 @@
 		top: 24px;
 	}
 }
+
+.raw-material-quantity, .raw-material-unit-price, .raw-material-total-price,
+.extra-material-quantity, .extra-material-unit-price, .extra-material-total-price {
+	text: {
+		align: right;
+	}
+}
