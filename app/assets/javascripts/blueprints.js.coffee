@@ -1,6 +1,27 @@
 $ ->
-	if $('#blueprints-show').length != 0
+	if $('.blueprints-show').length != 0
 		query_evecentral()
+		
+	$('.nav-skills-title').click(
+		() ->
+			#check if data is already present. If not, load it.
+			if $('.blueprint-skills').children().length == 0
+				blueprint_id = $('.blueprints-show').attr("id")
+				evedata_skills_url = "http://evedata.herokuapp.com/blueprints/#{blueprint_id}/requirements?activity_id=1&category_id=16"
+			
+				$.getJSON(
+					evedata_skills_url
+					(data) ->
+						for skill in data
+							$('.blueprint-skills').append("
+								<tr class='skill'>
+									<td class='skill-image'><img src='#{skill['images']['small']}' /></td>
+									<td class='skill-name'>#{skill['material']['name']}</td>
+									<td class='skill-level'>#{skill['quantity']}</td>
+								</tr>
+							")
+				)
+	)
 	
 	$('.nav-history-title').click(
 		() ->
