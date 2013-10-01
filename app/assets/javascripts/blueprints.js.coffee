@@ -103,14 +103,16 @@ query_evecentral = () ->
 	
 	$('#raw-materials').children(".panel-heading").each(
     () ->
-      id = $(this).attr("id").match(/\d+/)
-      evecentral_url += "&typeid=#{id}" if !evecentral_url.match(id)
+    	if $(this).attr("id")
+		    id = $(this).attr("id").match(/\d+/)
+		    evecentral_url += "&typeid=#{id}" if !evecentral_url.match(id)
   )
   
   $('#extra-materials').children(".panel-heading").each(
     () ->
-      id = $(this).attr("id").match(/\d+/)
-      evecentral_url += "&typeid=#{id}" if !evecentral_url.match(id)
+    	if $(this).attr("id")
+		    id = $(this).attr("id").match(/\d+/)
+		    evecentral_url += "&typeid=#{id}" if !evecentral_url.match(id)
   )
   
   console.log evecentral_url

@@ -56,6 +56,15 @@
 						<div class="panel-heading">Raw Materials</div>
 						<div class="panel-body">
 							<div id="raw-materials" class="panel panel-default">
+								
+								<!-- Heading for material list -->
+								<div class="panel-heading">
+									<div class="row">
+										<div class="col-xs-10">Name</div>
+										<div class="col-xs-2"><span class="pull-right">Quantity</span></div>
+									</div>
+								</div>
+							
 								<% @raw_materials.each do |material| %>
 									<div id="raw-<%= material['material']['id'] %>" class="panel-heading">
 										<div class="row">
@@ -86,6 +95,15 @@
 						<div class="panel-body">
 						
 							<div id="extra-materials" class="panel panel-default">
+							
+								<!-- Heading for material list -->
+								<div class="panel-heading">
+									<div class="row">
+										<div class="col-xs-10">Name</div>
+										<div class="col-xs-2"><span class="pull-right">Quantity</span></div>
+									</div>
+								</div>
+							
 								<% @extra_materials.each do |material| %>
 									<div id="extra-<%= material['material']['id'] %>" class="panel-heading">
 										<div class="row">
