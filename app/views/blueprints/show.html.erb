@@ -92,21 +92,13 @@
 									</div>
 									<div id="raw-<%= material['material']['id'] %>-collapse" class="panel-collapse collapse">
 										<div class="panel-body">
-											<div class="panel panel-primary">
-												<div class="row">
-													<div class="col-xs-4">
-														<div class="panel-heading">Unit Price</div>
-														<div class="panel-body">
-															<span id="raw-<%= material['material']['id'] %>-unit-price"></span>
-														</div>
-													</div>
-													
-													<div class="col-xs-4">
-														<div class="panel-heading">Total Price</div>
-														<div class="panel-body">
-															<span id="raw-<%= material['material']['id'] %>-total-price"></span>
-														</div>
-													</div>
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													Unit Price<span id="raw-<%= material['material']['id'] %>-unit-price" class="pull-right"></span>
+												</div>
+												
+												<div class="panel-heading">
+													Total Price<span id="raw-<%= material['material']['id'] %>-total-price" class="pull-right"></span>
 												</div>
 											</div>
 										</div>
@@ -154,28 +146,18 @@
 									</div>
 									<div id="extra-<%= material['material']['id'] %>-collapse" class="panel-collapse collapse">
 										<div class="panel-body">
-											<div class="panel panel-primary">
-												<div class="row">
-													<div class="col-xs-5">
-														<div class="panel-heading">Unit Price</div>
-														<div class="panel-body">
-															<span id="extra-<%= material['material']['id'] %>-unit-price"></span>
-														</div>
-													</div>
-													
-													<div class="col-xs-2">
-														<div class="panel-heading">Damage</div>
-														<div class="panel-body">
-															<span id="extra-<%= material['material']['id'] %>-damage"><%= material['damage_per_job'] %></span>
-														</div>
-													</div>
-													
-													<div class="col-xs-5">
-														<div class="panel-heading">Total Price</div>
-														<div class="panel-body">
-															<span id="extra-<%= material['material']['id'] %>-total-price"></span>
-														</div>
-													</div>
+											<div class="panel panel-default">
+												
+												<div class="panel-heading">
+													Unit Price<span id="extra-<%= material['material']['id'] %>-unit-price" class="pull-right"></span>
+												</div>
+												
+												<div class="panel-heading">
+													Damage<span id="extra-<%= material['material']['id'] %>-damage" class="pull-right"><%= material['damage_per_job'] %></span>
+												</div>
+												
+												<div class="panel-heading">
+													Total Price<span id="extra-<%= material['material']['id'] %>-total-price" class="pull-right"></span>
 												</div>
 											</div>
 										</div>
