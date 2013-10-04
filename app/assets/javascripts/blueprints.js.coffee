@@ -134,11 +134,12 @@ query_evecentral = () ->
 	    			$("#raw-#{id}-unit-price").text(min_sell)
 	    			$("#extra-#{id}-unit-price").text(min_sell)
 	    			
+	    			damage = $("#extra-#{id}-damage").text()
 	    			raw_quantity = $("#raw-#{id}-quantity").text()
 	    			extra_quantity = $("#extra-#{id}-quantity").text()
 	    			
 	    			total_price_for_raw_material = min_sell * raw_quantity
-	    			total_price_for_extra_material = min_sell * extra_quantity
+	    			total_price_for_extra_material = min_sell * extra_quantity * damage
 	    			
 	    			total_production_cost += total_price_for_raw_material
 	    			total_production_cost += total_price_for_extra_material
