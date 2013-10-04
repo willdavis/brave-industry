@@ -32,16 +32,25 @@
 								<tr>
 									<th>Units Produced</th>
 									<th>Unit Sell Price</th>
-									<th>Production Cost</th>
-									<th>Profit Margin</th>
 								</tr>
 		
 								<tr>
-									<td class="item-units-produced"><%= @product["portion_size"] %></td>
+									<td class="item-units-produced"><%= @product['portion_size'] %></td>
 									<td class="item-sell-price" id="<%= @blueprint['product_id'] %>">0</td>
+								</tr>
+							</table>
+							
+							<table class="table table-condensed">
+								<tr>
+									<th>Production Cost</th>
+									<th>Profit Margin</th>
+								<tr>
+								
+								<tr>
 									<td class="item-total-cost">0</td>
 									<td class="item-profit-margin">0</td>
 								</tr>
+								
 							</table>
 						</div>
 					</div>
