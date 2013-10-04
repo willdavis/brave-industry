@@ -24,7 +24,7 @@
 	<div class="tab-content">
 		<div class="tab-pane active" id="home">
 			<div class="row">
-				<div class="col-xs-12 col-md-10 col-md-offset-1">
+				<div class="col-md-12">
 					<div class="panel panel-primary">
 						<div class="panel-heading">Production Details</div>
 						<div class="panel-body">
@@ -32,16 +32,25 @@
 								<tr>
 									<th>Units Produced</th>
 									<th>Unit Sell Price</th>
-									<th>Production Cost</th>
-									<th>Profit Margin</th>
 								</tr>
 		
 								<tr>
-									<td class="item-units-produced"><%= @product["portion_size"] %></td>
+									<td class="item-units-produced"><%= @product['portion_size'] %></td>
 									<td class="item-sell-price" id="<%= @blueprint['product_id'] %>">0</td>
+								</tr>
+							</table>
+							
+							<table class="table table-condensed">
+								<tr>
+									<th>Production Cost</th>
+									<th>Profit Margin</th>
+								<tr>
+								
+								<tr>
 									<td class="item-total-cost">0</td>
 									<td class="item-profit-margin">0</td>
 								</tr>
+								
 							</table>
 						</div>
 					</div>
@@ -67,29 +76,29 @@
 							
 								<% @raw_materials.each do |material| %>
 									<div id="raw-<%= material['material']['id'] %>" class="panel-heading">
-										<div class="row">
-											<div class="col-xs-1"><img src="<%= material['images']['small'] %>" /></div>
-											<div class="col-xs-10"><a class="material-toggle" data-toggle="collapse" data-parent="#raw-materials" href="#raw-<%= material['material']['id'] %>-collapse"><%= material['material']['name'] %></a></div>
-											<div class="col-xs-1"><span id="raw-<%= material['material']['id'] %>-quantity" class="pull-right"><%= material['quantity'] %></span></div>
-										</div>
+										<a class="material-toggle" data-toggle="collapse" data-parent="#raw-materials" href="#raw-<%= material['material']['id'] %>-collapse">
+											<div class="row">
+												<div class="col-xs-10">
+													<table>
+														<tr>
+															<td><img src="<%= material['images']['small'] %>" /></td>
+															<td><%= material['material']['name'] %></td>
+														</tr>
+													</table>
+												</div>
+												<div class="col-xs-2"><span id="raw-<%= material['material']['id'] %>-quantity" class="pull-right"><%= material['quantity'] %></span></div>
+											</div>
+										</a>
 									</div>
 									<div id="raw-<%= material['material']['id'] %>-collapse" class="panel-collapse collapse">
 										<div class="panel-body">
-											<div class="panel panel-primary">
-												<div class="row">
-													<div class="col-xs-4">
-														<div class="panel-heading">Unit Price</div>
-														<div class="panel-body">
-															<span id="raw-<%= material['material']['id'] %>-unit-price"></span>
-														</div>
-													</div>
-													
-													<div class="col-xs-4">
-														<div class="panel-heading">Total Price</div>
-														<div class="panel-body">
-															<span id="raw-<%= material['material']['id'] %>-total-price"></span>
-														</div>
-													</div>
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													Unit Price<span id="raw-<%= material['material']['id'] %>-unit-price" class="pull-right"></span>
+												</div>
+												
+												<div class="panel-heading">
+													Total Price<span id="raw-<%= material['material']['id'] %>-total-price" class="pull-right"></span>
 												</div>
 											</div>
 										</div>
@@ -121,36 +130,34 @@
 							
 								<% @extra_materials.each do |material| %>
 									<div id="extra-<%= material['material']['id'] %>" class="panel-heading">
-										<div class="row">
-											<div class="col-xs-1"><img src="<%= material['images']['small'] %>" /></div>
-											<div class="col-xs-10"><a class="material-toggle" data-toggle="collapse" data-parent="#extra-materials" href="#extra-<%= material['material']['id'] %>-collapse"><%= material['material']['name'] %></a></div>
-											<div class="col-xs-1"><span id="extra-<%= material['material']['id'] %>-quantity" class="pull-right"><%= material['quantity'] %></span></div>
-										</div>
+										<a class="material-toggle" data-toggle="collapse" data-parent="#extra-materials" href="#extra-<%= material['material']['id'] %>-collapse">
+											<div class="row">
+												<div class="col-xs-10">
+													<table>
+														<tr>
+															<td><img src="<%= material['images']['small'] %>" /></td>
+															<td><%= material['material']['name'] %></td>
+														</tr>
+													</table>
+												</div>
+												<div class="col-xs-2"><span id="extra-<%= material['material']['id'] %>-quantity" class="pull-right"><%= material['quantity'] %></span></div>
+											</div>
+										</a>
 									</div>
 									<div id="extra-<%= material['material']['id'] %>-collapse" class="panel-collapse collapse">
 										<div class="panel-body">
-											<div class="panel panel-primary">
-												<div class="row">
-													<div class="col-xs-5">
-														<div class="panel-heading">Unit Price</div>
-														<div class="panel-body">
-															<span id="extra-<%= material['material']['id'] %>-unit-price"></span>
-														</div>
-													</div>
-													
-													<div class="col-xs-2">
-														<div class="panel-heading">Damage</div>
-														<div class="panel-body">
-															<span id="extra-<%= material['material']['id'] %>-damage"><%= material['damage_per_job'] %></span>
-														</div>
-													</div>
-													
-													<div class="col-xs-5">
-														<div class="panel-heading">Total Price</div>
-														<div class="panel-body">
-															<span id="extra-<%= material['material']['id'] %>-total-price"></span>
-														</div>
-													</div>
+											<div class="panel panel-default">
+												
+												<div class="panel-heading">
+													Unit Price<span id="extra-<%= material['material']['id'] %>-unit-price" class="pull-right"></span>
+												</div>
+												
+												<div class="panel-heading">
+													Damage<span id="extra-<%= material['material']['id'] %>-damage" class="pull-right"><%= material['damage_per_job'] %></span>
+												</div>
+												
+												<div class="panel-heading">
+													Total Price<span id="extra-<%= material['material']['id'] %>-total-price" class="pull-right"></span>
 												</div>
 											</div>
 										</div>
@@ -181,7 +188,7 @@
 		
 		<div class="tab-pane" id="skills">
 			<div class="row">
-				<div class="col-xs-4 col-md-3">
+				<div class="col-xs-12 col-md-4">
 					<div class="panel panel-primary">
 						<div class="panel-heading">Manufacturing Skills</div>
 						<div class="panel-body">
