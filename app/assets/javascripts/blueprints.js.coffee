@@ -101,14 +101,14 @@ query_evecentral = () ->
 	
 	console.log "Looking up material IDs..."
 	
-	$('#raw-materials').children(".panel-heading").each(
+	$('#raw-materials').find(".panel-heading").each(
     () ->
     	if $(this).attr("id")
 		    id = $(this).attr("id").match(/\d+/)
 		    evecentral_url += "&typeid=#{id}" if !evecentral_url.match(id)
   )
   
-  $('#extra-materials').children(".panel-heading").each(
+  $('#extra-materials').find(".panel-heading").each(
     () ->
     	if $(this).attr("id")
 		    id = $(this).attr("id").match(/\d+/)
