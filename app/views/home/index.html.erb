@@ -1,8 +1,6 @@
 <div id="main-index">
 	<div class="row">
-		<div class="col-md-8 col-md-offset-2 col-xs-12">
-			<h1>Green profit margins for everyone!</h1>
-			
+		<div class="col-md-8 col-md-offset-2 col-xs-12">			
 			<div class="panel panel-info">
 				<div class="panel-heading">
 					<table>
@@ -22,16 +20,23 @@
 				<% @blueprint_groups.each do |group| %>
 					<div id="<%= group['id'] %>" class="panel panel-primary">
 						<div class="panel-heading">
-							<table>
-								<tr>
-									<td><span class="glyphicon glyphicon-expand"></span></td>
-									<td>
-										<h4 class="panel-title">
-											<a class="blueprint-toggle" data-toggle="collapse" data-parent="#blueprint-groups" href="#<%= group['id'] %>-collapse"><%= group["name"] %></a>
-										</h4>
-									</td>
-								</tr>
-							</table>
+							<a class="blueprint-toggle" data-toggle="collapse" data-parent="#blueprint-groups" href="#<%= group['id'] %>-collapse">
+								<div class="row">
+									<div class="col-xs-12">
+										<table>
+											<tr>
+												<td><span class="glyphicon glyphicon-expand"></span></td>
+												<td>
+													<h4 class="panel-title">
+														<%= group["name"] %>
+													</h4>
+												</td>
+											</tr>
+										</table>
+									</div>
+								</div>
+								
+							</a>
 						</div>
 						<div id="<%= group['id'] %>-collapse" class="panel-collapse collapse">
 							<div class="panel-body"></div>
