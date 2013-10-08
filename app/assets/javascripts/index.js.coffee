@@ -2,10 +2,9 @@ $ ->
 	if $('#main-index').length != 0
 		$('.blueprint-toggle').click(
 			() ->
-				panel_title = $(this)
-				group_panel = panel_title.parent().parent().parent().parent().parent().parent().parent()
-				group_id = group_panel.attr("id")
-				group_blueprints = group_panel.children("##{group_id}-collapse").children(".panel-body")
+				panel = $(this).parent().parent()
+				group_id = panel.attr("id")
+				group_blueprints = panel.children("##{group_id}-collapse").children(".panel-body")
 				
 				console.log "clicked ID:#{group_id}"
 				
@@ -19,6 +18,6 @@ $ ->
 						(data) ->
 							console.log "recieved data from evedata...\ncreating HTML..."
 							for blueprint in data
-								group_panel.children("##{group_id}-collapse").children(".panel-body").append("<table class='blueprint'><tr><td width='32' height='32' class='blueprint-image'><img src='#{blueprint['images']['small']}' /></td><td class='blueprint-name'><a href='blueprints/#{blueprint['id']}'>#{blueprint['name']}</a></td></table>")
+								panel.children("##{group_id}-collapse").children(".panel-body").append("<table class='blueprint'><tr><td width='32' height='32' class='blueprint-image'><img src='#{blueprint['images']['small']}' /></td><td class='blueprint-name'><a href='blueprints/#{blueprint['id']}'>#{blueprint['name']}</a></td></table>")
 					)
 		)
