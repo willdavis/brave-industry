@@ -101,7 +101,7 @@
 													Total Price<span id="raw-<%= material['material']['id'] %>-total-price" class="pull-right"></span>
 												</div>
 												
-												<% if !["18","1034","429"].include?(material['group']['id']) %>
+												<% if !["18","1034","429","1041"].include?(material['group']['id']) %>
 												<div class="panel-heading">
 													<a href="/blueprints/<%= material['material']['id'] %>">View <%= material['material']['name'] %> Blueprint</a>
 												</div>
@@ -165,6 +165,12 @@
 												<div class="panel-heading">
 													Total Price<span id="extra-<%= material['material']['id'] %>-total-price" class="pull-right"></span>
 												</div>
+												
+												<% if !["18","1034","429","1041"].include?(material['group']['id']) %>
+												<div class="panel-heading">
+													<a href="/blueprints/<%= material['material']['id'] %>">View <%= material['material']['name'] %> Blueprint</a>
+												</div>
+												<% end %>
 											</div>
 										</div>
 									</div>
