@@ -100,6 +100,12 @@
 												<div class="panel-heading">
 													Total Price<span id="raw-<%= material['material']['id'] %>-total-price" class="pull-right"></span>
 												</div>
+												
+												<% if material['group']['id'] != "18" %>
+												<div class="panel-heading">
+													<a href="/blueprints/<%= material['material']['id'] %>">View <%= material['material']['name'] %> Blueprint</a>
+												</div>
+												<% end %>
 											</div>
 										</div>
 									</div>
