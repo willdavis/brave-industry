@@ -101,7 +101,7 @@
 													Total Price<span id="raw-<%= material['material']['id'] %>-total-price" class="pull-right"></span>
 												</div>
 												
-												<% if material['group']['id'] != "18" %>
+												<% if !["18","1034","429"].include?(material['group']['id']) %>
 												<div class="panel-heading">
 													<a href="/blueprints/<%= material['material']['id'] %>">View <%= material['material']['name'] %> Blueprint</a>
 												</div>
