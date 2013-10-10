@@ -1,6 +1,7 @@
 $ ->
 	if $('.blueprints-show').length != 0
 		query_evecentral()
+		we_must_go_deeper()
 		
 	$('.nav-skills-title').click(
 		() ->
@@ -89,6 +90,22 @@ $ ->
 						    label:'Units Sold'
 						    labelRenderer: $.jqplot.CanvasAxisLabelRenderer
 					)
+			)
+	)
+	
+#Lookup blueprints for items in the parent blueprints bill of materials
+#Yo dawg, I heard you like blueprints...
+we_must_go_deeper = () ->
+	$(".view-blueprint").each(
+		() ->
+			panel = $(this)
+			id = panel.attr("id").match(/\d+/)
+			blueprint_url = "http://evedata.herokuapp.com/blueprints?product_id=#{id}"
+			
+			$.getJSON(
+				blueprint_url
+				(data) ->
+					panel.append("<a href='/blueprints/#{data[0]['id']}'>View #{data[0]['name']}</a>")
 			)
 	)
 
