@@ -2,6 +2,19 @@ $ ->
 	if $('.blueprints-show').length != 0
 		query_evecentral()
 		
+		$(".view-blueprint").each(
+			() ->
+				panel = $(this)
+				id = panel.attr("id").match(/\d+/)
+				blueprint_url = "http://evedata.herokuapp.com/blueprints?product_id=#{id}"
+				
+				$.getJSON(
+					blueprint_url
+					(data) ->
+						panel.append("<a href='/blueprints/#{data[0]['id']}'>View #{data[0]['name']}</a>")
+				)
+		)
+		
 	$('.nav-skills-title').click(
 		() ->
 			#check if data is already present. If not, load it.
