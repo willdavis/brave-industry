@@ -94,15 +94,28 @@
 										<div class="panel-body">
 											<div class="panel panel-default">
 												<div class="panel-heading">
-													Type<span class="pull-right"><%= material['group']['name'] %></span>
+													<div class="row">
+														<div class="col-xs-2">Type</div>
+														<div class="col-xs-10"><span class="pull-right"><%= material['group']['name'] %></span></div>
+													</div>
 												</div>
 												
 												<div class="panel-heading">
-													Unit Price<span id="raw-<%= material['material']['id'] %>-unit-price" class="pull-right"></span>
+													<div class="row">
+														<div class="col-xs-5">Unit Price</div>
+														<div class="col-xs-7">
+															<span id="raw-<%= material['material']['id'] %>-unit-price" class="pull-right"></span>
+														</div>
+													</div>
 												</div>
 												
 												<div class="panel-heading">
-													Total Price<span id="raw-<%= material['material']['id'] %>-total-price" class="pull-right"></span>
+													<div class="row">
+														<div class="col-xs-5">Total Price</div>
+														<div class="col-xs-7">
+															<span id="raw-<%= material['material']['id'] %>-total-price" class="pull-right"></span>
+														</div>
+													</div>
 												</div>
 												
 												<% if !["18","1034","429","1041"].include?(material['group']['id']) %>
@@ -156,19 +169,39 @@
 										<div class="panel-body">
 											<div class="panel panel-default">
 												<div class="panel-heading">
-													Type<span class="pull-right"><%= material['group']['name'] %></span>
+													<div class="row">
+														<div class="col-xs-2">Type</div>
+														<div class="col-xs-10"><span class="pull-right"><%= material['group']['name'] %></span></div>
+													</div>
 												</div>
 												
 												<div class="panel-heading">
-													Unit Price<span id="extra-<%= material['material']['id'] %>-unit-price" class="pull-right"></span>
+													<div class="row">
+														<div class="col-xs-5">Unit Price</div>
+														<div class="col-xs-7">
+															<span id="extra-<%= material['material']['id'] %>-unit-price" class="pull-right"></span>
+														</div>
+													</div>
 												</div>
 												
 												<div class="panel-heading">
-													Damage<span id="extra-<%= material['material']['id'] %>-damage" class="pull-right"><%= material['damage_per_job'] %></span>
+													<div class="row">
+														<div class="col-xs-5">Damage</div>
+														<div class="col-xs-7">
+															<span id="extra-<%= material['material']['id'] %>-damage" class="pull-right">
+																<%= material['damage_per_job'] %>
+															</span>
+														</div>
+													</div>
 												</div>
 												
 												<div class="panel-heading">
-													Total Price<span id="extra-<%= material['material']['id'] %>-total-price" class="pull-right"></span>
+													<div class="row">
+														<div class="col-xs-5">Total Price</div>
+														<div class="col-xs-7">
+															<span id="extra-<%= material['material']['id'] %>-total-price" class="pull-right"></span>
+														</div>
+													</div>
 												</div>
 												
 												<% if !["18","1034","429","1041"].include?(material['group']['id']) %>
