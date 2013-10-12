@@ -1,6 +1,7 @@
 BraveIndustry::Application.routes.draw do
   resources :blueprints, :only => [:index, :show]
   get "home/index"
+  get "home/health_check"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
