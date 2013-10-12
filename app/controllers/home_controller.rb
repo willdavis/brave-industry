@@ -3,6 +3,10 @@ class HomeController < ApplicationController
   	@blueprint_groups = evedata.get("/categories/9/groups?limit=150").body
   end
   
+  def health_check
+  	render :nothing => true, :status => 200
+  end
+  
   private
   def evedata
   	Faraday.new(:url => "http://evedata.herokuapp.com") do |conn|
