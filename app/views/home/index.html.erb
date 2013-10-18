@@ -1,48 +1,75 @@
 <div id="main-index">
 	<div class="row">
-		<div class="col-md-8 col-md-offset-2 col-xs-12">			
-			<div class="panel panel-info">
-				<div class="panel-heading">
-					<table>
-						<tr>
-							<td class="info-icon"><span class="glyphicon glyphicon-info-sign"></span></td>
-							<td class="info-text">Click on a group to expand and view related blueprints</td>
-						</tr>
-					</table>
+		<div class="col-xs-12">
+			<div class="jumbotron">
+				<div class="container">
+					<h1>No More Spreadsheets!</h1>
+					<p>
+						View production costs, profit margins, and market history at a glance!
+					</p>
+					<p><a class="btn btn-primary btn-lg">Learn more</a></p>
 				</div>
 			</div>
 		</div>
 	</div>
 
 	<div class="row">
-		<div class="col-md-8 col-md-offset-2 col-xs-12">
-			<div class="panel-group" id="blueprint-groups">
-				<% @blueprint_groups.each do |group| %>
-					<div id="<%= group['id'] %>" class="panel panel-primary">
+		<div class="col-md-6 col-xs-12">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					Browse Blueprints:
+				</div>
+				<div class="panel-body">
+					<div class="panel panel-info">
 						<div class="panel-heading">
-							<a class="blueprint-toggle" data-toggle="collapse" data-parent="#blueprint-groups" href="#<%= group['id'] %>-collapse">
-								<div class="row">
-									<div class="col-xs-12">
-										<table>
-											<tr>
-												<td><span class="glyphicon glyphicon-expand"></span></td>
-												<td>
-													<h4 class="panel-title">
-														<%= group["name"] %>
-													</h4>
-												</td>
-											</tr>
-										</table>
-									</div>
-								</div>
-								
-							</a>
-						</div>
-						<div id="<%= group['id'] %>-collapse" class="panel-collapse collapse">
-							<div class="panel-body"></div>
+							<table>
+								<tr>
+									<td class="info-icon"><span class="glyphicon glyphicon-info-sign"></span></td>
+									<td class="info-text">Click on a group to expand and view related blueprints</td>
+								</tr>
+							</table>
 						</div>
 					</div>
-				<% end %>
+					<div class="panel-group" id="blueprint-groups">
+						<% @blueprint_groups.each do |group| %>
+							<div id="<%= group['id'] %>" class="panel panel-default">
+								<div class="panel-heading">
+									<a class="blueprint-toggle" data-toggle="collapse" data-parent="#blueprint-groups" href="#<%= group['id'] %>-collapse">
+										<div class="row">
+											<div class="col-xs-12">
+												<table>
+													<tr>
+														<td><span class="glyphicon glyphicon-expand"></span></td>
+														<td>
+															<h4 class="panel-title">
+																<%= group["name"] %>
+															</h4>
+														</td>
+													</tr>
+												</table>
+											</div>
+										</div>
+								
+									</a>
+								</div>
+								<div id="<%= group['id'] %>-collapse" class="panel-collapse collapse">
+									<div class="panel-body"></div>
+								</div>
+							</div>
+						<% end %>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="col-md-6 col-xs-12">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					Ship Fitting Import
+				</div>
+				<div class="panel-body">
+					Import EFT fittings to see the production costs for ship fittings
+				</div>
 			</div>
 		</div>
 	</div>
