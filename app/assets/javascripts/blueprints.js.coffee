@@ -122,14 +122,14 @@ query_evecentral = () ->
     () ->
     	if $(this).attr("id")
 		    id = $(this).attr("id").match(/\d+/)
-		    evecentral_url += "&typeid=#{id}" if !evecentral_url.match(id)
+		    evecentral_url += "&typeid=#{id}"
   )
   
   $('#extra-materials').find(".panel-heading").each(
     () ->
     	if $(this).attr("id")
 		    id = $(this).attr("id").match(/\d+/)
-		    evecentral_url += "&typeid=#{id}" if !evecentral_url.match(id)
+		    evecentral_url += "&typeid=#{id}"
   )
   
   console.log evecentral_url
