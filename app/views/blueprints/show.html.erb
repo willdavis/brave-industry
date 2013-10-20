@@ -80,7 +80,7 @@
 								</div>
 							
 								<% @raw_materials.each do |material| %>
-									<div id="raw-<%= material['material']['id'] %>" class="panel-heading">
+									<div id="raw-<%= material['material']['id'] %>" class="raw-material panel-heading">
 										<a class="material-toggle" data-toggle="collapse" data-parent="#raw-materials" href="#raw-<%= material['material']['id'] %>-collapse">
 											<div class="row">
 												<div class="col-xs-10">
@@ -155,7 +155,7 @@
 								</div>
 							
 								<% @extra_materials.each do |material| %>
-									<div id="extra-<%= material['material']['id'] %>" class="panel-heading">
+									<div id="extra-<%= material['material']['id'] %>" class="extra-material panel-heading">
 										<a class="material-toggle" data-toggle="collapse" data-parent="#extra-materials" href="#extra-<%= material['material']['id'] %>-collapse">
 											<div class="row">
 												<div class="col-xs-10">
