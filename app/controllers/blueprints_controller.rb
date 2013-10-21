@@ -8,10 +8,31 @@ class BlueprintsController < ApplicationController
   end
 
   def show
+  	#Get blueprint and item data
   	@blueprint = evedata.get("/blueprints/#{params[:id]}").body.first
   	@product = evedata.get("/items/#{@blueprint['product_id']}").body.first
-  	@raw_materials = evedata.get("/items/#{@blueprint['product_id']}/materials").body
-  	@extra_materials = evedata.get("/blueprints/#{params[:id]}/requirements?activity_id=1&not_category_id=16").body
+  	
+  	#Get both raw and extra materials
+  	raw = evedata.get("/items/#{@blueprint['product_id']}/materials").body
+  	extra = evedata.get("/blueprints/#{params[:id]}/requirements?activity_id=1&not_category_id=16").body
+  	
+  	#Calculate waste for raw materials
+  	#Materials Needed = Base Materials + (Base Waste)/(1 + ME)
+  	@waste_factor = @blueprint["waste_factor"]
+  	@material_efficiency = 0
+  	
+  	#Apply waste to raw materials
+  	raw.map do |material|
+  		material["wasted_materials"] = @waste_factor / (1 + @material_efficiency)
+  		material["quantity"] += material["wasted_materials"]
+  	end
+  	
+  	#Merge raw and extra materials
+  	#Merge any duplicate materials
+  	all_materials = raw.concat(extra)
+  	
+  	@extra_materials = all_materials.select { |m| ["17","6"].include?(m['category']['id']) }
+  	@raw_materials = all_materials.select { |m| ["4","43"].include?(m['category']['id']) }
   end
   
   private
