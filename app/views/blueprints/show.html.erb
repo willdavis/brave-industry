@@ -31,6 +31,13 @@
 							<div class="panel panel-default">
 								<div class="panel-heading">
 									<div class="row">
+										<div class="col-xs-5">Waste Factor</div>
+										<div class="col-xs-7"><span class="pull-right item-waste-factor"><%= @blueprint['waste_factor'] %>%</span></div>
+									</div>
+								</div>
+								
+								<div class="panel-heading">
+									<div class="row">
 										<div class="col-xs-5">Units Produced</div>
 										<div class="col-xs-7"><span class="pull-right item-units-produced"><%= @product['portion_size'] %></span></div>
 									</div>
@@ -102,6 +109,13 @@
 													<div class="row">
 														<div class="col-xs-2">Type</div>
 														<div class="col-xs-10"><span class="pull-right"><%= material['group']['name'] %></span></div>
+													</div>
+												</div>
+												
+												<div class="panel-heading">
+													<div class="row">
+														<div class="col-xs-2">Waste</div>
+														<div class="col-xs-10"><span class="pull-right"><%= material['wasted_materials'] %></span></div>
 													</div>
 												</div>
 												
@@ -182,10 +196,8 @@
 												
 												<div class="panel-heading">
 													<div class="row">
-														<div class="col-xs-5">Unit Price</div>
-														<div class="col-xs-7">
-															<span id="extra-<%= material['material']['id'] %>-unit-price" class="pull-right"></span>
-														</div>
+														<div class="col-xs-2">Waste</div>
+														<div class="col-xs-10"><span class="pull-right"><%= material['wasted_materials'] %></span></div>
 													</div>
 												</div>
 												
@@ -196,6 +208,15 @@
 															<span id="extra-<%= material['material']['id'] %>-damage" class="pull-right">
 																<%= material['damage_per_job'] %>
 															</span>
+														</div>
+													</div>
+												</div>
+												
+												<div class="panel-heading">
+													<div class="row">
+														<div class="col-xs-5">Unit Price</div>
+														<div class="col-xs-7">
+															<span id="extra-<%= material['material']['id'] %>-unit-price" class="pull-right"></span>
 														</div>
 													</div>
 												</div>
