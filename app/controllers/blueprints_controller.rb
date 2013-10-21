@@ -50,7 +50,7 @@ class BlueprintsController < ApplicationController
   	all_materials = raw.concat(extra)
   	
   	#Select components based on Category IDs
-  	@extra_materials = all_materials.select { |m| ["17","6","23"].include?(m['category']['id']) }
+  	@extra_materials = all_materials.select { |m| ["17","6","23","7"].include?(m['category']['id']) }
   	@raw_materials = all_materials.select { |m| ["4","43"].include?(m['category']['id']) }
   end
   
