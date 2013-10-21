@@ -88,6 +88,8 @@ GEM
     jquery-turbolinks (2.0.1)
       railties (>= 3.1.0)
       turbolinks
+    jquery-ui-rails (4.0.5)
+      railties (>= 3.1.0)
     json (1.8.0)
     launchy (2.3.0)
       addressable (~> 2.3)
@@ -202,6 +204,7 @@ DEPENDENCIES
   jqplot-rails
   jquery-rails
   jquery-turbolinks
+  jquery-ui-rails
   launchy
   newrelic_rpm
   pg
