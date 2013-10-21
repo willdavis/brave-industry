@@ -31,6 +31,13 @@
 							<div class="panel panel-default">
 								<div class="panel-heading">
 									<div class="row">
+										<div class="col-xs-5">Waste Factor</div>
+										<div class="col-xs-7"><span class="pull-right item-waste-factor"><%= @blueprint['waste_factor'] %>%</span></div>
+									</div>
+								</div>
+								
+								<div class="panel-heading">
+									<div class="row">
 										<div class="col-xs-5">Units Produced</div>
 										<div class="col-xs-7"><span class="pull-right item-units-produced"><%= @product['portion_size'] %></span></div>
 									</div>
@@ -80,7 +87,7 @@
 								</div>
 							
 								<% @raw_materials.each do |material| %>
-									<div id="raw-<%= material['material']['id'] %>" class="panel-heading">
+									<div id="raw-<%= material['material']['id'] %>" class="raw-material panel-heading">
 										<a class="material-toggle" data-toggle="collapse" data-parent="#raw-materials" href="#raw-<%= material['material']['id'] %>-collapse">
 											<div class="row">
 												<div class="col-xs-10">
@@ -102,6 +109,13 @@
 													<div class="row">
 														<div class="col-xs-2">Type</div>
 														<div class="col-xs-10"><span class="pull-right"><%= material['group']['name'] %></span></div>
+													</div>
+												</div>
+												
+												<div class="panel-heading">
+													<div class="row">
+														<div class="col-xs-2">Waste</div>
+														<div class="col-xs-10"><span class="pull-right"><%= material['wasted_materials'] %></span></div>
 													</div>
 												</div>
 												
@@ -141,7 +155,7 @@
 		
 				<div class="col-xs-12 col-md-6">
 					<div class="panel panel-primary">
-						<div class="panel-heading">Extra Materials</div>
+						<div class="panel-heading">Components</div>
 						<div class="panel-body">
 						
 							<div id="extra-materials" class="panel panel-default">
@@ -155,7 +169,7 @@
 								</div>
 							
 								<% @extra_materials.each do |material| %>
-									<div id="extra-<%= material['material']['id'] %>" class="panel-heading">
+									<div id="extra-<%= material['material']['id'] %>" class="extra-material panel-heading">
 										<a class="material-toggle" data-toggle="collapse" data-parent="#extra-materials" href="#extra-<%= material['material']['id'] %>-collapse">
 											<div class="row">
 												<div class="col-xs-10">
@@ -182,10 +196,8 @@
 												
 												<div class="panel-heading">
 													<div class="row">
-														<div class="col-xs-5">Unit Price</div>
-														<div class="col-xs-7">
-															<span id="extra-<%= material['material']['id'] %>-unit-price" class="pull-right"></span>
-														</div>
+														<div class="col-xs-2">Waste</div>
+														<div class="col-xs-10"><span class="pull-right"><%= material['wasted_materials'] %></span></div>
 													</div>
 												</div>
 												
@@ -196,6 +208,15 @@
 															<span id="extra-<%= material['material']['id'] %>-damage" class="pull-right">
 																<%= material['damage_per_job'] %>
 															</span>
+														</div>
+													</div>
+												</div>
+												
+												<div class="panel-heading">
+													<div class="row">
+														<div class="col-xs-5">Unit Price</div>
+														<div class="col-xs-7">
+															<span id="extra-<%= material['material']['id'] %>-unit-price" class="pull-right"></span>
 														</div>
 													</div>
 												</div>
@@ -218,7 +239,7 @@
 								<% end %>
 								
 								<% if @extra_materials.empty? %>
-									<div class="panel-heading">No extra materials found.</div>
+									<div class="panel-heading">No components found.</div>
 								<% end %>
 							</div>
 						</div>

@@ -93,8 +93,8 @@ $ ->
 			)
 	)
 	
-#Lookup blueprints for items in the parent blueprints bill of materials
-#Yo dawg, I heard you like blueprints...
+#Materials may be components with their own blueprints.
+#Look up component blueprints
 we_must_go_deeper = () ->
 	$(".view-blueprint").each(
 		() ->
@@ -118,18 +118,19 @@ query_evecentral = () ->
 	
 	console.log "Looking up material IDs..."
 	
-	$('#raw-materials').find(".panel-heading").each(
+	$('#raw-materials').find(".raw-material").each(
     () ->
     	if $(this).attr("id")
 		    id = $(this).attr("id").match(/\d+/)
 		    evecentral_url += "&typeid=#{id}"
   )
   
-  $('#extra-materials').find(".panel-heading").each(
+  $('#extra-materials').find(".extra-material").each(
     () ->
     	if $(this).attr("id")
 		    id = $(this).attr("id").match(/\d+/)
-		    evecentral_url += "&typeid=#{id}"
+		    new_url = "&typeid=#{id}"
+		    evecentral_url += new_url if !evecentral_url.match(new_url)
   )
   
   console.log evecentral_url
