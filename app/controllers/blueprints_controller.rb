@@ -24,7 +24,11 @@ class BlueprintsController < ApplicationController
   	#Apply waste to raw materials
   	raw.map do |material|
   		material["damage_per_job"] = 1.0		#add this in case the material is a Component
-  		material["wasted_materials"] = @waste_factor / (1 + @material_efficiency)
+  		if @material_efficiency >= 0
+  			material["wasted_materials"] = (material["quantity"] * @waste_factor * 0.01 / (1 + @material_efficiency)).round
+  		else
+  			material["wasted_materials"] = (material["quantity"] * @waste_factor * 0.01 * (1 - @material_efficiency)).round
+  		end
   		material["quantity"] += material["wasted_materials"]
   	end
   	
