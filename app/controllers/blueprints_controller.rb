@@ -23,6 +23,7 @@ class BlueprintsController < ApplicationController
   	
   	#Apply waste to raw materials
   	raw.map do |material|
+  		material["damage_per_job"] = 1.0		#add this in case the material is a Component
   		material["wasted_materials"] = @waste_factor / (1 + @material_efficiency)
   		material["quantity"] += material["wasted_materials"]
   	end
@@ -31,7 +32,7 @@ class BlueprintsController < ApplicationController
   	#Merge any duplicate materials
   	all_materials = raw.concat(extra)
   	
-  	@extra_materials = all_materials.select { |m| ["17","6"].include?(m['category']['id']) }
+  	@extra_materials = all_materials.select { |m| ["17","6","23"].include?(m['category']['id']) }
   	@raw_materials = all_materials.select { |m| ["4","43"].include?(m['category']['id']) }
   end
   
