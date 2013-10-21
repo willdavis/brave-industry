@@ -32,10 +32,24 @@ class BlueprintsController < ApplicationController
   		material["quantity"] += material["wasted_materials"]
   	end
   	
+  	#waste does not apply to extra materials
+  	#but some might need to be displayed as a raw material
+  	extra.map { |material| material["wasted_materials"] = 0 }
+  	
+  	#find any duplicate materials in the extra table and add their quantities to the raw material's
+  	#delete the extra table entry afterwards
+  	raw.each do |raw_mat|
+  		union = extra.select { |extra_mat| extra_mat['material']['id'] == raw_mat['material']['id'] }
+  		union.each do |material|
+  			raw_mat['quantity'] += material['quantity']
+  			extra.delete(material)
+  		end
+  	end
+  	
   	#Merge raw and extra materials
-  	#Merge any duplicate materials
   	all_materials = raw.concat(extra)
   	
+  	#Select components based on Category IDs
   	@extra_materials = all_materials.select { |m| ["17","6","23"].include?(m['category']['id']) }
   	@raw_materials = all_materials.select { |m| ["4","43"].include?(m['category']['id']) }
   end
