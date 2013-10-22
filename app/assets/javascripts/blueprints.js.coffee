@@ -4,7 +4,11 @@ $ ->
 			min: -10
 			max: 30
 			value: 0
+			slide:
+				(event,ui) ->
+					$('#ME-slider-value').text(ui.value)
 		)
+
 		query_evecentral()
 		we_must_go_deeper()
 		
