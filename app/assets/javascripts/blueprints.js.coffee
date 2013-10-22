@@ -11,7 +11,15 @@ $ ->
 
 		query_evecentral()
 		we_must_go_deeper()
-		
+	
+	$('#reset-modifiers').click(
+		() ->
+			$('#ME-slider').slider(
+				value: 0
+			)
+			$('#ME-slider-value').text(0)
+	)
+	
 	$('.nav-skills-title').click(
 		() ->
 			#check if data is already present. If not, load it.
