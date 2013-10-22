@@ -1,8 +1,32 @@
 $ ->
 	if $('.blueprints-show').length != 0
+		me_level = $('#ME').val()
+		$('#ME-slider-value').text(me_level)
+		$("#ME-slider").slider(
+			min: -10
+			max: 30
+			value: me_level
+			slide:
+				(event,ui) ->
+					$('#ME-slider-value').text(ui.value)
+			change:
+				(event,ui) ->
+					$('#reset-modifiers').prop('disabled', false)
+					$('#update-waste').prop('disabled', false)
+					$('#ME').val(ui.value)
+		)
+
 		query_evecentral()
 		we_must_go_deeper()
-		
+	
+	$('#reset-modifiers').click(
+		() ->
+			$('#ME-slider').slider(value: 0)
+			$('#ME-slider-value').text(0)
+			$('#reset-modifiers').prop('disabled', true)
+			$('#update-waste').prop('disabled', true)
+	)
+	
 	$('.nav-skills-title').click(
 		() ->
 			#check if data is already present. If not, load it.

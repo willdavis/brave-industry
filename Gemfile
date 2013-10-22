@@ -29,6 +29,8 @@ gem 'therubyracer', platforms: :ruby
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
+gem "jqplot-rails"
 
 # Fix for jquery bindings and turbolinks
 gem 'jquery-turbolinks'
@@ -47,8 +49,6 @@ end
 gem "figaro"
 gem "faraday"
 gem "faraday_middleware"
-
-gem "jqplot-rails"
 
 group :development do
   gem "better_errors"

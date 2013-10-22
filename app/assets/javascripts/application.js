@@ -20,5 +20,6 @@
 //= require jqplot/plugins/dateAxisRenderer
 //= require jqplot/plugins/canvasTextRenderer
 //= require jqplot/plugins/canvasAxisLabelRenderer
+//= require jquery.ui.slider
 //= require turbolinks
 //= require_tree .
