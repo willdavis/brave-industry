@@ -1,5 +1,6 @@
 $ ->
 	if $('.blueprints-show').length != 0
+		$("#ME-slider").slider()
 		query_evecentral()
 		we_must_go_deeper()
 		
