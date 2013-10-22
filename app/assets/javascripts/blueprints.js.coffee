@@ -1,6 +1,10 @@
 $ ->
 	if $('.blueprints-show').length != 0
-		$("#ME-slider").slider()
+		$("#ME-slider").slider(
+			min: -10
+			max: 30
+			value: 0
+		)
 		query_evecentral()
 		we_must_go_deeper()
 		
