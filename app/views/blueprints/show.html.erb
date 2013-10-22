@@ -203,7 +203,7 @@
 									</div>
 								</div>
 							
-								<% @extra_materials.each do |material| %>
+								<% @component_materials.each do |material| %>
 									<div id="extra-<%= material['material']['id'] %>" class="extra-material panel-heading">
 										<a class="material-toggle" data-toggle="collapse" data-parent="#extra-materials" href="#extra-<%= material['material']['id'] %>-collapse">
 											<div class="row">
@@ -273,7 +273,7 @@
 									</div>
 								<% end %>
 								
-								<% if @extra_materials.empty? %>
+								<% if @component_materials.empty? %>
 									<div class="panel-heading">No components found.</div>
 								<% end %>
 							</div>
