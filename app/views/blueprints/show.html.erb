@@ -280,6 +280,20 @@
 								
 								<% if @component_materials.empty? %>
 									<div class="panel-heading">No components found.</div>
+								<% else %>
+									<div class="panel-heading">
+										<div class="row">
+											<div class="col-xs-2">
+												<button id="build-all-toggle" class="btn btn-sm">Build All</button>
+											</div>
+											
+											<div class="col-xs-10">
+												<span class="pull-right">
+													<button type="submit" id="update-component-list" class="btn btn-primary btn-sm" disabled>Update</button>
+												</span>
+											</div>
+										</div>
+									</div>
 								<% end %>
 							</div>
 						</div>
