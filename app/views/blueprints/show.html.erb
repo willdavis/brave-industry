@@ -32,8 +32,8 @@
 								<div class="panel-heading">
 								
 									<div class="row">
-										<div class="col-xs-5">Waste Factor</div>
-										<div class="col-xs-7"><span class="pull-right item-waste-factor"><%= @blueprint['waste_factor'] %>%</span></div>
+										<div class="col-xs-5">Waste</div>
+										<div class="col-xs-7"><span class="pull-right item-waste-factor"><%= (@waste_factor * 100).round(2) %>%</span></div>
 									</div>
 								</div>
 								
