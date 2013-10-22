@@ -19,7 +19,7 @@ class BlueprintsController < ApplicationController
   	#Calculate waste for raw materials
   	#Materials Needed = Base Materials + (Base Waste)/(1 + ME)
   	@waste_factor = @blueprint["waste_factor"]
-  	@material_efficiency = 0
+  	@material_efficiency = params[:ME].nil? ? 0 : params[:ME].to_i
   	
   	#Apply waste to raw materials
   	raw.map do |material|

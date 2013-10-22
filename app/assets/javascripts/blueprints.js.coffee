@@ -1,9 +1,11 @@
 $ ->
 	if $('.blueprints-show').length != 0
+		me_level = $('#ME').val()
+		$('#ME-slider-value').text(me_level)
 		$("#ME-slider").slider(
 			min: -10
 			max: 30
-			value: 0
+			value: me_level
 			slide:
 				(event,ui) ->
 					$('#ME-slider-value').text(ui.value)
@@ -11,6 +13,7 @@ $ ->
 				(event,ui) ->
 					$('#reset-modifiers').prop('disabled', false)
 					$('#update-waste').prop('disabled', false)
+					$('#ME').val(ui.value)
 		)
 
 		query_evecentral()
