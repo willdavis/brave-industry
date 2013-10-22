@@ -7,6 +7,10 @@ $ ->
 			slide:
 				(event,ui) ->
 					$('#ME-slider-value').text(ui.value)
+			change:
+				(event,ui) ->
+					$('#reset-modifiers').prop('disabled', false)
+					$('#update-waste').prop('disabled', false)
 		)
 
 		query_evecentral()
@@ -14,10 +18,10 @@ $ ->
 	
 	$('#reset-modifiers').click(
 		() ->
-			$('#ME-slider').slider(
-				value: 0
-			)
+			$('#ME-slider').slider(value: 0)
 			$('#ME-slider-value').text(0)
+			$('#reset-modifiers').prop('disabled', true)
+			$('#update-waste').prop('disabled', true)
 	)
 	
 	$('.nav-skills-title').click(
