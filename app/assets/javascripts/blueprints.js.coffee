@@ -149,7 +149,7 @@ query_evecentral = () ->
 		    evecentral_url += "&typeid=#{id}"
   )
   
-  $('#extra-materials').find(".extra-material").each(
+  $('#component-materials').find(".component-material").each(
     () ->
     	if $(this).attr("id")
 		    id = $(this).attr("id").match(/\d+/)
@@ -173,21 +173,17 @@ query_evecentral = () ->
     				item_sell_price = min_sell
     				$(".item-sell-price").text(min_sell)
     			else
-	    			$("#raw-#{id}-unit-price").text(min_sell)
-	    			$("#extra-#{id}-unit-price").text(min_sell)
+	    			$("##{id}-unit-price").text(min_sell)
 	    			
-	    			damage = $("#extra-#{id}-damage").text()
-	    			raw_quantity = $("#raw-#{id}-quantity").text()
-	    			extra_quantity = $("#extra-#{id}-quantity").text()
+	    			if $("##{id}-damage").length
+	    				damage = $("##{id}-damage").text()
+	    			else
+	    				damage = 1
 	    			
-	    			total_price_for_raw_material = min_sell * raw_quantity
-	    			total_price_for_extra_material = min_sell * extra_quantity * damage
-	    			
-	    			total_production_cost += total_price_for_raw_material
-	    			total_production_cost += total_price_for_extra_material
-	    			
-	    			$("#raw-#{id}-total-price").text(total_price_for_raw_material.toFixed(2))
-	    			$("#extra-#{id}-total-price").text(total_price_for_extra_material.toFixed(2))
+	    			quantity = $("##{id}-quantity").text()
+	    			total_price = min_sell * quantity * damage
+	    			total_production_cost += total_price
+	    			$("##{id}-total-price").text(total_price.toFixed(2))
     	)
     	
     	console.log "Calculating profit margin..."

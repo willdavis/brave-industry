@@ -16,19 +16,22 @@ class BlueprintsController < ApplicationController
   	raw = evedata.get("/items/#{@blueprint['product_id']}/materials").body
   	extra = evedata.get("/blueprints/#{params[:id]}/requirements?activity_id=1&not_category_id=16").body
   	
+  	#Look up what the ME level should be, or set it to 0 if not present
+  	@material_efficiency = params[:ME].nil? ? 0 : params[:ME].to_i
+  	
   	#Calculate waste for raw materials
   	#Materials Needed = Base Materials + (Base Waste)/(1 + ME)
-  	@waste_factor = @blueprint["waste_factor"]
-  	@material_efficiency = params[:ME].nil? ? 0 : params[:ME].to_i
+  	base_waste = @blueprint["waste_factor"] * 0.01
+  	if @material_efficiency >= 0
+  		@waste_factor = base_waste / (1 + @material_efficiency)
+  	else
+  		@waste_factor = base_waste * (1 - @material_efficiency)
+  	end
   	
   	#Apply waste to raw materials
   	raw.map do |material|
   		material["damage_per_job"] = 1.0		#add this in case the material is a Component
-  		if @material_efficiency >= 0
-  			material["wasted_materials"] = (material["quantity"] * @waste_factor * 0.01 / (1 + @material_efficiency)).round
-  		else
-  			material["wasted_materials"] = (material["quantity"] * @waste_factor * 0.01 * (1 - @material_efficiency)).round
-  		end
+  		material["wasted_materials"] = (material["quantity"] * @waste_factor).round
   		material["quantity"] += material["wasted_materials"]
   	end
   	
@@ -50,7 +53,7 @@ class BlueprintsController < ApplicationController
   	all_materials = raw.concat(extra)
   	
   	#Select components based on Category IDs
-  	@extra_materials = all_materials.select { |m| ["17","6","23","7","18"].include?(m['category']['id']) }
+  	@component_materials = all_materials.select { |m| ["17","6","23","7","18"].include?(m['category']['id']) }
   	@raw_materials = all_materials.select { |m| ["4","43"].include?(m['category']['id']) }
   end
   
