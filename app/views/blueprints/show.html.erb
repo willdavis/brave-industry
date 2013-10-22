@@ -198,16 +198,21 @@
 								<!-- Heading for material list -->
 								<div class="panel-heading">
 									<div class="row">
-										<div class="col-xs-10">Name</div>
+										<div class="col-xs-2">Build</div>
+										<div class="col-xs-8">Name</div>
 										<div class="col-xs-2"><span class="pull-right">Quantity</span></div>
 									</div>
 								</div>
 							
 								<% @component_materials.each do |material| %>
 									<div id="<%= material['material']['id'] %>" class="component-material panel-heading">
-										<a class="material-toggle" data-toggle="collapse" data-parent="#component-materials" href="#<%= material['material']['id'] %>-collapse">
-											<div class="row">
-												<div class="col-xs-10">
+										<div class="row">
+											<div class="col-xs-2">
+												<button id="<%= material['material']['id'] %>-build-toggle" class="btn btn-sm">+</button>
+											</div>
+											
+											<a class="material-toggle" data-toggle="collapse" data-parent="#component-materials" href="#<%= material['material']['id'] %>-collapse">
+												<div class="col-xs-8">
 													<table>
 														<tr>
 															<td><img src="<%= material['images']['small'] %>" /></td>
@@ -216,8 +221,8 @@
 													</table>
 												</div>
 												<div class="col-xs-2"><span id="<%= material['material']['id'] %>-quantity" class="pull-right"><%= material['quantity'] %></span></div>
-											</div>
-										</a>
+											</a>
+										</div>
 									</div>
 									<div id="<%= material['material']['id'] %>-collapse" class="panel-collapse collapse">
 										<div class="panel-body">
