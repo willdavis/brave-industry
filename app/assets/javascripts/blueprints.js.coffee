@@ -149,12 +149,23 @@ query_evecentral = () ->
 		    evecentral_url += "&typeid=#{id}"
   )
   
-  $('#component-materials').find(".component-material").each(
+  $('#component-materials').find(".component").each(
     () ->
     	if $(this).attr("id")
 		    id = $(this).attr("id").match(/\d+/)
 		    new_url = "&typeid=#{id}"
 		    evecentral_url += new_url if !evecentral_url.match(new_url)
+		    
+		    $("##{id}-build-toggle").bind(
+		    	"click"
+		    	() ->
+		    		if $("##{id}").hasClass("build-component")
+		    			$("##{id}").removeClass("build-component")
+		    			$(this).text("+")
+		    		else
+		    			$("##{id}").addClass("build-component")
+		    			$(this).text("-")
+		    )
   )
   
   console.log evecentral_url

@@ -205,10 +205,10 @@
 								</div>
 							
 								<% @component_materials.each do |material| %>
-									<div id="<%= material['material']['id'] %>" class="component-material panel-heading">
+									<div id="<%= material['material']['id'] %>" class="component panel-heading">
 										<div class="row">
 											<div class="col-xs-2">
-												<button id="<%= material['material']['id'] %>-build-toggle" class="btn btn-sm">+</button>
+												<button id="<%= material['material']['id'] %>-build-toggle" class="build-toggle btn btn-sm">+</button>
 											</div>
 											
 											<a class="material-toggle" data-toggle="collapse" data-parent="#component-materials" href="#<%= material['material']['id'] %>-collapse">
@@ -283,14 +283,8 @@
 								<% else %>
 									<div class="panel-heading">
 										<div class="row">
-											<div class="col-xs-2">
+											<div class="col-xs-12">
 												<button id="build-all-toggle" class="btn btn-sm">Build All</button>
-											</div>
-											
-											<div class="col-xs-10">
-												<span class="pull-right">
-													<button type="submit" id="update-component-list" class="btn btn-primary btn-sm" disabled>Update</button>
-												</span>
 											</div>
 										</div>
 									</div>
