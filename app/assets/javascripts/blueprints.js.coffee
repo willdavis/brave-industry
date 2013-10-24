@@ -5,7 +5,8 @@ $ ->
 		query_evecentral()
 		we_must_go_deeper()
 	
-	$('#reset-modifiers').click(
+	$('#reset-modifiers').bind(
+		"click"
 		() ->
 			$('#ME-slider').slider(value: 0)
 			$('#ME-slider-value').text(0)
