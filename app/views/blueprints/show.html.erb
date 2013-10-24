@@ -89,6 +89,7 @@
 										<span class="pull-right">
 											<%= form_tag("/blueprints/#{@blueprint['id']}", :method => :get) do %>
 												<%= hidden_field_tag(:ME, @material_efficiency) %>
+												<%= hidden_field_tag(:include_components, @component_type_ids) %>
 												<div class="form-group">
 													<button id="reset-modifiers" class="btn btn-default" disabled>Reset</button>
 													<button type="submit" id="update-waste" class="btn btn-primary" disabled>Update</button>

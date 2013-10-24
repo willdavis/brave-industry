@@ -1,21 +1,7 @@
 $ ->
 	if $('.blueprints-show').length != 0
-		me_level = $('#ME').val()
-		$('#ME-slider-value').text(me_level)
-		$("#ME-slider").slider(
-			min: -10
-			max: 30
-			value: me_level
-			slide:
-				(event,ui) ->
-					$('#ME-slider-value').text(ui.value)
-			change:
-				(event,ui) ->
-					$('#reset-modifiers').prop('disabled', false)
-					$('#update-waste').prop('disabled', false)
-					$('#ME').val(ui.value)
-		)
-
+		console.log $("#include_components").val()
+		setup_ME_slider_bar()
 		query_evecentral()
 		we_must_go_deeper()
 	
@@ -116,6 +102,24 @@ $ ->
 					)
 			)
 	)
+
+#Configure the material effeciency slider bar	
+setup_ME_slider_bar = () ->
+	me_level = $('#ME').val()
+	$('#ME-slider-value').text(me_level)
+	$("#ME-slider").slider(
+		min: -10
+		max: 30
+		value: me_level
+		slide:
+			(event,ui) ->
+				$('#ME-slider-value').text(ui.value)
+		change:
+			(event,ui) ->
+				$('#reset-modifiers').prop('disabled', false)
+				$('#update-waste').prop('disabled', false)
+				$('#ME').val(ui.value)
+	)
 	
 #Materials may be components with their own blueprints.
 #Look up component blueprints
@@ -164,6 +168,12 @@ query_evecentral = () ->
 		    			$(this).text("+")
 		    		else
 		    			$("##{id}").addClass("build-component")
+		    			temp = $("#include_components").val()
+		    			if temp
+		    				temp += ",#{id}"
+		    			else
+		    				temp = id
+		    			$("#include_components").val(temp)
 		    			$(this).text("-")
 		    )
   )
