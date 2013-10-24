@@ -18,6 +18,7 @@ class BlueprintsController < ApplicationController
   	
   	#Look up what the ME level should be, or set it to 0 if not present
   	@material_efficiency = params[:ME].nil? ? 0 : params[:ME].to_i
+  	@component_type_ids = params[:include_components]
   	
   	#Calculate waste for raw materials
   	#Materials Needed = Base Materials + (Base Waste)/(1 + ME)
@@ -42,8 +43,8 @@ class BlueprintsController < ApplicationController
   	#find any duplicate materials in the extra table and add their quantities to the raw material's
   	#delete the extra table entry afterwards
   	raw.each do |raw_mat|
-  		union = extra.select { |extra_mat| extra_mat['material']['id'] == raw_mat['material']['id'] }
-  		union.each do |material|
+  		intersection = extra.select { |extra_mat| extra_mat['material']['id'] == raw_mat['material']['id'] }
+  		intersection.each do |material|
   			raw_mat['quantity'] += material['quantity']
   			extra.delete(material)
   		end

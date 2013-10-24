@@ -1,30 +1,17 @@
 $ ->
 	if $('.blueprints-show').length != 0
-		me_level = $('#ME').val()
-		$('#ME-slider-value').text(me_level)
-		$("#ME-slider").slider(
-			min: -10
-			max: 30
-			value: me_level
-			slide:
-				(event,ui) ->
-					$('#ME-slider-value').text(ui.value)
-			change:
-				(event,ui) ->
-					$('#reset-modifiers').prop('disabled', false)
-					$('#update-waste').prop('disabled', false)
-					$('#ME').val(ui.value)
-		)
-
+		update_components_css()
+		setup_ME_slider_bar()
 		query_evecentral()
 		we_must_go_deeper()
 	
-	$('#reset-modifiers').click(
+	$('#reset-modifiers').bind(
+		"click"
 		() ->
 			$('#ME-slider').slider(value: 0)
 			$('#ME-slider-value').text(0)
 			$('#reset-modifiers').prop('disabled', true)
-			$('#update-waste').prop('disabled', true)
+			$('#update-blueprint').prop('disabled', true)
 	)
 	
 	$('.nav-skills-title').click(
@@ -117,6 +104,52 @@ $ ->
 			)
 	)
 	
+update_hidden_component_list = (action, id) ->
+	existing_components = $("#include_components").val().split(",")
+	
+	#If params[:include_components] is null then existing_components array will = [""]
+	#Splice out the empty string if its detected
+	if existing_components[0] == ""
+		existing_components.splice(0,1)
+	
+	#Check if the given ID is present in the existing components list
+	index = $.inArray(id.toString(), existing_components)
+	if action == "remove"	and index >= 0
+		existing_components.splice(index,1)
+		console.log existing_components
+		$("#include_components").val(existing_components)
+		$('#update-blueprint').prop('disabled', false)
+	
+	if action == "add" and index < 0
+		existing_components.push(id.toString())
+		console.log existing_components
+		$("#include_components").val(existing_components)
+		$('#update-blueprint').prop('disabled', false)
+	
+update_components_css = () ->
+	ids = $("#include_components").val().split(",")
+	for id in ids
+		$("##{id}").addClass("build-component")
+		$("##{id}-build-toggle").text("-")
+
+#Configure the material effeciency slider bar	
+setup_ME_slider_bar = () ->
+	me_level = $('#ME').val()
+	$('#ME-slider-value').text(me_level)
+	$("#ME-slider").slider(
+		min: -10
+		max: 30
+		value: me_level
+		slide:
+			(event,ui) ->
+				$('#ME-slider-value').text(ui.value)
+		change:
+			(event,ui) ->
+				$('#reset-modifiers').prop('disabled', false)
+				$('#update-blueprint').prop('disabled', false)
+				$('#ME').val(ui.value)
+	)
+	
 #Materials may be components with their own blueprints.
 #Look up component blueprints
 we_must_go_deeper = () ->
@@ -149,12 +182,25 @@ query_evecentral = () ->
 		    evecentral_url += "&typeid=#{id}"
   )
   
-  $('#component-materials').find(".component-material").each(
+  $('#component-materials').find(".component").each(
     () ->
     	if $(this).attr("id")
 		    id = $(this).attr("id").match(/\d+/)
 		    new_url = "&typeid=#{id}"
 		    evecentral_url += new_url if !evecentral_url.match(new_url)
+		    
+		    $("##{id}-build-toggle").bind(
+		    	"click"
+		    	() ->
+		    		if $("##{id}").hasClass("build-component")
+		    			$("##{id}").removeClass("build-component")
+		    			update_hidden_component_list("remove",id)
+		    			$(this).text("+")
+		    		else
+		    			$("##{id}").addClass("build-component")
+		    			update_hidden_component_list("add",id)
+		    			$(this).text("-")
+		    )
   )
   
   console.log evecentral_url
