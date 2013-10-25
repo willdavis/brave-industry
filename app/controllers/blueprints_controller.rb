@@ -16,9 +16,29 @@ class BlueprintsController < ApplicationController
   	raw = evedata.get("/items/#{@blueprint['product_id']}/materials").body
   	extra = evedata.get("/blueprints/#{params[:id]}/requirements?activity_id=1&not_category_id=16").body
   	
-  	#Look up what the ME level should be, or set it to 0 if not present
+  	#Lookup the params and save them for later
   	@material_efficiency = params[:ME].nil? ? 0 : params[:ME].to_i
   	@component_type_ids = params[:include_components]
+  	
+  	#Check if an extra materials needs to be recycled
+  	#If so, look up it's raw materials
+  	@recycled_components = extra.select { |material| material["recycle"] == true }
+  	@recycled_raw_materials = @recycled_components.map do |component|
+  		evedata.get("/items/#{component['material']['id']}/materials").body
+  	end
+  	
+  	#Subtract each recycled raw material from the blueprints raw materials
+  	#If the new total is <= zero, delete the material from the list
+  	if !@recycled_raw_materials.empty?
+			@recycled_raw_materials.first.each do |material|
+				raw.map do |raw_material|
+					if raw_material['material']['id'] == material['material']['id']
+						raw_material['quantity'] -= material['quantity']
+						raw.delete(raw_material) if raw_material['quantity'] <= 0
+					end
+				end
+			end
+		end
   	
   	#Calculate waste for raw materials
   	#Materials Needed = Base Materials + (Base Waste)/(1 + ME)
