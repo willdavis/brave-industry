@@ -75,7 +75,7 @@ class BlueprintsController < ApplicationController
   	
   	#Select components based on Category IDs
   	@component_materials = all_materials.select { |m| ["17","6","23","7","18"].include?(m['category']['id']) }
-  	@raw_materials = all_materials.select { |m| ["4","43"].include?(m['category']['id']) }
+  	@raw_materials = all_materials.select { |m| ["4","43","25"].include?(m['category']['id']) }
   end
   
   private
