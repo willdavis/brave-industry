@@ -12,6 +12,10 @@ group :production do
   gem 'rails_12factor'	#needed for heroku.  Serves assets in production
 end
 
+# Memcachier
+gem 'memcachier'
+gem 'dalli'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
 
