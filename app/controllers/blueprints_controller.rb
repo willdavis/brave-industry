@@ -3,7 +3,7 @@ class BlueprintsController < ApplicationController
   	if params[:like_name]
   		@blueprints = evedata.get("/blueprints?like_name=#{params[:like_name]}").body
   	else
-  		@blueprints = evedata.get("/blueprints").body
+  		@blueprints = Rails.cache.fetch('Blueprints.all') { evedata.get("/blueprints").body }
   	end
   end
 

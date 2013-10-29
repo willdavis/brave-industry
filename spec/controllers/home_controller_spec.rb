@@ -8,5 +8,12 @@ describe HomeController do
       response.should be_success
     end
   end
+  
+  describe "GET 'health_check'" do
+    it "returns http success" do
+      get 'health_check'
+      response.should be_success
+    end
+  end
 
 end
