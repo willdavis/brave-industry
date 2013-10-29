@@ -9,12 +9,12 @@ class BlueprintsController < ApplicationController
 
   def show
   	#Get blueprint and item data
-  	@blueprint = evedata.get("/blueprints/#{params[:id]}").body.first
+  	@blueprint = Rails.cache.fetch("Blueprint.#{params[:id]}") { evedata.get("/blueprints/#{params[:id]}").body.first }
   	@product = evedata.get("/items/#{@blueprint['product_id']}").body.first
   	
   	#Get both raw and extra materials
-  	raw = evedata.get("/items/#{@blueprint['product_id']}/materials").body
-  	extra = evedata.get("/blueprints/#{params[:id]}/requirements?activity_id=1&not_category_id=16").body
+  	raw = Rails.cache.fetch("Blueprint.#{params[:id]}.raw_materials") { evedata.get("/items/#{@blueprint['product_id']}/materials").body }
+  	extra = Rails.cache.fetch("Blueprint.#{params[:id]}.extra_materials") { evedata.get("/blueprints/#{params[:id]}/requirements?activity_id=1&not_category_id=16").body }
   	
   	#Lookup the params and save them for later
   	@material_efficiency = params[:ME].nil? ? 0 : params[:ME].to_i
