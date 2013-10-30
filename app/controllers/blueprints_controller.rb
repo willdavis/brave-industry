@@ -8,37 +8,42 @@ class BlueprintsController < ApplicationController
   end
 
   def show
-  	#Get blueprint and item data
-  	@blueprint = Rails.cache.fetch("Blueprint.#{params[:id]}") { evedata.get("/blueprints/#{params[:id]}").body.first }
-  	@product = evedata.get("/items/#{@blueprint['product_id']}").body.first
+  	@blueprint = Rails.cache.fetch("Blueprint.#{params[:id]}") {
   	
-  	#Get both raw and extra materials
-  	raw = Rails.cache.fetch("Blueprint.#{params[:id]}.raw_materials") { evedata.get("/items/#{@blueprint['product_id']}/materials").body }
-  	extra = Rails.cache.fetch("Blueprint.#{params[:id]}.extra_materials") { evedata.get("/blueprints/#{params[:id]}/requirements?activity_id=1&not_category_id=16").body }
-  	
-  	#Lookup the params and save them for later
-  	@material_efficiency = params[:ME].nil? ? 0 : params[:ME].to_i
-  	@component_type_ids = params[:include_components]
-  	
-  	#Check if an extra materials needs to be recycled
-  	#If so, look up it's raw materials
-  	@recycled_components = extra.select { |material| material["recycle"] == true }
-  	@recycled_raw_materials = @recycled_components.map do |component|
-  		evedata.get("/items/#{component['material']['id']}/materials").body
-  	end
-  	
-  	#Subtract each recycled raw material from the blueprints raw materials
-  	#If the new total is <= zero, delete the material from the list
-  	if !@recycled_raw_materials.empty?
-			@recycled_raw_materials.first.each do |material|
-				raw.map do |raw_material|
+  		#Lookup the essential blueprint data and required materials
+  		blueprint = evedata.get("/blueprints/#{params[:id]}").body.first
+  		blueprint["product"] = evedata.get("/items/#{blueprint['product_id']}").body.first
+  		blueprint["raw_materials"] = evedata.get("/items/#{blueprint['product_id']}/materials").body
+  		blueprint["extra_materials"] = evedata.get("/blueprints/#{params[:id]}/requirements?activity_id=1&not_category_id=16").body
+			
+			#Check if there is a recycled component
+			#If so, lookup it's raw materials and store them
+  		blueprint["recycled_components"] = blueprint["extra_materials"].select { |material| material["recycle"] == true }
+			blueprint["recycled_materials"] = []
+			blueprint["recycled_components"].each do |component|
+				blueprint["recycled_materials"].concat(evedata.get("/items/#{component['material']['id']}/materials").body)
+			end
+			
+			#Recycling!!!
+			#Subtract all recycled materials from the blueprints raw materials
+			#Remove the raw material if it's less than or equal to zero
+			blueprint["recycled_materials"].each do |material|
+				blueprint["raw_materials"].map do |raw_material|
 					if raw_material['material']['id'] == material['material']['id']
 						raw_material['quantity'] -= material['quantity']
-						raw.delete(raw_material) if raw_material['quantity'] <= 0
+						blueprint["raw_materials"].delete(raw_material) if raw_material['quantity'] <= 0
 					end
 				end
 			end
-		end
+  		
+  		blueprint
+  	}
+  	
+  	puts @blueprint
+  	  	
+  	#Lookup the params and save them for later
+  	@material_efficiency = params[:ME].nil? ? 0 : params[:ME].to_i
+  	@component_type_ids = params[:include_components]
   	
   	#Calculate waste for raw materials
   	#Materials Needed = Base Materials + (Base Waste)/(1 + ME)
@@ -50,28 +55,28 @@ class BlueprintsController < ApplicationController
   	end
   	
   	#Apply waste to raw materials
-  	raw.map do |material|
+  	@blueprint["raw_materials"].map do |material|
   		material["damage_per_job"] = 1.0		#add this in case the material is a Component
   		material["wasted_materials"] = (material["quantity"] * @waste_factor).round
   		material["quantity"] += material["wasted_materials"]
   	end
   	
-  	#waste does not apply to extra materials
-  	#but some might need to be displayed as a raw material
-  	extra.map { |material| material["wasted_materials"] = 0 }
-  	
-  	#find any duplicate materials in the extra table and add their quantities to the raw material's
-  	#delete the extra table entry afterwards
-  	raw.each do |raw_mat|
-  		intersection = extra.select { |extra_mat| extra_mat['material']['id'] == raw_mat['material']['id'] }
-  		intersection.each do |material|
-  			raw_mat['quantity'] += material['quantity']
-  			extra.delete(material)
-  		end
-  	end
+  	#waste does not apply to extra materials but some might be base materials
+		@blueprint["extra_materials"].map { |material| material["wasted_materials"] = 0 }
+		
+		#Some blueprints have duplicate materials in the raw and extra tables
+		#Find these duplicates and merge them into the raw materials array
+		#NOTE!!!  This MUST BE DONE AFTER calculating raw material waste!!!
+		@blueprint["raw_materials"].each do |raw_mat|
+			intersection = @blueprint["extra_materials"].select { |extra_mat| extra_mat['material']['id'] == raw_mat['material']['id'] }
+			intersection.each do |material|
+				raw_mat['quantity'] += material['quantity']
+				@blueprint["extra_materials"].delete(material)
+			end
+		end
   	
   	#Merge raw and extra materials
-  	all_materials = raw.concat(extra)
+  	all_materials = @blueprint["raw_materials"].concat(@blueprint["extra_materials"])
   	
   	#Select components based on Category IDs
   	@component_materials = all_materials.select { |m| ["17","6","23","7","18"].include?(m['category']['id']) }
