@@ -1,6 +1,5 @@
 class HomeController < ApplicationController
   def index
-  	@blueprint_groups = Rails.cache.fetch('BlueprintGroups.all') { evedata.get("/categories/9/groups?limit=150").body }
   end
   
   def health_check
