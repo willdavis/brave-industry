@@ -1,5 +1,37 @@
-<div class="page-header">
-  <h1>Price Check <small>the results are in!</small></h1>
-</div>
+<div id="price-check_results">
+	<div class="page-header">
+		<h1>Price Check <small>the results are in!</small></h1>
+	</div>
 
-<p>You submitted: <%= @results %></p>
+	<h3><%= @fitting[:name] %></h3>
+
+	<p>Total Price: <span id="total-price">loading...</span></p>
+
+	<table class="table table-condensed">
+		<tr>
+			<th>Type ID</th>
+			<th>Name</th>
+			<th>Slot</th>
+			<th>Quantity</th>
+			<th>Price</th>
+		</tr>
+	
+		<tr class="item item-<%= @ship[:id] %>">
+			<td class="item-id"><%= @ship[:id] %></td>
+			<td class="item-name"><%= @ship[:value] %></td>
+			<td class="item-slot">ship</td>
+			<td class="item-qty">1</td>
+			<td class="item-price">loading...</td>
+		</tr>
+	
+		<% @hardware.each do |item| %>
+		<tr class="item item-<%= item[:id] %>">
+			<td class="item-id"><%= item[:id] %></td>
+			<td class="item-name"><%= item[:type] %></td>
+			<td class="item-slot"><%= item[:slot] %></td>
+			<td class="item-qty"><%= item[:qty] || 1 %></td>
+			<td class="item-price">loading...</td>
+		</tr>
+		<% end %>
+	</table>
+</div>

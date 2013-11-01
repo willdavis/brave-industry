@@ -12,6 +12,8 @@ group :production do
   gem 'rails_12factor'	#needed for heroku.  Serves assets in production
 end
 
+gem 'nokogiri'
+
 # Memcachier
 gem 'memcachier'
 gem 'dalli'
