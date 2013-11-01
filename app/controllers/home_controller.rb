@@ -6,6 +6,10 @@ class HomeController < ApplicationController
   	render :nothing => true, :status => 200
   end
   
+  def price_check
+  
+  end
+  
   private
   def evedata
   	Faraday.new(:url => "http://evedata.herokuapp.com") do |conn|

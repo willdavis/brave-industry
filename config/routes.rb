@@ -2,8 +2,11 @@ BraveIndustry::Application.routes.draw do
   resources :blueprints, :only => [:index, :show] do
   	get 'browse', on: :collection
   end
-  get "home/index"
-  get "home/health_check"
+  
+  resources :home, :only => [:index] do
+  	get "health_check", on: :collection
+  	get "price_check", on: :collection
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
