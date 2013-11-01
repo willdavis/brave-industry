@@ -2,4 +2,34 @@
   <h1>Price Check <small>the results are in!</small></h1>
 </div>
 
-<p>You submitted: <%= @results %></p>
+<h3><%= @fitting[:name] %></h3>
+
+<p>Total Price: 0.0</p>
+
+<table class="table table-condensed">
+	<tr>
+		<th>Type ID</th>
+		<th>Name</th>
+		<th>Slot</th>
+		<th>Quantity</th>
+		<th>Price</th>
+	</tr>
+	
+	<tr>
+		<td><%= @ship[:id] %></td>
+		<td><%= @ship[:value] %></td>
+		<td>ship</td>
+		<td>1</td>
+		<td>loading...</td>
+	</tr>
+	
+	<% @hardware.each do |item| %>
+	<tr>
+		<td><%= item[:id] %></td>
+		<td><%= item[:type] %></td>
+		<td><%= item[:slot] %></td>
+		<td><%= item[:qty] || 1 %></td>
+		<td>loading...</td>
+	</tr>
+	<% end %>
+</table>

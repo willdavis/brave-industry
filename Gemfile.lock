@@ -211,6 +211,7 @@ DEPENDENCIES
   launchy
   memcachier
   newrelic_rpm
+  nokogiri
   pg
   quiet_assets
   rails (= 4.0.0)
