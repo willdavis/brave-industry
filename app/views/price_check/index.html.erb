@@ -1,0 +1,14 @@
+<p>This section is still being developed and will be finalized shortly.</p>
+
+<div class="page-header">
+  <h1>Price Check <small>on space aisle four</small></h1>
+</div>
+
+<%= form_tag("/price_check/results", method: "post", :class => "form") do %>
+	<div class="form-group">
+    <label for="input_file">File input</label>
+    <input type="file" name="input_file" id="input_file">
+    <p class="help-block">Select an exported EFT file</p>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+<% end %>
