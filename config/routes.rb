@@ -5,7 +5,10 @@ BraveIndustry::Application.routes.draw do
   
   resources :home, :only => [:index] do
   	get "health_check", on: :collection
-  	get "price_check", on: :collection
+  end
+  
+  resources :price_check, :only => [:index] do
+  	post "results", on: :collection
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
