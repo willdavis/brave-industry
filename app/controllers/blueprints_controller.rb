@@ -6,9 +6,13 @@ class BlueprintsController < ApplicationController
   		@blueprints = Rails.cache.fetch('Blueprints.all') { evedata.get("/blueprints").body }
   	end
   end
+  
+  def browse
+  	@blueprint_groups = Rails.cache.fetch('Blueprints.Groups.all') { evedata.get("/categories/9/groups?limit=150").body }
+  end
 
   def show
-  	@blueprint = Rails.cache.fetch("Blueprint.#{params[:id]}") {
+  	@blueprint = Rails.cache.fetch("Blueprints.#{params[:id]}") {
   	
   		#Lookup the essential blueprint data and required materials
   		blueprint = evedata.get("/blueprints/#{params[:id]}").body.first
@@ -27,11 +31,11 @@ class BlueprintsController < ApplicationController
 			#Recycling!!!
 			#Subtract all recycled materials from the blueprints raw materials
 			#Remove the raw material if it's less than or equal to zero
-			blueprint["recycled_materials"].each do |material|
-				blueprint["raw_materials"].map do |raw_material|
-					if raw_material['material']['id'] == material['material']['id']
-						raw_material['quantity'] -= material['quantity']
-						blueprint["raw_materials"].delete(raw_material) if raw_material['quantity'] <= 0
+			blueprint["recycled_materials"].each do |recycled|
+				blueprint["raw_materials"].map do |raw|
+					if raw['material']['id'] == recycled['material']['id']
+						raw['quantity'] -= recycled['quantity']
+						blueprint["raw_materials"].delete(raw) if raw['quantity'] <= 0
 					end
 				end
 			end
@@ -39,9 +43,6 @@ class BlueprintsController < ApplicationController
   		blueprint
   	}
   	
-  	puts @blueprint
-  	  	
-  	#Lookup the params and save them for later
   	@material_efficiency = params[:ME].nil? ? 0 : params[:ME].to_i
   	@component_type_ids = params[:include_components]
   	
