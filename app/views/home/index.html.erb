@@ -1,35 +1,36 @@
 <div id="main-index">
 	<div class="jumbotron">
 		<div class="container">
-			<h1>No More Spreadsheets!</h1>
-			<p>
-				View production costs, profit margins, and market history at a glance.
-			</p>
+			<h1 class="text-center">Production made simple</h1>
+			<h3 class="text-center">Let the internet do the math for you!</h3>
 		</div>
+	</div>
+	
+	<div class="row">
+		<h2 class="text-center text-primary">Brave Industry can answer the big questions in production</h2>
 	</div>
 
 	<div class="row">
 		<div class="col-md-4 col-xs-12">
 			<h2>Is it profitable?</h2>
 			<p>With the cutthroat competition in EVE, it can be difficult to figure out what's actually profitable to build.  And even then, is it maintainable?  Is the ISK/hour you're generating even worth while?<p>
-			<p>Brave Industry makes it easy to find blueprints. Even if you don't know what to build!  You can easily search or browse for blueprints to help narrow down your choices.  Additionally, Brave Industry provides up to date price information and market history. Hot off the EveCentral API!</p>
-			<p><%= link_to "Would you like to know more?", blueprint_path(2489), :class => "btn btn-default", :role => "button" %></p>
+			<p>Brave Industry makes it easy to find blueprints. Even if you don't know what you're looking for!  You can easily search or browse blueprints to help narrow down your choices.</p>
+			<p><%= link_to "Example Blueprint", blueprint_path(2489), :class => "btn btn-default", :role => "button" %></p>
 		</div>
 		
 		<div class="col-md-4 col-xs-12">
 			<h2>Can I afford it?</h2>
-			<p>Have you build your dream ship but are now wondering how much it would actually cost?  Perhaps you need to fill a bulk order and need to know how much it would cost to buy 30 Talwars and their modules?  Or maybe your just sick of doing the math yourself!</p>
+			<p>Have you built your dream ship but are now wondering how much it would actually cost?  Perhaps you need to fill a bulk order of 30 Talwars plus their modules?  Or maybe your just sick of doing the math yourself!</p>
 			
-			<p>Brave Industry makes it easy to import ship fittings and see a price breakdown for their components.</p>
-			<p><%= link_to "Would you like to know more?", price_check_index_path, :class => "btn btn-default", :role => "button" %></p>
+			<p>Brave Industry makes it easy to import ship fittings and see price breakdowns for their components.</p>
+			<p><%= link_to "Price Check", price_check_index_path, :class => "btn btn-default", :role => "button" %></p>
 		</div>
 		
 		<div class="col-md-4 col-xs-12">
-			<h2>Can I build it?</h2>
-			<p>EVE Online can be extremely complicated.  Nothing's more frusterating than finding out at the last minute that you cannot build that shiny ship.  In fact, it will take you three weeks!  Don't let this happen to you!</p>
+			<h2>Is it maintainable?</h2>
+			<p>EVE Online can be extremely complicated and the market can swing on a moments notice.  Leaving a less savy industrialist in the cold.  Don't let this happen to you!</p>
 			
-			<p>Using the static database for EVE Online, Brave Industry knows all and can show you exactly what skills are required.  Before you spend a mountain of ISK on contruction components!
-			<p><%= link_to "Would you like to know more?", blueprint_path(2489), :class => "btn btn-default", :role => "button" %></p>
+			<p>Check if an item's price is stable with Brave Industries market history graphs!</p>
 		</div>
 	</div> <!-- end row -->
 </div>
