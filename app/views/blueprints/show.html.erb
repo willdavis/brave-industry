@@ -313,13 +313,46 @@
 								</div>
 							
 								<% @blueprint["invention"].each do |item| %>
-									<div class="panel-heading">
+									<div id="<%= item['material']['id'] %>" class="panel-heading">
 										<div class="row">
+											<a class="material-toggle" data-toggle="collapse" data-parent="#invention-materials" href="#<%= item['material']['id'] %>-collapse">
 											<div class="col-xs-2"><img src="<%= item['images']['small'] %>" /></div>
 											<div class="col-xs-8"><%= item["material"]["name"] %></div>
 											<div class="col-xs-2"><span class="pull-right"><%= item["quantity"] %></span></div>
+											</a>
 										</div>
 									</div>
+									<div id="<%= item['material']['id'] %>-collapse" class="panel-collapse collapse">
+										<div class="panel-body">
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<div class="row">
+														<div class="col-xs-2">Type</div>
+														<div class="col-xs-10"><span class="pull-right"><%= item['group']['name'] %></span></div>
+													</div>
+												</div>
+												
+												<div class="panel-heading">
+													<div class="row">
+														<div class="col-xs-5">Unit Price</div>
+														<div class="col-xs-7">
+															<span id="<%= item['material']['id'] %>-unit-price" class="pull-right">0.0</span>
+														</div>
+													</div>
+												</div>
+												
+												<div class="panel-heading">
+													<div class="row">
+														<div class="col-xs-5">Total Price</div>
+														<div class="col-xs-7">
+															<span id="<%= item['material']['id'] %>-total-price" class="pull-right">0.0</span>
+														</div>
+													</div>
+												</div>
+												
+											</div> <!-- end panel -->
+										</div>
+									</div> <!-- end panel collapse -->
 								<% end %>
 					
 								<% if @blueprint["invention"].empty? %>
