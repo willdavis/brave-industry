@@ -347,11 +347,35 @@
 		
 		<div class="tab-pane" id="skills">
 			<div class="row">
-				<div class="col-xs-12 col-md-4">
+				<div class="col-xs-12 col-md-6">
 					<div class="panel panel-primary">
-						<div class="panel-heading">Manufacturing Skills</div>
+						<div class="panel-heading">Required Skills</div>
 						<div class="panel-body">
-							<table class="blueprint-skills"></table>
+							<div class="panel panel-default">
+							
+								<!-- Heading for skills list -->
+								<div class="panel-heading">
+									<div class="row">
+										<div class="col-xs-10">Name</div>
+										<div class="col-xs-2"><span class="pull-right">Level</span></div>
+									</div>
+								</div>
+							
+								<% @blueprint["skills"].each do |item| %>
+									<div class="panel-heading">
+										<div class="row">
+											<div class="col-xs-2"><img src="<%= item['images']['small'] %>" /></div>
+											<div class="col-xs-8"><%= item["material"]["name"] %></div>
+											<div class="col-xs-2"><span class="pull-right"><%= item["quantity"] %></span></div>
+										</div>
+									</div>
+								<% end %>
+					
+								<% if @blueprint["skills"].empty? %>
+									<div class="panel-heading">No skills found.</div>
+								<% end %>
+							
+							</div>
 						</div>
 					</div>
 				</div>

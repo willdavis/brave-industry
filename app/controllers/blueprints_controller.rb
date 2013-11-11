@@ -22,7 +22,9 @@ class BlueprintsController < ApplicationController
   		blueprint["extra_materials"] = blueprint["requirements"].select do |item|
   			item["activity"]["id"] == 1 and item["category"]["id"] != 16
   		end
-  		blueprint["skills"] = blueprint["requirements"].select { |item| item["category"]["id"] == 16 }
+  		blueprint["skills"] = blueprint["requirements"].select do |item|
+  			item["activity"]["id"] == 1 and item["category"]["id"].to_i == 16
+  		end
   		blueprint["invention"] = blueprint["requirements"].select { |item| item["activity"]["id"] == 8 }
 			
 			#Check if there is a recycled component
@@ -47,6 +49,8 @@ class BlueprintsController < ApplicationController
   		
   		blueprint
   	}
+  	
+  	puts @blueprint["skills"]
   	
   	@material_efficiency = params[:ME].nil? ? 0 : params[:ME].to_i
   	@component_type_ids = params[:include_components]
