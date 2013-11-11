@@ -206,6 +206,13 @@ query_evecentral = () ->
 		    )
   )
   
+  $('#invention-materials').find(".invention-material").each(
+    () ->
+    	if $(this).attr("id")
+		    id = $(this).attr("id").match(/\d+/)
+		    evecentral_url += "&typeid=#{id}"
+  )
+  
   console.log evecentral_url
   
   #lookup current market data

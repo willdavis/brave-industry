@@ -313,12 +313,12 @@
 								</div>
 							
 								<% @blueprint["invention"].each do |item| %>
-									<div id="<%= item['material']['id'] %>" class="panel-heading">
+									<div id="<%= item['material']['id'] %>" class="invention-material panel-heading">
 										<div class="row">
 											<a class="material-toggle" data-toggle="collapse" data-parent="#invention-materials" href="#<%= item['material']['id'] %>-collapse">
 											<div class="col-xs-2"><img src="<%= item['images']['small'] %>" /></div>
 											<div class="col-xs-8"><%= item["material"]["name"] %></div>
-											<div class="col-xs-2"><span class="pull-right"><%= item["quantity"] %></span></div>
+											<div class="col-xs-2"><span id="<%= item['material']['id'] %>-quantity" class="pull-right"><%= item["quantity"] %></span></div>
 											</a>
 										</div>
 									</div>
