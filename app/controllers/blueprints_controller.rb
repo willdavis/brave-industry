@@ -17,8 +17,13 @@ class BlueprintsController < ApplicationController
   		#Lookup the essential blueprint data and required materials
   		blueprint = evedata.get("/blueprints/#{params[:id]}").body.first
   		blueprint["product"] = evedata.get("/items/#{blueprint['product_id']}").body.first
+  		blueprint["requirements"] = evedata.get("/blueprints/#{params[:id]}/requirements").body
   		blueprint["raw_materials"] = evedata.get("/items/#{blueprint['product_id']}/materials").body
-  		blueprint["extra_materials"] = evedata.get("/blueprints/#{params[:id]}/requirements?activity_id=1&not_category_id=16").body
+  		blueprint["extra_materials"] = blueprint["requirements"].select do |item|
+  			item["activity"]["id"] == 1 and item["category"]["id"] != 16
+  		end
+  		blueprint["skills"] = blueprint["requirements"].select { |item| item["category"]["id"] == 16 }
+  		blueprint["invention"] = blueprint["requirements"].select { |item| item["activity"]["id"] == 8 }
 			
 			#Check if there is a recycled component
 			#If so, lookup it's raw materials and store them
