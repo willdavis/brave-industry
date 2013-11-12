@@ -25,14 +25,18 @@ class BlueprintsController < ApplicationController
   		blueprint["skills"] = blueprint["requirements"].select do |item|
   			item["activity"]["id"] == 1 and item["category"]["id"].to_i == 16
   		end
-  		blueprint["invention"] = blueprint["requirements"].select { |item| item["activity"]["id"] == 8 }
+			blueprint["invention"] = []
 			
 			#Check if there is a recycled component
 			#If so, lookup it's raw materials and store them
   		blueprint["recycled_components"] = blueprint["extra_materials"].select { |material| material["recycle"] == true }
 			blueprint["recycled_materials"] = []
 			blueprint["recycled_components"].each do |component|
-				blueprint["recycled_materials"].concat(evedata.get("/items/#{component['material']['id']}/materials").body)
+				component_id = component['material']['id']
+				component_blueprint_id = evedata.get("/blueprints?product_id=#{component_id}").body.first["id"]
+				
+				blueprint["invention"] = evedata.get("/blueprints/#{component_blueprint_id}/requirements?activity_id=8").body
+				blueprint["recycled_materials"].concat(evedata.get("/items/#{component_id}/materials").body)
 			end
 			
 			#Recycling!!!
@@ -49,8 +53,6 @@ class BlueprintsController < ApplicationController
   		
   		blueprint
   	}
-  	
-  	puts @blueprint["skills"]
   	
   	@material_efficiency = params[:ME].nil? ? 0 : params[:ME].to_i
   	@component_type_ids = params[:include_components]
