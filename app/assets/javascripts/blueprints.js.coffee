@@ -5,15 +5,6 @@ $ ->
 		query_evecentral()
 		we_must_go_deeper()
 	
-	$('#reset-modifiers').bind(
-		"click"
-		() ->
-			$('#ME-slider').slider(value: 0)
-			$('#ME-slider-value').text(0)
-			$('#reset-modifiers').prop('disabled', true)
-			$('#update-blueprint').prop('disabled', true)
-	)
-	
 	$('.blueprint-toggle').bind(
 		"click"
 		() ->
@@ -121,13 +112,11 @@ update_hidden_component_list = (action, id) ->
 		existing_components.splice(index,1)
 		console.log existing_components
 		$("#include_components").val(existing_components)
-		$('#update-blueprint').prop('disabled', false)
 	
 	if action == "add" and index < 0
 		existing_components.push(id.toString())
 		console.log existing_components
 		$("#include_components").val(existing_components)
-		$('#update-blueprint').prop('disabled', false)
 	
 update_components_css = () ->
 	ids = $("#include_components").val().split(",")
@@ -148,8 +137,6 @@ setup_ME_slider_bar = () ->
 				$('#ME-slider-value').text(ui.value)
 		change:
 			(event,ui) ->
-				$('#reset-modifiers').prop('disabled', false)
-				$('#update-blueprint').prop('disabled', false)
 				$('#ME').val(ui.value)
 	)
 	
