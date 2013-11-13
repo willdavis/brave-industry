@@ -2,7 +2,10 @@ $ ->
 	if $('.blueprints-show').length != 0
 		update_components_css()
 		setup_ME_slider_bar()
-		query_evecentral()
+		
+		lookup_production_costs()
+		lookup_invention_costs()
+		
 		we_must_go_deeper()
 	
 	$('.blueprint-toggle').bind(
@@ -156,7 +159,49 @@ we_must_go_deeper = () ->
 			)
 	)
 
-query_evecentral = () ->
+lookup_invention_costs = () ->
+	total_production_cost = 0
+	evecentral_url = "http://api.eve-central.com/api/marketstat?regionlimit=10000002"
+	
+	$('#invention-materials').find(".invention-material").each(
+    () ->
+    	if $(this).attr("id")
+		    id = $(this).attr("id").match(/\d+/)
+		    evecentral_url += "&typeid=#{id}"
+  )
+  
+  console.log evecentral_url
+  
+  #lookup current market data
+  $.get(
+    evecentral_url
+    (data) ->
+    	$(data).find("type").each(
+    		() ->
+    			console.log this
+    			id = $(this).attr("id")
+    			min_sell = $(this).find("sell").find("min").text()
+    			
+    			$("##{id}-unit-price").text(min_sell)
+    				
+    			if $("##{id}-damage").length
+    				damage = $("##{id}-damage").text()
+    			else
+    				damage = 1
+    			
+    			quantity = $("##{id}-quantity").text()
+    			total_price = min_sell * quantity * damage
+    			total_production_cost += total_price
+    			$("##{id}-total-price").text(total_price.toFixed(2))
+    	)
+    	
+    	console.log "Calculating invention costs..."
+    	console.log "Reticulating splines..."
+    	
+    	$('.item-invention-cost').text(total_production_cost.toFixed(2))
+  )
+
+lookup_production_costs = () ->
 	total_production_cost = 0
 	item_sell_price = 0
 	units_produced = $('.item-units-produced').text()
@@ -193,13 +238,6 @@ query_evecentral = () ->
 		    )
   )
   
-  $('#invention-materials').find(".invention-material").each(
-    () ->
-    	if $(this).attr("id")
-		    id = $(this).attr("id").match(/\d+/)
-		    #evecentral_url += "&typeid=#{id}"
-  )
-  
   console.log evecentral_url
   
   #lookup current market data
@@ -229,7 +267,7 @@ query_evecentral = () ->
 	    			$("##{id}-total-price").text(total_price.toFixed(2))
     	)
     	
-    	console.log "Calculating profit margin..."
+    	console.log "Calculating production costs..."
     	console.log "Reticulating splines..."
     	
     	profit_margin = (item_sell_price * units_produced) - total_production_cost
