@@ -199,6 +199,12 @@ lookup_invention_costs = () ->
     	console.log "Reticulating splines..."
     	
     	$('.item-invention-cost').text(total_production_cost.toFixed(2))
+    	if $('#invented').attr("checked") == "checked"
+    		console.log "Applying invention costs..."
+    		price = $('.item-profit-margin').text()
+    		price -= total_production_cost
+    		$('.item-profit-margin').text(price.toFixed(2))
+    		update_profit_css(price)
   )
 
 lookup_production_costs = () ->
@@ -275,8 +281,11 @@ lookup_production_costs = () ->
     	$('.item-total-cost').text(total_production_cost.toFixed(2))
     	$('.item-profit-margin').text(profit_margin.toFixed(2))
     	
-    	if profit_margin >= 0
-    		$('.item-profit-margin').css("color", "green")
-    	else
-    		$('.item-profit-margin').css("color", "red")
+    	update_profit_css(profit_margin)
   )
+
+update_profit_css = (profit) ->
+	if profit >= 0
+		$('.item-profit-margin').css("color", "green")
+	else
+		$('.item-profit-margin').css("color", "red")
