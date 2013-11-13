@@ -197,7 +197,7 @@ query_evecentral = () ->
     () ->
     	if $(this).attr("id")
 		    id = $(this).attr("id").match(/\d+/)
-		    evecentral_url += "&typeid=#{id}"
+		    #evecentral_url += "&typeid=#{id}"
   )
   
   console.log evecentral_url

@@ -56,6 +56,7 @@ class BlueprintsController < ApplicationController
   	
   	@material_efficiency = params[:ME].nil? ? 0 : params[:ME].to_i
   	@component_type_ids = params[:include_components]
+  	@invented = params[:invented]
   	
   	#Calculate waste for raw materials
   	#Materials Needed = Base Materials + (Base Waste)/(1 + ME)

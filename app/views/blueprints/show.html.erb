@@ -54,8 +54,15 @@
 								
 								<div class="panel-heading">
 									<div class="row">
-										<div class="col-xs-5">Production Cost</div>
+										<div class="col-xs-5">Production Costs</div>
 										<div class="col-xs-7"><span class="pull-right item-total-cost">0.00</span></div>
+									</div>
+								</div>
+								
+								<div class="panel-heading">
+									<div class="row">
+										<div class="col-xs-5">Invention Costs</div>
+										<div class="col-xs-7"><span class="pull-right item-invention-cost">0.00</span></div>
 									</div>
 								</div>
 								
@@ -87,15 +94,20 @@
 							<div class="panel-heading">
 								<div class="row">
 									<div class="col-xs-12">
-										<span class="pull-right">
-											<%= form_tag("/blueprints/#{@blueprint['id']}", :method => :get) do %>
+										<%= form_tag("/blueprints/#{@blueprint['id']}", :method => :get) do %>
+											<div class="checkbox">
+												<label>
+													<%= check_box_tag(:invented, "yes", @invented ? true : false) %> Include Invention Costs
+												</label>
+											</div>
+											<span class="pull-right">
 												<%= hidden_field_tag(:ME, @material_efficiency) %>
 												<%= hidden_field_tag(:include_components, @component_type_ids) %>
 												<div class="form-group">
 													<button type="submit" id="update-blueprint" class="btn btn-primary">Update</button>
 												</div>
-											<% end %>
-										</span>
+											</span>
+										<% end %>
 									</div>
 								</div>
 							</div>
