@@ -15,6 +15,7 @@
 			<ul class="nav nav-tabs">
 				<li class="nav-home-title active"><a href="#home" data-toggle="tab">Home</a></li>
 				<li class="nav-materials-title"><a href="#materials" data-toggle="tab">Bill of Materials</a></li>
+				<li class="nav-invention-title"><a href="#invention" data-toggle="tab">Invention</a></li>
 				<li class="nav-history-title"><a href="#history" data-toggle="tab">Market History</a></li>
 				<li class="nav-skills-title"><a href="#skills" data-toggle="tab">Required Skills</a></li>
 			</ul>
@@ -53,8 +54,15 @@
 								
 								<div class="panel-heading">
 									<div class="row">
-										<div class="col-xs-5">Production Cost</div>
+										<div class="col-xs-5">Production Costs</div>
 										<div class="col-xs-7"><span class="pull-right item-total-cost">0.00</span></div>
+									</div>
+								</div>
+								
+								<div class="panel-heading">
+									<div class="row">
+										<div class="col-xs-5">Invention Costs</div>
+										<div class="col-xs-7"><span class="pull-right item-invention-cost">0.00</span></div>
 									</div>
 								</div>
 								
@@ -86,16 +94,20 @@
 							<div class="panel-heading">
 								<div class="row">
 									<div class="col-xs-12">
-										<span class="pull-right">
-											<%= form_tag("/blueprints/#{@blueprint['id']}", :method => :get) do %>
+										<%= form_tag("/blueprints/#{@blueprint['id']}", :method => :get) do %>
+											<div class="checkbox">
+												<label>
+													<%= check_box_tag(:invented, "yes", @invented ? true : false) %> Include Invention Costs
+												</label>
+											</div>
+											<span class="pull-right">
 												<%= hidden_field_tag(:ME, @material_efficiency) %>
 												<%= hidden_field_tag(:include_components, @component_type_ids) %>
 												<div class="form-group">
-													<button id="reset-modifiers" class="btn btn-default" disabled>Reset</button>
-													<button type="submit" id="update-blueprint" class="btn btn-primary" disabled>Update</button>
+													<button type="submit" id="update-blueprint" class="btn btn-primary">Update</button>
 												</div>
-											<% end %>
-										</span>
+											</span>
+										<% end %>
 									</div>
 								</div>
 							</div>
@@ -294,6 +306,77 @@
 			</div>
 		</div> <!-- end materials -->
 		
+		<div class="tab-pane" id="invention">
+			<div class="row">
+				<div class="col-xs-12 col-md-6">
+					<div class="panel panel-primary">
+						<div class="panel-heading">Required Materials</div>
+						<div class="panel-body">
+						
+							<div id="invention-materials" class="panel panel-default">
+							
+								<!-- Heading for invention list -->
+								<div class="panel-heading">
+									<div class="row">
+										<div class="col-xs-10">Name</div>
+										<div class="col-xs-2"><span class="pull-right">Quantity</span></div>
+									</div>
+								</div>
+							
+								<% @blueprint["invention"].each do |item| %>
+									<div id="<%= item['material']['id'] %>" class="invention-material panel-heading">
+										<div class="row">
+											<a class="material-toggle" data-toggle="collapse" data-parent="#invention-materials" href="#<%= item['material']['id'] %>-collapse">
+											<div class="col-xs-2"><img src="<%= item['images']['small'] %>" /></div>
+											<div class="col-xs-8"><%= item["material"]["name"] %></div>
+											<div class="col-xs-2"><span id="<%= item['material']['id'] %>-quantity" class="pull-right"><%= item["quantity"] %></span></div>
+											</a>
+										</div>
+									</div>
+									<div id="<%= item['material']['id'] %>-collapse" class="panel-collapse collapse">
+										<div class="panel-body">
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<div class="row">
+														<div class="col-xs-2">Type</div>
+														<div class="col-xs-10"><span class="pull-right"><%= item['group']['name'] %></span></div>
+													</div>
+												</div>
+												
+												<div class="panel-heading">
+													<div class="row">
+														<div class="col-xs-5">Unit Price</div>
+														<div class="col-xs-7">
+															<span id="<%= item['material']['id'] %>-unit-price" class="pull-right">0.0</span>
+														</div>
+													</div>
+												</div>
+												
+												<div class="panel-heading">
+													<div class="row">
+														<div class="col-xs-5">Total Price</div>
+														<div class="col-xs-7">
+															<span id="<%= item['material']['id'] %>-total-price" class="pull-right">0.0</span>
+														</div>
+													</div>
+												</div>
+												
+											</div> <!-- end panel -->
+										</div>
+									</div> <!-- end panel collapse -->
+								<% end %>
+					
+								<% if @blueprint["invention"].empty? %>
+									<div class="panel-heading">No invention materials found.</div>
+								<% end %>
+							
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div> <!-- end invention -->
+		
 		<div class="tab-pane" id="history">
 			<div class="row">
 				<div class="col-xs-12 col-md-6">
@@ -308,11 +391,35 @@
 		
 		<div class="tab-pane" id="skills">
 			<div class="row">
-				<div class="col-xs-12 col-md-4">
+				<div class="col-xs-12 col-md-6">
 					<div class="panel panel-primary">
-						<div class="panel-heading">Manufacturing Skills</div>
+						<div class="panel-heading">Required Skills</div>
 						<div class="panel-body">
-							<table class="blueprint-skills"></table>
+							<div class="panel panel-default">
+							
+								<!-- Heading for skills list -->
+								<div class="panel-heading">
+									<div class="row">
+										<div class="col-xs-10">Name</div>
+										<div class="col-xs-2"><span class="pull-right">Level</span></div>
+									</div>
+								</div>
+							
+								<% @blueprint["skills"].each do |item| %>
+									<div class="panel-heading">
+										<div class="row">
+											<div class="col-xs-2"><img src="<%= item['images']['small'] %>" /></div>
+											<div class="col-xs-8"><%= item["material"]["name"] %></div>
+											<div class="col-xs-2"><span class="pull-right"><%= item["quantity"] %></span></div>
+										</div>
+									</div>
+								<% end %>
+					
+								<% if @blueprint["skills"].empty? %>
+									<div class="panel-heading">No skills found.</div>
+								<% end %>
+							
+							</div>
 						</div>
 					</div>
 				</div>

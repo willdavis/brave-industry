@@ -2,17 +2,11 @@ $ ->
 	if $('.blueprints-show').length != 0
 		update_components_css()
 		setup_ME_slider_bar()
-		query_evecentral()
+		
+		lookup_production_costs()
+		lookup_invention_costs()
+		
 		we_must_go_deeper()
-	
-	$('#reset-modifiers').bind(
-		"click"
-		() ->
-			$('#ME-slider').slider(value: 0)
-			$('#ME-slider-value').text(0)
-			$('#reset-modifiers').prop('disabled', true)
-			$('#update-blueprint').prop('disabled', true)
-	)
 	
 	$('.blueprint-toggle').bind(
 		"click"
@@ -34,28 +28,6 @@ $ ->
 						console.log "recieved data from evedata...\ncreating HTML..."
 						for blueprint in data
 							panel.children("##{group_id}-collapse").children(".panel-body").append("<table class='blueprint'><tr><td width='32' height='32' class='blueprint-image'><img src='#{blueprint['images']['small']}' /></td><td class='blueprint-name'><a href='#{blueprint['id']}'>#{blueprint['name']}</a></td></table>")
-				)
-	)
-	
-	$('.nav-skills-title').bind(
-		"click"
-		() ->
-			#check if data is already present. If not, load it.
-			if $('.blueprint-skills').children().length == 0
-				blueprint_id = $('.blueprints-show').attr("id")
-				evedata_skills_url = "http://evedata.herokuapp.com/blueprints/#{blueprint_id}/requirements?activity_id=1&category_id=16"
-			
-				$.getJSON(
-					evedata_skills_url
-					(data) ->
-						for skill in data
-							$('.blueprint-skills').append("
-								<tr class='skill'>
-									<td class='skill-image'><img src='#{skill['images']['small']}' /></td>
-									<td class='skill-name'>#{skill['material']['name']}</td>
-									<td class='skill-level'>#{skill['quantity']}</td>
-								</tr>
-							")
 				)
 	)
 	
@@ -143,13 +115,11 @@ update_hidden_component_list = (action, id) ->
 		existing_components.splice(index,1)
 		console.log existing_components
 		$("#include_components").val(existing_components)
-		$('#update-blueprint').prop('disabled', false)
 	
 	if action == "add" and index < 0
 		existing_components.push(id.toString())
 		console.log existing_components
 		$("#include_components").val(existing_components)
-		$('#update-blueprint').prop('disabled', false)
 	
 update_components_css = () ->
 	ids = $("#include_components").val().split(",")
@@ -170,8 +140,6 @@ setup_ME_slider_bar = () ->
 				$('#ME-slider-value').text(ui.value)
 		change:
 			(event,ui) ->
-				$('#reset-modifiers').prop('disabled', false)
-				$('#update-blueprint').prop('disabled', false)
 				$('#ME').val(ui.value)
 	)
 	
@@ -191,7 +159,55 @@ we_must_go_deeper = () ->
 			)
 	)
 
-query_evecentral = () ->
+lookup_invention_costs = () ->
+	total_production_cost = 0
+	evecentral_url = "http://api.eve-central.com/api/marketstat?regionlimit=10000002"
+	
+	$('#invention-materials').find(".invention-material").each(
+    () ->
+    	if $(this).attr("id")
+		    id = $(this).attr("id").match(/\d+/)
+		    evecentral_url += "&typeid=#{id}"
+  )
+  
+  console.log evecentral_url
+  
+  #lookup current market data
+  $.get(
+    evecentral_url
+    (data) ->
+    	$(data).find("type").each(
+    		() ->
+    			console.log this
+    			id = $(this).attr("id")
+    			min_sell = $(this).find("sell").find("min").text()
+    			
+    			$("##{id}-unit-price").text(min_sell)
+    				
+    			if $("##{id}-damage").length
+    				damage = $("##{id}-damage").text()
+    			else
+    				damage = 1
+    			
+    			quantity = $("##{id}-quantity").text()
+    			total_price = min_sell * quantity * damage
+    			total_production_cost += total_price
+    			$("##{id}-total-price").text(total_price.toFixed(2))
+    	)
+    	
+    	console.log "Calculating invention costs..."
+    	console.log "Reticulating splines..."
+    	
+    	$('.item-invention-cost').text(total_production_cost.toFixed(2))
+    	if $('#invented').attr("checked") == "checked"
+    		console.log "Applying invention costs..."
+    		price = $('.item-profit-margin').text()
+    		price -= total_production_cost
+    		$('.item-profit-margin').text(price.toFixed(2))
+    		update_profit_css(price)
+  )
+
+lookup_production_costs = () ->
 	total_production_cost = 0
 	item_sell_price = 0
 	units_produced = $('.item-units-produced').text()
@@ -257,7 +273,7 @@ query_evecentral = () ->
 	    			$("##{id}-total-price").text(total_price.toFixed(2))
     	)
     	
-    	console.log "Calculating profit margin..."
+    	console.log "Calculating production costs..."
     	console.log "Reticulating splines..."
     	
     	profit_margin = (item_sell_price * units_produced) - total_production_cost
@@ -265,8 +281,11 @@ query_evecentral = () ->
     	$('.item-total-cost').text(total_production_cost.toFixed(2))
     	$('.item-profit-margin').text(profit_margin.toFixed(2))
     	
-    	if profit_margin >= 0
-    		$('.item-profit-margin').css("color", "green")
-    	else
-    		$('.item-profit-margin').css("color", "red")
+    	update_profit_css(profit_margin)
   )
+
+update_profit_css = (profit) ->
+	if profit >= 0
+		$('.item-profit-margin').css("color", "green")
+	else
+		$('.item-profit-margin').css("color", "red")

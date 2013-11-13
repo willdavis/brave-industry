@@ -17,15 +17,26 @@ class BlueprintsController < ApplicationController
   		#Lookup the essential blueprint data and required materials
   		blueprint = evedata.get("/blueprints/#{params[:id]}").body.first
   		blueprint["product"] = evedata.get("/items/#{blueprint['product_id']}").body.first
+  		blueprint["requirements"] = evedata.get("/blueprints/#{params[:id]}/requirements").body
   		blueprint["raw_materials"] = evedata.get("/items/#{blueprint['product_id']}/materials").body
-  		blueprint["extra_materials"] = evedata.get("/blueprints/#{params[:id]}/requirements?activity_id=1&not_category_id=16").body
+  		blueprint["extra_materials"] = blueprint["requirements"].select do |item|
+  			item["activity"]["id"] == 1 and item["category"]["id"] != 16
+  		end
+  		blueprint["skills"] = blueprint["requirements"].select do |item|
+  			item["activity"]["id"] == 1 and item["category"]["id"].to_i == 16
+  		end
+			blueprint["invention"] = []
 			
 			#Check if there is a recycled component
 			#If so, lookup it's raw materials and store them
   		blueprint["recycled_components"] = blueprint["extra_materials"].select { |material| material["recycle"] == true }
 			blueprint["recycled_materials"] = []
 			blueprint["recycled_components"].each do |component|
-				blueprint["recycled_materials"].concat(evedata.get("/items/#{component['material']['id']}/materials").body)
+				component_id = component['material']['id']
+				component_blueprint_id = evedata.get("/blueprints?product_id=#{component_id}").body.first["id"]
+				
+				blueprint["invention"] = evedata.get("/blueprints/#{component_blueprint_id}/requirements?activity_id=8").body
+				blueprint["recycled_materials"].concat(evedata.get("/items/#{component_id}/materials").body)
 			end
 			
 			#Recycling!!!
@@ -45,6 +56,7 @@ class BlueprintsController < ApplicationController
   	
   	@material_efficiency = params[:ME].nil? ? 0 : params[:ME].to_i
   	@component_type_ids = params[:include_components]
+  	@invented = params[:invented]
   	
   	#Calculate waste for raw materials
   	#Materials Needed = Base Materials + (Base Waste)/(1 + ME)
