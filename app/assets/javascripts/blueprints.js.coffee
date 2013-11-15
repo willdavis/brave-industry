@@ -1,6 +1,5 @@
 $ ->
 	if $('.blueprints-show').length != 0
-		update_components_css()
 		setup_ME_slider_bar()
 		
 		lookup_production_costs()
@@ -100,32 +99,6 @@ $ ->
 					)
 			)
 	)
-	
-update_hidden_component_list = (action, id) ->
-	existing_components = $("#include_components").val().split(",")
-	
-	#If params[:include_components] is null then existing_components array will = [""]
-	#Splice out the empty string if its detected
-	if existing_components[0] == ""
-		existing_components.splice(0,1)
-	
-	#Check if the given ID is present in the existing components list
-	index = $.inArray(id.toString(), existing_components)
-	if action == "remove"	and index >= 0
-		existing_components.splice(index,1)
-		console.log existing_components
-		$("#include_components").val(existing_components)
-	
-	if action == "add" and index < 0
-		existing_components.push(id.toString())
-		console.log existing_components
-		$("#include_components").val(existing_components)
-	
-update_components_css = () ->
-	ids = $("#include_components").val().split(",")
-	for id in ids
-		$("##{id}").addClass("build-component")
-		$("##{id}-build-toggle").text("-")
 
 #Configure the material effeciency slider bar	
 setup_ME_slider_bar = () ->

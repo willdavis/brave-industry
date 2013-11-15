@@ -102,7 +102,6 @@
 											</div>
 											<span class="pull-right">
 												<%= hidden_field_tag(:ME, @material_efficiency) %>
-												<%= hidden_field_tag(:include_components, @component_type_ids) %>
 												<div class="form-group">
 													<button type="submit" id="update-blueprint" class="btn btn-primary">Update</button>
 												</div>
@@ -138,13 +137,11 @@
 									<div id="<%= material['material']['id'] %>" class="raw-material panel-heading">
 										<a class="material-toggle" data-toggle="collapse" data-parent="#raw-materials" href="#<%= material['material']['id'] %>-collapse">
 											<div class="row">
-												<div class="col-xs-10">
-													<table>
-														<tr>
-															<td><img src="<%= material['images']['small'] %>" /></td>
-															<td><%= material['material']['name'] %></td>
-														</tr>
-													</table>
+												<div class="col-xs-2">
+													<img src="<%= material['images']['small'] %>" />
+												</div>
+												<div class="col-xs-8">
+													<%= material['material']['name'] %>
 												</div>
 												<div class="col-xs-2"><span id="<%= material['material']['id'] %>-quantity" class="pull-right"><%= material['quantity'] %></span></div>
 											</div>
@@ -208,27 +205,20 @@
 								<!-- Heading for material list -->
 								<div class="panel-heading">
 									<div class="row">
-										<div class="col-xs-2">Build</div>
-										<div class="col-xs-8">Name</div>
+										<div class="col-xs-10">Name</div>
 										<div class="col-xs-2"><span class="pull-right">Quantity</span></div>
 									</div>
 								</div>
 							
 								<% @component_materials.each do |material| %>
 									<div id="<%= material['material']['id'] %>" class="component panel-heading">
-										<div class="row">
-											<div class="col-xs-2">
-												<button id="<%= material['material']['id'] %>-build-toggle" class="build-toggle btn btn-sm">+</button>
-											</div>
-											
+										<div class="row">											
 											<a class="material-toggle" data-toggle="collapse" data-parent="#component-materials" href="#<%= material['material']['id'] %>-collapse">
+												<div class="col-xs-2">
+													<img src="<%= material['images']['small'] %>" />
+												</div>
 												<div class="col-xs-8">
-													<table>
-														<tr>
-															<td><img src="<%= material['images']['small'] %>" /></td>
-															<td><%= material['material']['name'] %></td>
-														</tr>
-													</table>
+													<%= material['material']['name'] %>
 												</div>
 												<div class="col-xs-2"><span id="<%= material['material']['id'] %>-quantity" class="pull-right"><%= material['quantity'] %></span></div>
 											</a>
@@ -289,15 +279,6 @@
 								
 								<% if @component_materials.empty? %>
 									<div class="panel-heading">No components found.</div>
-								<% else %>
-									<div class="panel-heading">
-										<div class="row">
-											<div class="col-xs-12">
-												<button id="build-all-toggle" class="btn btn-sm" disabled>Build All</button>
-												<button id="reset-all-toggle" class="btn btn-sm" disabled>Reset All</button>
-											</div>
-										</div>
-									</div>
 								<% end %>
 							</div>
 						</div>
