@@ -41,14 +41,14 @@
 								<div class="panel-heading">
 									<div class="row">
 										<div class="col-xs-5">Units Produced</div>
-										<div class="col-xs-7"><span class="pull-right item-units-produced"><%= @blueprint['product']['portion_size'] %></span></div>
+										<div class="col-xs-7"><span class="pull-right item-units-produced"><%= @blueprint['product']['batch_size'] %></span></div>
 									</div>
 								</div>
 								
 								<div class="panel-heading">
 									<div class="row">
 										<div class="col-xs-5">Unit Sell Price</div>
-										<div class="col-xs-7"><span id="<%= @blueprint['product_id'] %>" class="pull-right item-sell-price">0.00</span></div>
+										<div class="col-xs-7"><span id="<%= @blueprint['product']['id'] %>" class="pull-right item-sell-price">0.00</span></div>
 									</div>
 								</div>
 								
