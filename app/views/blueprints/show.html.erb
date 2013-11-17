@@ -59,12 +59,14 @@
 									</div>
 								</div>
 								
-								<div class="panel-heading">
-									<div class="row">
-										<div class="col-xs-5">Invention Costs</div>
-										<div class="col-xs-7"><span class="pull-right item-invention-cost">0.00</span></div>
+								<% if @invented %>
+									<div class="panel-heading">
+										<div class="row">
+											<div class="col-xs-5">Invention Costs</div>
+											<div class="col-xs-7"><span class="pull-right item-invention-cost">0.00</span></div>
+										</div>
 									</div>
-								</div>
+								<% end %>
 								
 								<div class="panel-heading">
 									<div class="row">
