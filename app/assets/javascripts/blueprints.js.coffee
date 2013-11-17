@@ -136,7 +136,14 @@ lookup_invention_costs = () ->
 	total_production_cost = 0
 	evecentral_url = "http://api.eve-central.com/api/marketstat?regionlimit=10000002"
 	
-	$('#invention-materials').find(".invention-material").each(
+	$('#invention-materials-datacores').find(".invention-material").each(
+    () ->
+    	if $(this).attr("id")
+		    id = $(this).attr("id").match(/\d+/)
+		    evecentral_url += "&typeid=#{id}"
+  )
+  
+  $('#invention-materials-interface').find(".invention-material").each(
     () ->
     	if $(this).attr("id")
 		    id = $(this).attr("id").match(/\d+/)
@@ -164,9 +171,16 @@ lookup_invention_costs = () ->
     			
     			quantity = $("##{id}-quantity").text()
     			total_price = min_sell * quantity * damage
-    			total_production_cost += total_price
     			$("##{id}-total-price").text(total_price.toFixed(2))
+    			
+    			#check if the price should be ignored
+    			if !$("##{id}").hasClass("exclude-price")
+    				total_production_cost += total_price
     	)
+    	
+    	#Temporary fix for Invention max run count
+    	#will be dynamic eventually
+    	total_production_cost = total_production_cost / 5
     	
     	console.log "Calculating invention costs..."
     	console.log "Reticulating splines..."
