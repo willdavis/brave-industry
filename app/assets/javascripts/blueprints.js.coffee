@@ -178,6 +178,10 @@ lookup_invention_costs = () ->
     				total_production_cost += total_price
     	)
     	
+    	#Temporary fix for Invention max run count
+    	#will be dynamic eventually
+    	total_production_cost = total_production_cost / 5
+    	
     	console.log "Calculating invention costs..."
     	console.log "Reticulating splines..."
     	
