@@ -307,7 +307,7 @@
 								<% if @blueprint["invention"]["datacores"].empty? %>
 									<div class="panel-heading">No datacores found.</div>
 								<% else %>
-									<%= render partial: "invention_component", collection: @blueprint["invention"]["datacores"], as: :item %>
+									<%= render partial: "invention_component", collection: @blueprint["invention"]["datacores"], as: :item, locals: {exclude_price: false} %>
 								<% end %>
 							
 							</div>
@@ -333,7 +333,7 @@
 								<% if @blueprint["invention"]["data_interface"].nil? %>
 									<div class="panel-heading">No data interface found.</div>
 								<% else %>
-									<%= render partial: "invention_component", locals: {item: @blueprint["invention"]["data_interface"]} %>
+									<%= render partial: "invention_component", locals: {item: @blueprint["invention"]["data_interface"], exclude_price: true} %>
 								<% end %>
 							
 							</div>

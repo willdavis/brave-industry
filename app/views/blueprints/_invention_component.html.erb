@@ -1,4 +1,4 @@
-<div id="<%= item['material']['id'] %>" class="invention-material panel-heading">
+<div id="<%= item['material']['id'] %>" class="invention-material <%= 'exclude-price' if exclude_price %> panel-heading">
 	<div class="row">
 		<a class="material-toggle" data-toggle="collapse" data-parent="#invention-materials" href="#<%= item['material']['id'] %>-collapse">
 		<div class="col-xs-2"><img src="<%= item['images']['small'] %>" /></div>
