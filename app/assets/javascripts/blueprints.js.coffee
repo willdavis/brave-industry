@@ -136,7 +136,14 @@ lookup_invention_costs = () ->
 	total_production_cost = 0
 	evecentral_url = "http://api.eve-central.com/api/marketstat?regionlimit=10000002"
 	
-	$('#invention-materials').find(".invention-material").each(
+	$('#invention-materials-datacores').find(".invention-material").each(
+    () ->
+    	if $(this).attr("id")
+		    id = $(this).attr("id").match(/\d+/)
+		    evecentral_url += "&typeid=#{id}"
+  )
+  
+  $('#invention-materials-interface').find(".invention-material").each(
     () ->
     	if $(this).attr("id")
 		    id = $(this).attr("id").match(/\d+/)

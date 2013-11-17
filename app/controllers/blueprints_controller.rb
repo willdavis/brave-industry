@@ -24,7 +24,11 @@ class BlueprintsController < ApplicationController
   		blueprint["skills"] = blueprint["requirements"].select do |item|
   			item["activity"]["id"] == 1 and item["category"]["id"].to_i == 16
   		end
-			blueprint["invention"] = []
+  		
+  		#Setup basic invention variables.  These will only be relavent for Tech2 blueprints
+			blueprint["invention"] = {}
+			blueprint["invention"]["datacores"] = []
+			blueprint["invention"]["data_interface"] = nil
 			
 			#Check if there is a recycled component
 			#If so, lookup it's raw materials and store them
@@ -33,8 +37,13 @@ class BlueprintsController < ApplicationController
 			blueprint["recycled_components"].each do |component|
 				component_id = component['material']['id']
 				component_blueprint_id = evedata.get("/blueprints?product_id=#{component_id}").body.first["id"]
+				invention_components = evedata.get("/blueprints/#{component_blueprint_id}/requirements?activity_id=8").body
 				
-				blueprint["invention"] = evedata.get("/blueprints/#{component_blueprint_id}/requirements?activity_id=8").body
+				#Only Tech2 blueprints have recycled components.
+				#Therefore, it also has invention components.
+				blueprint["invention"]["datacores"] = invention_components.select{ |item| item["group"]["name"] == "Datacores" }
+				blueprint["invention"]["data_interface"] = invention_components.select{ |item| item["group"]["name"] == "Data Interfaces" }.first
+				
 				blueprint["recycled_materials"].concat(evedata.get("/items/#{component_id}/materials").body)
 			end
 			
