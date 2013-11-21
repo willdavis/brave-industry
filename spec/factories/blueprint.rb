@@ -4,5 +4,6 @@ FactoryGirl.define do
   factory :blueprint do
     id 12345
     invented 1
+    material_efficiency 0
   end
 end

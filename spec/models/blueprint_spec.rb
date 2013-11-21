@@ -16,7 +16,12 @@ describe Blueprint do
   		@blueprint.invented.should be_a(Integer)
   	end
   	
-  	it "contain a modifier for Material Efficiency"
+  	it "contain a modifier for Material Efficiency" do
+  		@blueprint.material_efficiency.should be_a(Integer)
+  		@blueprint.material_efficiency = nil
+  		@blueprint.material_efficiency.should be_nil
+  	end
+  	
   	it "contain a modifier for Production Efficiency"
   end
   
