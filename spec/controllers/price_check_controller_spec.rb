@@ -10,10 +10,7 @@ describe PriceCheckController do
   end
 	
   describe "POST 'results'" do
-    it "returns http success" do
-      get 'results'
-      response.should be_success
-    end
+    it "returns http success"
   end
 
 end
