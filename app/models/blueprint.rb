@@ -18,4 +18,7 @@ class Blueprint
     end
   end
   
+  def product
+  	@product ||= Hash.new
+  end
 end

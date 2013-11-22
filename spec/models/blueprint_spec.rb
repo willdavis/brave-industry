@@ -25,6 +25,23 @@ describe Blueprint do
   	it "contain a modifier for Production Efficiency"
   end
   
+  context "product" do
+  	it "has an id" do
+  		@blueprint.product[:id].should_not be_nil
+  		@blueprint.product[:id].should be_a(Integer)
+  	end
+  	
+  	it "has a name" do
+  		@blueprint.product[:name].should_not be_nil
+  		@blueprint.product[:name].should be_a(String)
+  	end
+  	
+  	it "has a batch size" do
+  		@blueprint.product[:batch_size].should_not be_nil
+  		@blueprint.product[:batch_size].should be_a(Integer)
+  	end
+  end
+  
   context "invention" do
   	it "is hard!"
   	it "returns list of required datacores"
