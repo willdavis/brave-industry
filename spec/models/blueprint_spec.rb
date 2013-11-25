@@ -83,6 +83,20 @@ describe Blueprint do
   	end
   end
   
+  context "manufacturing" do
+  	it "raw materials are listed" do
+  		@blueprint.raw_materials.should_not be_nil
+  		@blueprint.raw_materials.should be_a(Array)
+  		@blueprint.raw_materials.first.should be_a(Hash)
+  	end
+  	
+  	it "components are listed" do
+  		@blueprint.components.should_not be_nil
+  		@blueprint.components.should be_a(Array)
+  		@blueprint.components.first.should be_a(Hash)
+  	end
+  end
+  
   context "invention" do
   	it "is hard!"
   	it "returns list of required datacores"

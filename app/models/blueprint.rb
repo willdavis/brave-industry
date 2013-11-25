@@ -56,6 +56,14 @@ class Blueprint
   	{ "manufacturing" => manufacturing }
   end
   
+  def raw_materials
+  	@raw_materials ||= get_materials
+  end
+  
+  def components
+  	@components ||= get_requirements.select{ |item| item["activity"]["id"] == 1 and item["category"]["id"] != 16 }
+  end
+  
   private
   
   #Methods for accessing Blueprint info on EveData

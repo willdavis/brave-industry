@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :blueprint do
-    id 12345
+    id 28666	#Vargur blueprint
     invented 1
     material_efficiency 0
   end
