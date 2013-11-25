@@ -59,6 +59,18 @@ describe Blueprint do
   	end
   end
   
+  context "images" do
+  	it "has a small URL" do
+  		@blueprint.images["small"].should_not be_nil
+  		@blueprint.images["small"].should be_a(String)
+  	end
+  	
+  	it "has a thumbnail URL" do
+  		@blueprint.images["thumb"].should_not be_nil
+  		@blueprint.images["thumb"].should be_a(String)
+  	end
+  end
+  
   context "product" do
   	it "has an id" do
   		@blueprint.product["id"].should_not be_nil

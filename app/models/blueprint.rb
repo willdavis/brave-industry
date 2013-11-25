@@ -34,6 +34,10 @@ class Blueprint
   	get_details["tech_level"]
   end
   
+  def images
+  	get_details["images"]
+  end
+  
   def group
   	id = get_details["group"]["id"].to_i
   	name = get_details["group"]["name"]
