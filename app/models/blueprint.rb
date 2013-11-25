@@ -56,16 +56,16 @@ class Blueprint
   
   #Methods for accessing Blueprint info on EveData
   def get_details
-  	evedata.get("/blueprints/#{id}").body.first
+  	@details ||= evedata.get("/blueprints/#{id}").body.first
   end
   
   def get_requirements
-  	evedata.get("/blueprints/#{id}/requirements").body
+  	@requirements ||= evedata.get("/blueprints/#{id}/requirements").body
   end
   
   def get_materials
   	blueprint_product_id = get_details["product"]["id"]
-  	evedata.get("/items/#{blueprint_product_id}/materials").body
+  	@materials ||= evedata.get("/items/#{blueprint_product_id}/materials").body
   end
   
   def evedata
