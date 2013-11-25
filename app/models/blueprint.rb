@@ -56,6 +56,13 @@ class Blueprint
   	{ "manufacturing" => manufacturing }
   end
   
+  def invention
+  	materials = get_invention_materials
+  	datacores = materials.select { |item| item["group"]["name"] == "Datacores" }
+  	data_interface = materials.select { |item| item["group"]["name"] == "Data Interfaces" }.first
+  	{ "datacores" => datacores, "data_interface" => data_interface }
+  end
+  
   def raw_materials
   	@raw_materials ||= get_materials
   end
@@ -78,6 +85,16 @@ class Blueprint
   def get_materials
   	blueprint_product_id = get_details["product"]["id"]
   	@materials ||= evedata.get("/items/#{blueprint_product_id}/materials").body
+  end
+  
+  def get_recycled_component
+  	type_id = get_requirements.select{ |item| item["recycle"] == true }.first["material"]["id"]
+  	@recycled_component ||= evedata.get("/blueprints?product_id=#{type_id}").body.first
+  end
+  
+  def get_invention_materials
+  	blueprint_id = get_recycled_component["id"]
+  	@invention_materials ||= evedata.get("/blueprints/#{blueprint_id}/requirements?activity_id=8").body
   end
   
   def evedata

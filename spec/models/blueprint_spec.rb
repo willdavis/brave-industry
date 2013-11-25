@@ -99,8 +99,17 @@ describe Blueprint do
   
   context "invention" do
   	it "is hard!"
-  	it "returns list of required datacores"
-  	it "returns the required data interface"
+  	it "returns list of required datacores" do
+  		@blueprint.invention["datacores"].should_not be_nil
+  		@blueprint.invention["datacores"].should be_a(Array)
+  		@blueprint.invention["datacores"].first.should be_a(Hash)
+  	end
+  	
+  	it "returns the required data interface" do
+  		@blueprint.invention["data_interface"].should_not be_nil
+  		@blueprint.invention["data_interface"].should be_a(Hash)
+  	end
+  	
   	it "returns list of viable data decryptors"
   	it "returns list of viable modules"
   end
