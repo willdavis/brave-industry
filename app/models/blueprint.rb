@@ -21,4 +21,23 @@ class Blueprint
   def product
   	@product ||= Hash.new
   end
+  
+  #Methods for accessing Blueprint info on EveData
+  def get_details
+  	evedata.get("/blueprints/#{id}").body.first
+  end
+  
+  def get_requirements
+  	evedata.get("/blueprints/#{id}/requirements").body
+  end
+  
+  private
+  
+  def evedata
+  	Faraday.new(:url => "http://evedata.herokuapp.com") do |conn|
+  		conn.request :json
+  		conn.response :json, :content_type => /\bjson$/
+  		conn.adapter Faraday.default_adapter
+  	end
+  end
 end
