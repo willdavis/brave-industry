@@ -40,6 +40,23 @@ describe Blueprint do
   		@blueprint.production_time.should_not be_nil
   		@blueprint.production_time.should be_a(Integer)
   	end
+  	
+  	it "has a tech level" do
+  		@blueprint.tech_level.should_not be_nil
+  		@blueprint.tech_level.should be_a(Integer)
+  	end
+  end
+  
+  context "group" do
+  	it "has an id" do
+  		@blueprint.group["id"].should_not be_nil
+  		@blueprint.group["id"].should be_a(Integer)
+  	end
+  	
+  	it "has a name" do
+  		@blueprint.group["name"].should_not be_nil
+  		@blueprint.group["name"].should be_a(String)
+  	end
   end
   
   context "product" do

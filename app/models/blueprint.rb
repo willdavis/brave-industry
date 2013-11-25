@@ -30,9 +30,20 @@ class Blueprint
   	get_details["production_time"]
   end
   
+  def tech_level
+  	get_details["tech_level"]
+  end
+  
+  def group
+  	id = get_details["group"]["id"].to_i
+  	name = get_details["group"]["name"]
+  	{ "id" => id, "name" => name }
+  end
+  
   def product
-  	blueprint = get_details
-  	{ "id" => blueprint["product"]["id"], "batch_size" => blueprint["product"]["batch_size"].to_i }
+  	id = get_details["product"]["id"]
+  	batch_size = get_details["product"]["batch_size"]
+  	{ "id" => id, "batch_size" => batch_size.to_i }
   end
   
   def skills
