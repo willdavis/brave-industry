@@ -63,8 +63,16 @@ describe Blueprint do
   end
   
   context "skills" do
-  	it "returns a list of all required skills"
-  	it "can be filtered to only return required skills for manufacturing"
+  	it "returns a list of all required skills" do
+  		@blueprint.skills.should_not be_nil
+  		@blueprint.skills.should be_a(Hash)
+  	end
+  	
+  	it "can be filtered to only return required skills for manufacturing" do
+  		@blueprint.skills["manufacturing"].should_not be_nil
+  		@blueprint.skills["manufacturing"].should be_a(Array)
+  		@blueprint.skills["manufacturing"].first.should be_a(Hash)
+  	end
   	it "can be filtered to only return required skills for research"
   	it "can be filtered to only return required skills for invention"
   end

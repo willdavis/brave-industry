@@ -35,6 +35,12 @@ class Blueprint
   	{ "id" => blueprint["product"]["id"], "batch_size" => blueprint["product"]["batch_size"].to_i }
   end
   
+  def skills
+  	requirements = get_requirements
+  	manufacturing = requirements.select { |item| item["category"]["id"].to_i == 16 and item["activity"]["id"] == 1 }
+  	{ "manufacturing" => manufacturing }
+  end
+  
   #Methods for accessing Blueprint info on EveData
   def get_details
   	evedata.get("/blueprints/#{id}").body.first
