@@ -5,7 +5,7 @@ describe Blueprint do
     @blueprint = FactoryGirl.create(:blueprint)
   end
   
-  context "attributes" do
+  context "initialize params" do
   	it "contain an id" do
   		@blueprint.id.should_not be_nil
   		@blueprint.id.should be_a(Integer)
@@ -25,20 +25,25 @@ describe Blueprint do
   	it "contain a modifier for Production Efficiency"
   end
   
-  context "product" do
-  	it "has an id" do
-  		@blueprint.product[:id].should_not be_nil
-  		@blueprint.product[:id].should be_a(Integer)
+  context "details" do
+  	it "has a name" do
+  		@blueprint.name.should_not be_nil
+  		@blueprint.name.should be_a(String)
   	end
   	
-  	it "has a name" do
-  		@blueprint.product[:name].should_not be_nil
-  		@blueprint.product[:name].should be_a(String)
+  	it "has a waste factor"
+  	it "has a production time"
+  end
+  
+  context "product" do
+  	it "has an id" do
+  		@blueprint.product["id"].should_not be_nil
+  		@blueprint.product["id"].should be_a(Integer)
   	end
   	
   	it "has a batch size" do
-  		@blueprint.product[:batch_size].should_not be_nil
-  		@blueprint.product[:batch_size].should be_a(Integer)
+  		@blueprint.product["batch_size"].should_not be_nil
+  		@blueprint.product["batch_size"].should be_a(Integer)
   	end
   end
   

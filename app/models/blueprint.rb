@@ -18,8 +18,14 @@ class Blueprint
     end
   end
   
+  def name
+  	blueprint = get_details
+  	blueprint["name"]
+  end
+  
   def product
-  	@product ||= Hash.new
+  	blueprint = get_details
+  	{ "id" => blueprint["product"]["id"], "batch_size" => blueprint["product"]["batch_size"].to_i }
   end
   
   #Methods for accessing Blueprint info on EveData
