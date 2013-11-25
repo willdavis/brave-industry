@@ -31,8 +31,15 @@ describe Blueprint do
   		@blueprint.name.should be_a(String)
   	end
   	
-  	it "has a waste factor"
-  	it "has a production time"
+  	it "has a waste factor" do
+  		@blueprint.base_waste.should_not be_nil
+  		@blueprint.base_waste.should be_a(Integer)
+  	end
+  	
+  	it "has a production time" do
+  		@blueprint.production_time.should_not be_nil
+  		@blueprint.production_time.should be_a(Integer)
+  	end
   end
   
   context "product" do

@@ -19,8 +19,15 @@ class Blueprint
   end
   
   def name
-  	blueprint = get_details
-  	blueprint["name"]
+  	get_details["name"]
+  end
+  
+  def base_waste
+  	get_details["waste_factor"]
+  end
+  
+  def production_time
+  	get_details["production_time"]
   end
   
   def product
