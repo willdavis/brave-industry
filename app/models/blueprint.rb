@@ -41,6 +41,8 @@ class Blueprint
   	{ "manufacturing" => manufacturing }
   end
   
+  private
+  
   #Methods for accessing Blueprint info on EveData
   def get_details
   	evedata.get("/blueprints/#{id}").body.first
@@ -50,7 +52,10 @@ class Blueprint
   	evedata.get("/blueprints/#{id}/requirements").body
   end
   
-  private
+  def get_materials
+  	blueprint_product_id = get_details["product"]["id"]
+  	evedata.get("/items/#{blueprint_product_id}/materials").body
+  end
   
   def evedata
   	Faraday.new(:url => "http://evedata.herokuapp.com") do |conn|

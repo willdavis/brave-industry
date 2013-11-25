@@ -76,19 +76,4 @@ describe Blueprint do
   	it "can be filtered to only return required skills for research"
   	it "can be filtered to only return required skills for invention"
   end
-  
-  context "EVEData API integration" do
-  	it "looks up a blueprint's details" do
-  		details = @blueprint.get_details
-  		details.should_not be_nil
-  		details.should be_a(Hash)
-  	end
-  	
-  	it "looks up a blueprint's requirements" do
-  		requirements = @blueprint.get_requirements
-  		requirements.should_not be_nil
-  		requirements.should be_a(Array)
-  		requirements.first.should be_a(Hash)
-  	end
-  end
 end
