@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Blueprint do
-  before(:all) do
+  before(:each) do
     @blueprint = FactoryGirl.create(:blueprint)
   end
   
@@ -31,9 +31,22 @@ describe Blueprint do
   		@blueprint.name.should be_a(String)
   	end
   	
-  	it "has a waste factor" do
-  		@blueprint.base_waste.should_not be_nil
-  		@blueprint.base_waste.should be_a(Integer)
+  	it "has a base waste factor" do
+  		@blueprint.waste["base"].should_not be_nil
+  		@blueprint.waste["base"].should be_a(Integer)
+  	end
+  	
+  	it "has a current waste factor" do
+  		@blueprint.waste["current"].should_not be_nil
+  		@blueprint.waste["current"].should be_a(Float)
+  		@blueprint.waste["current"].should eq(0.1)
+  		
+  		#Current waste is modified by material efficiency
+  		@blueprint.material_efficiency = -4
+  		@blueprint.waste["current"].should eq(0.5)
+  		
+  		@blueprint.material_efficiency = 4
+  		@blueprint.waste["current"].should eq(0.02)
   	end
   	
   	it "has a production time" do
@@ -111,7 +124,6 @@ describe Blueprint do
   			@blueprint.raw_materials.first["quantity"].should be_a(Integer)
   		end
   		
-  		it "are 100% consumed"
   		it "have a wasted quantity"
   		it "does not include components"
   	end

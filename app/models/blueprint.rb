@@ -22,8 +22,11 @@ class Blueprint
   	get_details["name"]
   end
   
-  def base_waste
-  	get_details["waste_factor"]
+  def waste
+  	base = get_details["waste_factor"]
+  	base_modifier = base * 0.01
+  	material_efficiency >= 0 ? current_waste = base_modifier / (1 + material_efficiency) : current_waste = base_modifier * (1 - material_efficiency)
+  	{ "base" => base, "current" => current_waste }
   end
   
   def production_time
