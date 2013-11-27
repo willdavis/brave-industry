@@ -66,11 +66,12 @@ class Blueprint
   end
   
   def raw_materials
-  	get_materials.map do |material|
-  		material["damage_per_job"] = 1.0		#add this in case the material needs to be displayed as a Component
-  		material["wasted_quantity"] = (material["quantity"] * waste["current"]).round
-  		material["total_quantity"] = material["quantity"] + material["wasted_quantity"]
-  		material
+  	get_materials.map do |item|
+  		item["damage_per_job"] = 1.0		#add this in case the material needs to be displayed as a Component
+  		item["wasted_quantity"] = (item["quantity"] * waste["current"]).round
+  		item["recycled_quantity"] = get_recycled_materials.select{ |item| item["material"]["id"] == item["material"]["id"] }.first["quantity"]
+  		item["total_quantity"] = item["quantity"] + item["wasted_quantity"]
+  		item
   	end
   end
   
@@ -97,13 +98,18 @@ class Blueprint
   	@materials ||= evedata.get("/items/#{blueprint_product_id}/materials").body
   end
   
-  def get_recycled_component
+  def get_recycled_details
   	type_id = get_requirements.select{ |item| item["recycle"] == true }.first["material"]["id"]
-  	@recycled_component ||= evedata.get("/blueprints?product_id=#{type_id}").body.first
+  	@recycled_details ||= evedata.get("/blueprints?product_id=#{type_id}").body.first
+  end
+  
+  def get_recycled_materials
+  	product_id = get_recycled_details["product"]["id"]
+  	@recycled_materials ||= evedata.get("/items/#{product_id}/materials").body
   end
   
   def get_invention_materials
-  	blueprint_id = get_recycled_component["id"]
+  	blueprint_id = get_recycled_details["id"]
   	@invention_materials ||= evedata.get("/blueprints/#{blueprint_id}/requirements?activity_id=8").body
   end
   

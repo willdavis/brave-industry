@@ -133,6 +133,10 @@ describe Blueprint do
   			@blueprint.raw_materials.first["wasted_quantity"].should be_a(Integer)
   		end
   		
+  		it "have a recycled quantity" do
+  			@blueprint.raw_materials.first["recycled_quantity"].should be_a(Integer)
+  		end
+  		
   		it "does not include components"
   	end
   	
