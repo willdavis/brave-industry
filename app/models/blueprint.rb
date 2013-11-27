@@ -75,7 +75,10 @@ class Blueprint
   end
   
   def components
-  	@components ||= get_requirements.select{ |item| item["activity"]["id"] == 1 and item["category"]["id"] != 16 }
+  	get_requirements.select{ |item| item["activity"]["id"] == 1 and item["category"]["id"] != 16 }.map do |material|
+  		material["wasted_quantity"] = 0
+  		material
+  	end
   end
   
   private

@@ -143,14 +143,36 @@ describe Blueprint do
 				@blueprint.components.first.should be_a(Hash)
   		end
   		
-  		it "have an id"
-  		it "have a name"
-  		it "have a quantity"
-  		it "have a wasted quantity"
-  		it "have a consumed percentage"
+  		it "have an id" do
+  			@blueprint.components.first["material"]["id"].should_not be_nil
+  			@blueprint.components.first["material"]["id"].should be_a(Integer)
+  		end
   		
-  		it "have a small image"
-  		it "have a thumbnail image"
+  		it "have a name" do
+  			@blueprint.components.first["material"]["name"].should be_a(String)
+  		end
+  		
+  		it "have a quantity" do
+  			@blueprint.components.first["quantity"].should be_a(Integer)
+  		end
+  		
+  		it "have a wasted quantity" do
+  			@blueprint.components.first["wasted_quantity"].should be_a(Integer)
+  			@blueprint.components.first["wasted_quantity"].should eq(0)
+  		end
+  		
+  		it "have a consumed percentage" do
+  			@blueprint.components.first["damage_per_job"].should be_a(Float)
+  			@blueprint.components.first["damage_per_job"].should eq(1.0)
+  		end
+  		
+  		it "have a small image" do
+  			@blueprint.components.first["images"]["small"].should be_a(String)
+  		end
+  		
+  		it "have a thumbnail image" do
+  			@blueprint.components.first["images"]["thumb"].should be_a(String)
+  		end
   	end
   end
   
