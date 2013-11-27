@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Blueprint do
-  before(:each) do
+  before(:all) do
     @blueprint = FactoryGirl.create(:blueprint)
   end
   
@@ -84,16 +84,53 @@ describe Blueprint do
   end
   
   context "manufacturing" do
-  	it "raw materials are listed" do
-  		@blueprint.raw_materials.should_not be_nil
-  		@blueprint.raw_materials.should be_a(Array)
-  		@blueprint.raw_materials.first.should be_a(Hash)
+  	context "raw materials" do
+  		it "are present" do
+  			@blueprint.raw_materials.should_not be_nil
+				@blueprint.raw_materials.should be_a(Array)
+				@blueprint.raw_materials.first.should be_a(Hash)
+  		end
+  		
+  		it "have a type id" do
+  			@blueprint.raw_materials.first["material"]["id"].should be_a(Integer)
+  		end
+  		
+  		it "have a name" do
+  			@blueprint.raw_materials.first["material"]["name"].should be_a(String)
+  		end
+  		
+  		it "have a small image" do
+  			@blueprint.raw_materials.first["images"]["small"].should be_a(String)
+  		end
+  		
+  		it "have a thumbnail image" do
+  			@blueprint.raw_materials.first["images"]["thumb"].should be_a(String)
+  		end
+  		
+  		it "have a quantity" do
+  			@blueprint.raw_materials.first["quantity"].should be_a(Integer)
+  		end
+  		
+  		it "are 100% consumed"
+  		it "have a wasted quantity"
+  		it "does not include components"
   	end
   	
-  	it "components are listed" do
-  		@blueprint.components.should_not be_nil
-  		@blueprint.components.should be_a(Array)
-  		@blueprint.components.first.should be_a(Hash)
+  	context "components" do
+  		it "are present" do
+  			@blueprint.components.should_not be_nil
+				@blueprint.components.should be_a(Array)
+				@blueprint.components.first.should be_a(Hash)
+  		end
+  		
+  		it "have an id"
+  		it "have a name"
+  		it "have a quantity"
+  		it "have a wasted quantity"
+  		it "have a consumed percentage"
+  		
+  		it "have a small image"
+  		it "have a thumbnail image"
   	end
   end
   
