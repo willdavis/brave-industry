@@ -23,10 +23,9 @@ class Blueprint
   end
   
   def waste
-  	base = get_details["waste_factor"]
-  	base_modifier = base * 0.01
-  	material_efficiency >= 0 ? current_waste = base_modifier / (1 + material_efficiency) : current_waste = base_modifier * (1 - material_efficiency)
-  	{ "base" => base, "current" => current_waste }
+  	base = get_details["waste_factor"] * 0.01
+  	material_efficiency >= 0 ? current = base / (1 + material_efficiency) : current = base * (1 - material_efficiency)
+  	{ "base" => base, "current" => current }
   end
   
   def production_time
@@ -67,7 +66,12 @@ class Blueprint
   end
   
   def raw_materials
-  	@raw_materials ||= get_materials
+  	get_materials.map do |material|
+  		material["damage_per_job"] = 1.0		#add this in case the material needs to be displayed as a Component
+  		material["wasted_quantity"] = (material["quantity"] * waste["current"]).round
+  		material["total_quantity"] = material["quantity"] + material["wasted_quantity"]
+  		material
+  	end
   end
   
   def components

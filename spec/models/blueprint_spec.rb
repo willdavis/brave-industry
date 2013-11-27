@@ -33,7 +33,8 @@ describe Blueprint do
   	
   	it "has a base waste factor" do
   		@blueprint.waste["base"].should_not be_nil
-  		@blueprint.waste["base"].should be_a(Integer)
+  		@blueprint.waste["base"].should be_a(Float)
+  		@blueprint.waste["base"].should eq(0.1)
   	end
   	
   	it "has a current waste factor" do
@@ -120,11 +121,18 @@ describe Blueprint do
   			@blueprint.raw_materials.first["images"]["thumb"].should be_a(String)
   		end
   		
-  		it "have a quantity" do
+  		it "have a base quantity" do
   			@blueprint.raw_materials.first["quantity"].should be_a(Integer)
   		end
   		
-  		it "have a wasted quantity"
+  		it "have a total quantity" do
+  			@blueprint.raw_materials.first["total_quantity"].should be_a(Integer)
+  		end
+  		
+  		it "have a wasted quantity" do
+  			@blueprint.raw_materials.first["wasted_quantity"].should be_a(Integer)
+  		end
+  		
   		it "does not include components"
   	end
   	
