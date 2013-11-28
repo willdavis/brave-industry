@@ -154,7 +154,7 @@ describe Blueprint do
   	context "components" do
   		it "are optional" do
 				@blueprint.components.should be_a(Array)
-				@blueprint.components.first.should be_a(Hash) if @blueprint.has_components?
+				@blueprint.components.each{ |item| item.should be_a(Hash) } if @blueprint.has_components?
 				@blueprint.components.should be_empty if !@blueprint.has_components?
   		end
   		
