@@ -67,9 +67,11 @@ class Blueprint
   
   def raw_materials
   	get_materials.map do |item|
+  		recycled = get_recycled_materials.select{ |recycled| recycled["material"]["id"] == item["material"]["id"] }.first
+			recycled ? item["recycled_quantity"] = recycled["quantity"] : item["recycled_quantity"] = 0
+			
   		item["damage_per_job"] = 1.0		#add this in case the material needs to be displayed as a Component
   		item["wasted_quantity"] = (item["quantity"] * waste["current"]).round
-  		item["recycled_quantity"] = get_recycled_materials.select{ |item| item["material"]["id"] == item["material"]["id"] }.first["quantity"]
   		item["total_quantity"] = item["quantity"] + item["wasted_quantity"]
   		item
   	end
@@ -94,23 +96,38 @@ class Blueprint
   end
   
   def get_materials
-  	blueprint_product_id = get_details["product"]["id"]
-  	@materials ||= evedata.get("/items/#{blueprint_product_id}/materials").body
+  	query = lambda { evedata.get("/items/#{get_details["product"]["id"]}/materials").body }
+  	@materials ||= query.call
   end
   
   def get_recycled_details
-  	type_id = get_requirements.select{ |item| item["recycle"] == true }.first["material"]["id"]
-  	@recycled_details ||= evedata.get("/blueprints?product_id=#{type_id}").body.first
+  	query = lambda do
+  		recycled = get_requirements.select{ |item| item["recycle"] == true }.first
+  		recycled ? type_id = recycled["material"]["id"] : type_id = 0
+  		evedata.get("/blueprints?product_id=#{type_id}").body.first
+  	end
+  	
+  	@recycled_details ||= query.call
   end
   
   def get_recycled_materials
-  	product_id = get_recycled_details["product"]["id"]
-  	@recycled_materials ||= evedata.get("/items/#{product_id}/materials").body
+  	query = lambda do
+  		blueprint = get_recycled_details
+  		blueprint ? product_id = blueprint["product"]["id"] : product_id = 0
+  		evedata.get("/items/#{product_id}/materials").body
+  	end
+  	
+  	@recycled_materials ||= query.call
   end
   
   def get_invention_materials
-  	blueprint_id = get_recycled_details["id"]
-  	@invention_materials ||= evedata.get("/blueprints/#{blueprint_id}/requirements?activity_id=8").body
+  	query = lambda do
+  		blueprint = get_recycled_details
+  		blueprint ? blueprint_id = blueprint["id"] : blueprint_id = 0
+  		evedata.get("/blueprints/#{blueprint_id}/requirements?activity_id=8").body
+  	end
+  	
+  	@invention_materials ||= query.call
   end
   
   def evedata
