@@ -111,6 +111,10 @@ describe Blueprint do
 				@blueprint.raw_materials.first.should be_a(Hash)
   		end
   		
+  		it "do not have a blueprint id" do
+  			@blueprint.raw_materials.each{ |item| item["material"]["blueprint_id"].should be_nil }
+  		end
+  		
   		it "have a type id" do
   			@blueprint.raw_materials.first["material"]["id"].should be_a(Integer)
   		end
