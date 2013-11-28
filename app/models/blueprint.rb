@@ -72,7 +72,7 @@ class Blueprint
 			
   		item["damage_per_job"] = 1.0		#add this in case the material needs to be displayed as a Component
   		item["wasted_quantity"] = (item["quantity"] * waste["current"]).round
-  		item["total_quantity"] = item["quantity"] + item["wasted_quantity"]
+  		item["total_quantity"] = item["quantity"] + item["wasted_quantity"] - item["recycled_quantity"]
   		item
   	end
   end

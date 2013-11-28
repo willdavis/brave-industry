@@ -29,19 +29,14 @@ describe Blueprint do
   	it "contain a modifier for Production Efficiency"
   end
   
-  context "details" do
-  	it "has a name" do
-  		@blueprint.name.should_not be_nil
-  		@blueprint.name.should be_a(String)
-  	end
-  	
-  	it "has a base waste factor" do
+  context "waste" do
+  	it "has a base value" do
   		@blueprint.waste["base"].should_not be_nil
   		@blueprint.waste["base"].should be_a(Float)
   		@blueprint.waste["base"].should eq(0.1)
   	end
   	
-  	it "has a current waste factor" do
+  	it "has a current value" do
   		@blueprint.waste["current"].should_not be_nil
   		@blueprint.waste["current"].should be_a(Float)
   		@blueprint.waste["current"].should eq(0.1)
@@ -52,6 +47,13 @@ describe Blueprint do
   		
   		@blueprint.material_efficiency = 4
   		@blueprint.waste["current"].should eq(0.02)
+  	end
+  end
+  
+  context "details" do
+  	it "has a name" do
+  		@blueprint.name.should_not be_nil
+  		@blueprint.name.should be_a(String)
   	end
   	
   	it "has a production time" do
@@ -130,11 +132,16 @@ describe Blueprint do
   		end
   		
   		it "have a total quantity" do
-  			@blueprint.raw_materials.first["total_quantity"].should be_a(Integer)
+  			item = @blueprint.raw_materials.first
+  			total = item["quantity"] + item["wasted_quantity"] - item["recycled_quantity"]
+  			item["total_quantity"].should be_a(Integer)
+  			item["total_quantity"].should eq total
   		end
   		
   		it "have a wasted quantity" do
-  			@blueprint.raw_materials.first["wasted_quantity"].should be_a(Integer)
+  			item = @blueprint.raw_materials.first
+  			item["wasted_quantity"].should be_a(Integer)
+  			item["wasted_quantity"].should eq (item["quantity"] * @blueprint.waste["current"]).round
   		end
   		
   		it "have a recycled quantity" do
