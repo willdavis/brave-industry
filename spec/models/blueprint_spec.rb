@@ -152,40 +152,40 @@ describe Blueprint do
   	end
   	
   	context "components" do
-  		it "are present" do
-  			@blueprint.components.should_not be_nil
+  		it "are optional" do
 				@blueprint.components.should be_a(Array)
-				@blueprint.components.first.should be_a(Hash)
+				@blueprint.components.first.should be_a(Hash) if @blueprint.has_components?
+				@blueprint.components.should be_empty if !@blueprint.has_components?
   		end
   		
   		it "have an id" do
-  			@blueprint.components.first["material"]["id"].should_not be_nil
-  			@blueprint.components.first["material"]["id"].should be_a(Integer)
+  			@blueprint.components.each{ |item| item["material"]["id"].should_not be_nil }
+  			@blueprint.components.each{ |item| item["material"]["id"].should be_a(Integer) }
   		end
   		
   		it "have a name" do
-  			@blueprint.components.first["material"]["name"].should be_a(String)
+  			@blueprint.components.each{ |item| item["material"]["name"].should be_a(String) }
   		end
   		
   		it "have a quantity" do
-  			@blueprint.components.first["quantity"].should be_a(Integer)
+  			@blueprint.components.each{ |item| item["quantity"].should be_a(Integer) }
   		end
   		
   		it "have a wasted quantity" do
-  			@blueprint.components.first["wasted_quantity"].should be_a(Integer)
-  			@blueprint.components.first["wasted_quantity"].should eq(0)
+  			@blueprint.components.each{ |item| item["wasted_quantity"].should be_a(Integer) }
+  			@blueprint.components.each{ |item| item["wasted_quantity"].should eq 0 }
   		end
   		
   		it "have a consumed percentage" do
-  			@blueprint.components.first["damage_per_job"].should be_a(Float)
+  			@blueprint.components.each{ |item| item["damage_per_job"].should be_a(Float) }
   		end
   		
   		it "have a small image" do
-  			@blueprint.components.first["images"]["small"].should be_a(String)
+  			@blueprint.components.each{ |item| item["images"]["small"].should be_a(String) }
   		end
   		
   		it "have a thumbnail image" do
-  			@blueprint.components.first["images"]["thumb"].should be_a(String)
+  			@blueprint.components.each{ |item| item["images"]["thumb"].should be_a(String) }
   		end
   	end
   end

@@ -78,10 +78,14 @@ class Blueprint
   end
   
   def components
-  	get_requirements.select{ |item| item["activity"]["id"] == 1 and item["category"]["id"] != 16 }.map do |material|
+  	get_requirements.select{ |item| item["activity"]["id"] == 1 and item["category"]["id"].to_i != 16 and !item["material"]["blueprint_id"].nil? }.map do |material|
   		material["wasted_quantity"] = 0
   		material
   	end
+  end
+  
+  def has_components?
+  	@has_components ||= !components.empty?
   end
   
   private
