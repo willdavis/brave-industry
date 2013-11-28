@@ -78,9 +78,11 @@ class Blueprint
   end
   
   def components
-  	get_requirements.select{ |item| item["activity"]["id"] == 1 and item["category"]["id"].to_i != 16 and !item["material"]["blueprint_id"].nil? }.map do |material|
-  		material["wasted_quantity"] = 0
-  		material
+  	get_requirements.select{ |item| item["activity"]["id"] == 1 and item["category"]["id"].to_i != 16 and !item["material"]["blueprint_id"].nil? }.map do |item|
+  		item["wasted_quantity"] = 0
+  		item["material"]["blueprint_id"] = item["material"]["blueprint_id"].to_i  #patch fix
+  		item["total_quantity"] = item["quantity"] + item["wasted_quantity"]
+  		item
   	end
   end
   

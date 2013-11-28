@@ -180,6 +180,14 @@ describe Blueprint do
   			@blueprint.components.each{ |item| item["quantity"].should be_a(Integer) }
   		end
   		
+  		it "have a total quantity" do
+  			@blueprint.components.each do |item|
+					total = item["quantity"] + item["wasted_quantity"]
+					item["total_quantity"].should be_a(Integer)
+					item["total_quantity"].should eq total
+				end
+  		end
+  		
   		it "have a wasted quantity" do
   			@blueprint.components.each{ |item| item["wasted_quantity"].should be_a(Integer) }
   			@blueprint.components.each{ |item| item["wasted_quantity"].should eq 0 }
