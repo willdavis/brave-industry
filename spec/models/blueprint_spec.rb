@@ -104,62 +104,62 @@ describe Blueprint do
   end
   
   context "manufacturing" do
-  	context "raw materials" do
-  		it "are present" do
-  			@blueprint.raw_materials.should_not be_nil
-				@blueprint.raw_materials.should be_a(Array)
-				@blueprint.raw_materials.first.should be_a(Hash)
+  	context "materials" do
+  		it "can be optional" do
+				@blueprint.materials.should be_a(Array)
+				@blueprint.materials.should be_empty if !@blueprint.has_materials?
+				@blueprint.materials.each{ |item| item.should be_a(Hash) } if @blueprint.has_materials?
   		end
   		
   		it "do not have a blueprint id" do
-  			@blueprint.raw_materials.each{ |item| item["material"]["blueprint_id"].should be_nil }
+  			@blueprint.materials.each{ |item| item["material"]["blueprint_id"].should be_nil }
   		end
   		
   		it "have a type id" do
-  			@blueprint.raw_materials.first["material"]["id"].should be_a(Integer)
+  			@blueprint.materials.each{ |item| item["material"]["id"].should be_a(Integer) }
   		end
   		
   		it "have a name" do
-  			@blueprint.raw_materials.first["material"]["name"].should be_a(String)
+  			@blueprint.materials.each{ |item| item["material"]["name"].should be_a(String) }
   		end
   		
   		it "have a small image" do
-  			@blueprint.raw_materials.first["images"]["small"].should be_a(String)
+  			@blueprint.materials.each{ |item| item["images"]["small"].should be_a(String) }
   		end
   		
   		it "have a thumbnail image" do
-  			@blueprint.raw_materials.first["images"]["thumb"].should be_a(String)
+  			@blueprint.materials.each{ |item| item["images"]["thumb"].should be_a(String) }
   		end
   		
   		it "have a base quantity" do
-  			@blueprint.raw_materials.first["quantity"].should be_a(Integer)
+  			@blueprint.materials.each{ |item| item["quantity"].should be_a(Integer) }
   		end
   		
   		it "have a total quantity" do
-  			item = @blueprint.raw_materials.first
-  			total = item["quantity"] + item["wasted_quantity"] - item["recycled_quantity"]
-  			item["total_quantity"].should be_a(Integer)
-  			item["total_quantity"].should eq total
+  			@blueprint.materials.each do |item|
+					total = item["quantity"] + item["wasted_quantity"] - item["recycled_quantity"]
+					item["total_quantity"].should be_a(Integer)
+					item["total_quantity"].should eq total
+				end
   		end
   		
   		it "have a wasted quantity" do
-  			item = @blueprint.raw_materials.first
-  			item["wasted_quantity"].should be_a(Integer)
-  			item["wasted_quantity"].should eq (item["quantity"] * @blueprint.waste["current"]).round
+  			@blueprint.materials.each do |item|
+					item["wasted_quantity"].should be_a(Integer)
+					item["wasted_quantity"].should eq (item["quantity"] * @blueprint.waste["current"]).round
+				end
   		end
   		
   		it "have a recycled quantity" do
-  			@blueprint.raw_materials.first["recycled_quantity"].should be_a(Integer)
+  			@blueprint.materials.each{ |item| item["recycled_quantity"].should be_a(Integer) }
   		end
-  		
-  		it "does not include components"
   	end
   	
   	context "components" do
-  		it "are optional" do
+  		it "can be optional" do
 				@blueprint.components.should be_a(Array)
-				@blueprint.components.each{ |item| item.should be_a(Hash) } if @blueprint.has_components?
 				@blueprint.components.should be_empty if !@blueprint.has_components?
+				@blueprint.components.each{ |item| item.should be_a(Hash) } if @blueprint.has_components?
   		end
   		
   		it "have a blueprint id" do

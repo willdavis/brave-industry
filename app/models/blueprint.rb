@@ -65,7 +65,7 @@ class Blueprint
   	{ "datacores" => datacores, "data_interface" => data_interface }
   end
   
-  def raw_materials
+  def materials
   	get_materials.map do |item|
   		recycled = get_recycled_materials.select{ |recycled| recycled["material"]["id"] == item["material"]["id"] }.first
 			recycled ? item["recycled_quantity"] = recycled["quantity"] : item["recycled_quantity"] = 0
@@ -88,6 +88,10 @@ class Blueprint
   
   def has_components?
   	@has_components ||= !components.empty?
+  end
+  
+  def has_materials?
+  	@has_materials ||= !materials.empty?
   end
   
   private
