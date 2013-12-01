@@ -163,7 +163,7 @@ describe Blueprint do
 				@blueprint.components.each{ |item| item.should be_a(Hash) } if @blueprint.has_components?
   		end
   		
-  		it "have a blueprint id" do
+  		it "must have a blueprint id" do
   			@blueprint.components.each{ |item| item["material"]["blueprint_id"].should_not be_nil }
   			@blueprint.components.each{ |item| item["material"]["blueprint_id"].should be_a(Integer) }
   		end

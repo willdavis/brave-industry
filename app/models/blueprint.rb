@@ -66,28 +66,36 @@ class Blueprint
   end
   
   def materials
-  	get_materials.map do |item|
-  		if tech_level == 2
-  			recycled_item = get_recycled_materials.select{ |recycled| recycled["material"]["id"] == item["material"]["id"] }.first
-  			recycled_item ? item["recycled_quantity"] = recycled_item["quantity"] : item["recycled_quantity"] = 0
-  		else
-  			item["recycled_quantity"] = 0
-  		end
+  	build_materials = lambda do
+  		get_materials.select{ |item| item["material"]["blueprint_id"].nil? }.map do |item|
+				if tech_level == 2
+					recycled_item = get_recycled_materials.select{ |recycled| recycled["material"]["id"] == item["material"]["id"] }.first
+					recycled_item ? item["recycled_quantity"] = recycled_item["quantity"] : item["recycled_quantity"] = 0
+				else
+					item["recycled_quantity"] = 0
+				end
 			
-  		item["damage_per_job"] = 1.0		#add this in case the material needs to be displayed as a Component
-  		item["wasted_quantity"] = (item["quantity"] * waste["current"]).round
-  		item["total_quantity"] = item["quantity"] + item["wasted_quantity"] - item["recycled_quantity"]
-  		item
+				item["damage_per_job"] = 1.0		#add this in case the material needs to be displayed as a Component
+				item["wasted_quantity"] = (item["quantity"] * waste["current"]).round
+				item["total_quantity"] = item["quantity"] + item["wasted_quantity"] - item["recycled_quantity"]
+				item
+			end
   	end
+  	
+  	@materials ||= build_materials.call
   end
   
   def components
-  	get_requirements.select{ |item| item["activity"]["id"] == 1 and item["category"]["id"].to_i != 16 and !item["material"]["blueprint_id"].nil? }.map do |item|
-  		item["wasted_quantity"] = 0
-  		item["material"]["blueprint_id"] = item["material"]["blueprint_id"].to_i  #patch fix
-  		item["total_quantity"] = item["quantity"] + item["wasted_quantity"]
-  		item
+  	build_components = lambda do
+  		get_requirements.select{ |item| item["activity"]["id"] == 1 and item["category"]["id"].to_i != 16 and !item["material"]["blueprint_id"].nil? }.map do |item|
+				item["wasted_quantity"] = 0
+				item["material"]["blueprint_id"] = item["material"]["blueprint_id"].to_i  #patch fix
+				item["total_quantity"] = item["quantity"] + item["wasted_quantity"]
+				item
+			end
   	end
+  	
+  	@components ||= build_components.call
   end
   
   def has_components?
@@ -111,7 +119,7 @@ class Blueprint
   
   def get_materials
   	query = lambda { evedata.get("/items/#{get_details["product"]["id"]}/materials").body }
-  	@materials ||= query.call
+  	@raw_materials ||= query.call
   end
   
   def get_recycled_details
