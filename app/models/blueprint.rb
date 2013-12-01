@@ -107,11 +107,11 @@ class Blueprint
   end
   
   def has_components?
-  	@has_components ||= !components.empty?
+  	!components.empty?
   end
   
   def has_materials?
-  	@has_materials ||= !materials.empty?
+  	!materials.empty?
   end
   
   def has_invention_materials?
