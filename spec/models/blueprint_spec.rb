@@ -211,16 +211,14 @@ describe Blueprint do
   context "invention" do
   	it "is hard!"
   	it "returns list of required datacores" do
-  		if !@blueprint.invention["datacores"].empty?
-				@blueprint.invention["datacores"].should be_a(Array)
-				@blueprint.invention["datacores"].first.should be_a(Hash)
-			end
+			@blueprint.invention["datacores"].should be_a(Array)
+			@blueprint.invention["datacores"].should be_empty if !@blueprint.has_invention_materials?
+			@blueprint.invention["datacores"].each{ |item| item.should be_a(Hash) } if @blueprint.has_invention_materials?
   	end
   	
   	it "returns the required data interface" do
-  		if @blueprint.invention["data_interface"]
-  			@blueprint.invention["data_interface"].should be_a(Hash)
-  		end
+  		@blueprint.invention["data_interface"].should be_nil if !@blueprint.has_invention_materials?
+  		@blueprint.invention["data_interface"].should be_a(Hash) if @blueprint.has_invention_materials?
   	end
   	
   	it "returns list of viable data decryptors"

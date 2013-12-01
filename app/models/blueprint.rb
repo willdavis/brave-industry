@@ -59,10 +59,18 @@ class Blueprint
   end
   
   def invention
-  	materials = get_invention_materials
-  	datacores = materials.select { |item| item["group"]["name"] == "Datacores" }
-  	data_interface = materials.select { |item| item["group"]["name"] == "Data Interfaces" }.first
-  	{ "datacores" => datacores, "data_interface" => data_interface }
+  	build_invention_materials = lambda do
+  		if tech_level == 2
+				materials = get_invention_materials
+				datacores = materials.select { |item| item["group"]["name"] == "Datacores" }
+				data_interface = materials.select { |item| item["group"]["name"] == "Data Interfaces" }.first
+				{ "datacores" => datacores, "data_interface" => data_interface }
+			else
+				{ "datacores" => [], "data_interface" => nil }
+			end
+  	end
+		
+		@invention ||= build_invention_materials.call
   end
   
   def materials
@@ -104,6 +112,10 @@ class Blueprint
   
   def has_materials?
   	@has_materials ||= !materials.empty?
+  end
+  
+  def has_invention_materials?
+  	!invention["datacores"].empty? and !invention["data_interface"].nil?
   end
   
   private
@@ -149,7 +161,7 @@ class Blueprint
   		evedata.get("/blueprints/#{blueprint_id}/requirements?activity_id=8").body
   	end
   	
-  	@invention_materials ||= query.call
+  	@raw_invention_materials ||= query.call
   end
   
   def evedata
