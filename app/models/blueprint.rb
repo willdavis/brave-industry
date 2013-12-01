@@ -67,8 +67,12 @@ class Blueprint
   
   def materials
   	get_materials.map do |item|
-  		recycled = get_recycled_materials.select{ |recycled| recycled["material"]["id"] == item["material"]["id"] }.first
-			recycled ? item["recycled_quantity"] = recycled["quantity"] : item["recycled_quantity"] = 0
+  		if tech_level == 2
+  			recycled_item = get_recycled_materials.select{ |recycled| recycled["material"]["id"] == item["material"]["id"] }.first
+  			recycled_item ? item["recycled_quantity"] = recycled_item["quantity"] : item["recycled_quantity"] = 0
+  		else
+  			item["recycled_quantity"] = 0
+  		end
 			
   		item["damage_per_job"] = 1.0		#add this in case the material needs to be displayed as a Component
   		item["wasted_quantity"] = (item["quantity"] * waste["current"]).round
