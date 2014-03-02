@@ -158,16 +158,16 @@ class Blueprint
   
   #Methods for accessing Blueprint info on EveData
   def get_details
-  	@details ||= evedata.get("/blueprints/#{id}").body.first
+  	@details ||= Rails.cache.fetch("blueprint.#{id}.details") { evedata.get("/blueprints/#{id}").body.first }
   end
   
   def get_requirements
-  	@requirements ||= evedata.get("/blueprints/#{id}/requirements").body
+  	@requirements ||= Rails.cache.fetch("blueprint.#{id}.requirements") { evedata.get("/blueprints/#{id}/requirements").body }
   end
   
   def get_materials
   	query = lambda { evedata.get("/items/#{get_details["product"]["id"]}/materials").body }
-  	@raw_materials ||= query.call
+  	@raw_materials ||= Rails.cache.fetch("blueprint.#{id}.materials") { query.call }
   end
   
   def get_recycled_details
@@ -177,7 +177,7 @@ class Blueprint
   		evedata.get("/blueprints?product_id=#{type_id}").body.first
   	end
   	
-  	@recycled_details ||= query.call
+  	@recycled_details ||= Rails.cache.fetch("blueprint.#{id}.recycled_details") { query.call }
   end
   
   def get_recycled_materials
@@ -187,7 +187,7 @@ class Blueprint
   		evedata.get("/items/#{product_id}/materials").body
   	end
   	
-  	@recycled_materials ||= query.call
+  	@recycled_materials ||= Rails.cache.fetch("blueprint.#{id}.recycled_materials") { query.call }
   end
   
   def get_invention_materials
@@ -197,7 +197,7 @@ class Blueprint
   		evedata.get("/blueprints/#{blueprint_id}/requirements?activity_id=8").body
   	end
   	
-  	@raw_invention_materials ||= query.call
+  	@raw_invention_materials ||= Rails.cache.fetch("blueprint.#{id}.invention_materials") { query.call }
   end
   
   def evedata
