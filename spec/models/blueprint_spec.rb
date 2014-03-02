@@ -154,6 +154,11 @@ describe Blueprint do
   			@blueprint.materials.each{ |item| item["recycled_quantity"].should be_a(Integer) }
   			@blueprint.materials.select{ |item| item["recycled_quantity"] > 0 }.should_not be_empty if @blueprint.tech_level == 2 and @blueprint.group["name"] != "Freighter Blueprint"
   		end
+
+			it "have an extra quantity" do
+				@blueprint.materials.each{ |item| item["extra_quantity"].should be_a(Integer) }
+				@blueprint.materials.each{ |item| item["extra_quantity"].should be >= 0 }
+			end
   	end
   	
   	context "components" do

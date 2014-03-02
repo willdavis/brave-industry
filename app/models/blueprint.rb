@@ -75,21 +75,40 @@ class Blueprint
   
   def materials
   	build_materials = lambda do
-  		get_materials.select{ |item| item["material"]["blueprint_id"].nil? }.map do |item|
+			#find raw materials
+  		raw = get_materials.select{ |item| item["material"]["blueprint_id"].nil? }.map do |item|
 				if tech_level == 2
 					recycled_item = get_recycled_materials.select{ |recycled| recycled["material"]["id"] == item["material"]["id"] }.first
 					recycled_item ? item["recycled_quantity"] = recycled_item["quantity"] : item["recycled_quantity"] = 0
 				else
 					item["recycled_quantity"] = 0
 				end
-			
-				item["damage_per_job"] = 1.0		#add this in case the material needs to be displayed as a Component
+				
+				item["extra_quantity"] = 0
 				item["wasted_quantity"] = (item["quantity"] * waste["current"]).round
 				item["total_quantity"] = item["quantity"] + item["wasted_quantity"] - item["recycled_quantity"]
 				item
 			end
+
+			#find any components that are actually raw materials
+			extra = get_requirements.select{ |item| item["activity"]["id"] == 1 and item["category"]["id"].to_i != 16 and item["material"]["blueprint_id"].nil? }.map do |item|
+				item["extra_quantity"] = 0
+				item["wasted_quantity"] = 0
+				item["recycled_quantity"] = 0
+				item["total_quantity"] = item["quantity"]
+				item
+			end
+
+			#merge any extra raw materials into the main array
+			extra.each do |extra_item|
+				item = raw.select{ |raw_item| raw_item["material"]["id"] == extra_item["material"]["id"] }.first
+				item["extra_quantity"] += extra_item["quantity"] if !item.nil?
+				raw.push(extra_item) if item.nil?
+			end
+
+			return raw
   	end
-  	
+
   	@materials ||= build_materials.call
   end
   
