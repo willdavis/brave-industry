@@ -114,12 +114,29 @@ class Blueprint
   
   def components
   	build_components = lambda do
-  		get_requirements.select{ |item| item["activity"]["id"] == 1 and item["category"]["id"].to_i != 16 and !item["material"]["blueprint_id"].nil? }.map do |item|
+			#find all components
+  		components = get_requirements.select{ |item| item["activity"]["id"] == 1 and item["category"]["id"].to_i != 16 and !item["material"]["blueprint_id"].nil? }.map do |item|
 				item["wasted_quantity"] = 0
 				item["material"]["blueprint_id"] = item["material"]["blueprint_id"].to_i  #patch fix
 				item["total_quantity"] = item["quantity"] + item["wasted_quantity"]
 				item
 			end
+
+			#check for any materials with a blueprint_id
+			materials = get_materials.select{ |item| !item["material"]["blueprint_id"].nil? }.map do |item|
+				item["damage_per_job"] = 0
+				item["wasted_quantity"] = 0
+				item["material"]["blueprint_id"] = item["material"]["blueprint_id"].to_i  #patch fix
+				item["total_quantity"] = item["quantity"]
+				item
+			end
+
+			#merge any component materials to the component array
+			materials.each do |item|
+				components.push(item)
+			end
+
+			return components
   	end
   	
   	@components ||= build_components.call
