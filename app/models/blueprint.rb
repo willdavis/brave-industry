@@ -126,9 +126,9 @@ class Blueprint
 			#check for any materials with a blueprint_id
 			materials = get_materials.select{ |item| !item["material"]["blueprint_id"].nil? }.map do |item|
 				item["damage_per_job"] = 1.0
-				item["wasted_quantity"] = 0
+				item["wasted_quantity"] = (item["quantity"] * waste["current"]).round
 				item["material"]["blueprint_id"] = item["material"]["blueprint_id"].to_i  #patch fix
-				item["total_quantity"] = item["quantity"]
+				item["total_quantity"] = item["quantity"] + item["wasted_quantity"]
 				item
 			end
 
