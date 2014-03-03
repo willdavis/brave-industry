@@ -240,17 +240,18 @@
 												
 												<div class="panel-heading">
 													<div class="row">
-														<div class="col-xs-2">Waste</div>
+														<div class="col-xs-2">Wasted</div>
 														<div class="col-xs-10"><span class="pull-right"><%= item['wasted_quantity'] %></span></div>
 													</div>
 												</div>
 												
 												<div class="panel-heading">
 													<div class="row">
-														<div class="col-xs-5">Damage</div>
+														<div class="col-xs-5">Consumed</div>
 														<div class="col-xs-7">
-															<span id="<%= item['material']['id'] %>-damage" class="pull-right">
-																<%= item['damage_per_job'] %>
+															<span class="pull-right">
+																<span id="<%= item['material']['id'] %>-damage" style="display:none"><%= item['damage_per_job'] %></span>
+																<span><%= item['damage_per_job']*100 %>%</span>
 															</span>
 														</div>
 													</div>
