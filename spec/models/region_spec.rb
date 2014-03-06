@@ -15,8 +15,18 @@ describe Region do
 
   context "initialize params" do
 	  it "has an id" do
-		  @region.id.should_not be_nil
-		  @region.id.should be_a(Integer)
+		  expect(@region.id).to_not be_nil
+		  expect(@region.id).to be_a(Integer)
+	  end
+	end
+	
+	context "search all result" do
+	  it "returns an array containing all regions" do
+	    expect(Region.all).to be_a(Array)
+	  end
+	  
+	  it "size should be 67 regions" do
+	    expect(Region.all.size).to eq(67)
 	  end
 	end
 end
