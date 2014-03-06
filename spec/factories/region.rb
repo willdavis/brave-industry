@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :region do
-    #id 10000001 #Derelik
-    id 10000002 #The Forge
+    id 10000002
+    name "The Forge"
   end
 end
