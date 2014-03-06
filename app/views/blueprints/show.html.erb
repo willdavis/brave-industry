@@ -81,6 +81,24 @@
 				</div> <!-- end column -->
 				
 				<div class="col-xs-12 col-md-6">
+				  <%= form_tag("/blueprints/#{@blueprint.id}", :method => :get) do %>
+				  <div class="panel panel-primary">
+						<div class="panel-heading">Market Details</div>
+						<div class="panel-body">
+						
+							<div class="panel-heading">
+								<div class="row">
+									<div class="col-xs-5">Region</div>
+									<div class="col-xs-7">
+									  <%= select_tag(:region_id, options_for_select(Region.all.map{ |region| [region["name"], region["id"]] }, @blueprint.region_id ? @blueprint.region_id : 10000002)) %>
+									</div>
+								</div>
+							</div>
+							
+						</div>
+					</div> <!-- end market details panel -->
+				  
+				  
 					<div class="panel panel-primary">
 						<div class="panel-heading">Research Details</div>
 						<div class="panel-body">
@@ -96,25 +114,26 @@
 							<div class="panel-heading">
 								<div class="row">
 									<div class="col-xs-12">
-										<%= form_tag("/blueprints/#{@blueprint.id}", :method => :get) do %>
-											<div class="checkbox">
-												<label>
-													<%= check_box_tag(:invented, "yes", @blueprint.invented ? true : false) %> Include Invention Costs
-												</label>
+									
+										<div class="checkbox">
+											<label>
+												<%= check_box_tag(:invented, "yes", @blueprint.invented ? true : false) %> Include Invention Costs
+											</label>
+										</div>
+										<span class="pull-right">
+											<%= hidden_field_tag(:ME, @blueprint.material_efficiency) %>
+											<div class="form-group">
+												<button type="submit" id="update-blueprint" class="btn btn-primary">Update</button>
 											</div>
-											<span class="pull-right">
-												<%= hidden_field_tag(:ME, @blueprint.material_efficiency) %>
-												<div class="form-group">
-													<button type="submit" id="update-blueprint" class="btn btn-primary">Update</button>
-												</div>
-											</span>
-										<% end %>
+										</span>
+										
 									</div>
 								</div>
 							</div>
 							
 						</div>
-					</div>
+					</div> <!-- end research details panel -->
+				  <% end %> <!-- end blueprint form-->
 				</div> <!-- end column -->
 			</div>
 		</div> <!-- end home -->
