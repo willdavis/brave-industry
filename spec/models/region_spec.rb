@@ -20,6 +20,23 @@ describe Region do
 	  end
 	end
 	
+	context "search by id" do
+	  context "with valid id" do
+	    it "returns a region in JSON" do
+	      expect(@region.name).to_not be_nil
+	      expect(@region.name).to be_a(String)
+	    end
+	  end
+	  
+	  context "with invalid id" do
+	    it "returns nil" do
+	      bad_region = FactoryGirl.create(:region)
+	      bad_region.id = 0
+	      expect(bad_region.name).to be_nil
+	    end
+	  end
+	end
+	
 	context "search all result" do
 	  it "returns an array containing all regions" do
 	    expect(Region.all).to be_a(Array)
@@ -27,6 +44,16 @@ describe Region do
 	  
 	  it "size should be 67 regions" do
 	    expect(Region.all.size).to eq(67)
+	  end
+	  
+	  it "returns a name and id for all regions" do
+	    Region.all.each do |region|
+	      expect(region["id"]).to_not be_nil
+	      expect(region["id"]).to be_a(Integer)
+	      
+	      expect(region["name"]).to_not be_nil
+	      expect(region["name"]).to be_a(String)
+	    end
 	  end
 	end
 end

@@ -21,6 +21,10 @@ class Region
     end
   end
   
+  def name
+    get_region["name"] if !get_region.nil?
+  end
+  
   private
   
   def self.get_all_regions
