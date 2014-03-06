@@ -89,7 +89,9 @@
 							<div class="panel-heading">
 								<div class="row">
 									<div class="col-xs-5">Region</div>
-									<div class="col-xs-7">[region name]</div>
+									<div class="col-xs-7">
+									  <%= select_tag(:region_id, options_for_select(Region.all.map{ |region| [region["name"], region["id"]] }, @blueprint.region_id ? @blueprint.region_id : 10000002)) %>
+									</div>
 								</div>
 							</div>
 							
