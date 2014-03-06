@@ -41,7 +41,8 @@ $ ->
 			item_trade_volume = []
 			
 			product_id = $('.item-sell-price').attr("id")
-			evecentral_market_history = "http://api.eve-central.com/api/history/for/type/#{product_id}/region/10000002/bid/0"
+			region_id = $('#region_id').val()
+			evecentral_market_history = "http://api.eve-central.com/api/history/for/type/#{product_id}/region/#{region_id}/bid/0"
 			
 			$.getJSON(
 				evecentral_market_history
@@ -134,7 +135,8 @@ we_must_go_deeper = () ->
 
 lookup_invention_costs = () ->
 	total_production_cost = 0
-	evecentral_url = "http://api.eve-central.com/api/marketstat?regionlimit=10000002"
+	region_id = $('#region_id').val()
+	evecentral_url = "http://api.eve-central.com/api/marketstat?regionlimit=#{region_id}"
 	
 	$('#invention-materials-datacores').find(".invention-material").each(
     () ->
@@ -199,7 +201,8 @@ lookup_production_costs = () ->
 	item_sell_price = 0
 	units_produced = $('.item-units-produced').text()
 	product_id = $('.item-sell-price').attr("id")
-	evecentral_url = "http://api.eve-central.com/api/marketstat?regionlimit=10000002&typeid=#{product_id}"
+	region_id = $('#region_id').val()
+	evecentral_url = "http://api.eve-central.com/api/marketstat?regionlimit=#{region_id}&typeid=#{product_id}"
 	
 	console.log "Looking up material IDs..."
 	
