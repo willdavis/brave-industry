@@ -10,9 +10,10 @@ class Region
   
   # ActiveRecord queries
   def self.all; Region.get_all_regions; end
+  def self.find(region_id); Region.get_region(region_id); end
   
   # Dynamic attributes should match the values supplied by form_for params
-  ATTRIBUTES = [:id]
+  ATTRIBUTES = [:id, :name]
   attr_accessor *ATTRIBUTES
   
   def initialize(attributes = {})
@@ -21,18 +22,17 @@ class Region
     end
   end
   
-  def name
-    get_region["name"] if !get_region.nil?
-  end
-  
   private
   
   def self.get_all_regions
-    @regions ||= Rails.cache.fetch("regions.all") { Region.evedata.get("/regions?limit=67").body }
+    regions = Rails.cache.fetch("regions.all") { Region.evedata.get("/regions?limit=67").body }
+    regions.map{ |region| Region.new(:id=>region["id"], :name=>region["name"]) }
   end
   
-  def get_region
-    @region ||= Rails.cache.fetch("region.#{id}") { Region.evedata.get("/regions/#{id}").body.first }
+  def self.get_region(region_id)
+    region = Rails.cache.fetch("region.#{region_id}") { Region.evedata.get("/regions/#{region_id}").body.first }
+    return Region.new(:id => region["id"], :name => region["name"]) if !region.nil?
+    return Region.new if region.nil?
   end
   
   def self.evedata

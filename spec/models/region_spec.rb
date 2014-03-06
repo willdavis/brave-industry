@@ -17,22 +17,34 @@ describe Region do
 	  it "has an id" do
 		  expect(@region.id).to_not be_nil
 		  expect(@region.id).to be_a(Integer)
+		  expect(@region.id).to eq(10000002)
+	  end
+	  
+	  it "has a name" do
+	    expect(@region.name).to_not be_nil
+	    expect(@region.name).to be_a(String)
+	    expect(@region.name).to eq("The Forge")
 	  end
 	end
 	
-	context "search by id" do
+	context "search" do
 	  context "with valid id" do
-	    it "returns a region in JSON" do
-	      expect(@region.name).to_not be_nil
-	      expect(@region.name).to be_a(String)
+	    it "returns a region" do
+	      region = Region.find(10000002)
+	      expect(region.id).to_not be_nil
+	      expect(region.name).to_not be_nil
+	      
+	      expect(region.id).to be_a(Integer)
+	      expect(region.name).to be_a(String)
 	    end
 	  end
 	  
 	  context "with invalid id" do
 	    it "returns nil" do
-	      bad_region = FactoryGirl.create(:region)
-	      bad_region.id = 0
-	      expect(bad_region.name).to be_nil
+	      region = Region.find(0)
+	      
+	      expect(region.id).to be_nil
+	      expect(region.name).to be_nil
 	    end
 	  end
 	end
@@ -48,11 +60,11 @@ describe Region do
 	  
 	  it "returns a name and id for all regions" do
 	    Region.all.each do |region|
-	      expect(region["id"]).to_not be_nil
-	      expect(region["id"]).to be_a(Integer)
+	      expect(region.id).to_not be_nil
+	      expect(region.id).to be_a(Integer)
 	      
-	      expect(region["name"]).to_not be_nil
-	      expect(region["name"]).to be_a(String)
+	      expect(region.name).to_not be_nil
+	      expect(region.name).to be_a(String)
 	    end
 	  end
 	end
