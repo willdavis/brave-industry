@@ -152,7 +152,7 @@ describe Blueprint do
   		
   		it "have a recycled quantity" do
   			@blueprint.materials.each{ |item| item["recycled_quantity"].should be_a(Integer) }
-  			@blueprint.materials.select{ |item| item["recycled_quantity"] > 0 }.should_not be_empty if @blueprint.tech_level == 2 and @blueprint.group["name"] != "Freighter Blueprint"
+  			@blueprint.materials.select{ |item| item["recycled_quantity"] >= 0 }.should_not be_empty if @blueprint.tech_level == 2
   		end
 
 			it "have an extra quantity" do
@@ -196,7 +196,7 @@ describe Blueprint do
   		
   		it "have a wasted quantity" do
   			@blueprint.components.each{ |item| item["wasted_quantity"].should be_a(Integer) }
-  			@blueprint.components.each{ |item| item["wasted_quantity"].should eq 0 }
+  			@blueprint.components.each{ |item| item["wasted_quantity"].should be >= 0 }
   		end
   		
   		it "have a consumed percentage" do
