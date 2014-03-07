@@ -8,7 +8,7 @@ class BlueprintsController < ApplicationController
   end
   
   def browse
-  	@blueprint_groups = Rails.cache.fetch('Blueprints.Groups.all') { evedata.get("/categories/9/groups?limit=150").body }
+  	@blueprint_groups = Group.find_by_category_id(9)
   end
 
   def show
