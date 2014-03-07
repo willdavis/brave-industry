@@ -8,6 +8,9 @@ class Group
   def persisted?; false; end
   def save!; true; end
   
+  # ActiveRecord support
+  def self.find_by_category_id(category_id); get_groups(category_id); end
+  
   # Dynamic attributes should match the values supplied by form_for params
   ATTRIBUTES = [:id, :name]
   attr_accessor *ATTRIBUTES
@@ -24,14 +27,19 @@ class Group
   
   def get_members
     query = lambda do
-      members = Rails.cache.fetch("group.#{id}.members") { evedata.get("/blueprints?group_id=#{id}&limit=200").body }
+      members = Rails.cache.fetch("group.#{id}.members") { Group.evedata.get("/blueprints?group_id=#{id}&limit=200").body }
       members.map{ |member| Blueprint.new(:id=>member["id"]) }
     end
     
     @members ||= query.call
   end
   
-  def evedata
+  def self.get_groups(category_id)
+    groups = Rails.cache.fetch("category.#{category_id}.groups") { Group.evedata.get("/categories/9/groups?limit=200").body }
+    groups.map{ |group| Group.new(:id=>group["id"], :name=>group["name"]) }
+  end
+  
+  def self.evedata
   	@connection ||= Faraday.new(:url => "http://evedata.herokuapp.com") do |conn|
   		conn.request :json
   		conn.response :json, :content_type => /\bjson$/
