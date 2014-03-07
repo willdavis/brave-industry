@@ -35,7 +35,7 @@ class Group
   end
   
   def self.get_groups(category_id)
-    groups = Rails.cache.fetch("category.#{category_id}.groups") { Group.evedata.get("/categories/9/groups?limit=200").body }
+    groups = Rails.cache.fetch("category.#{category_id}.groups") { Group.evedata.get("/categories/#{category_id}/groups?limit=200").body }
     groups.map{ |group| Group.new(:id=>group["id"], :name=>group["name"]) }
   end
   
