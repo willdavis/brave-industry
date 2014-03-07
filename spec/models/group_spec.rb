@@ -22,14 +22,17 @@ describe Group do
       expect(@group.members).to_not be_nil
       expect(@group.members).to be_a(Array)
       expect(@group.members).to_not be_empty
+      @group.members.each do |member|
+        expect(member).to be_a(Blueprint)
+      end
     end
   end
   
   context "members" do
-    it "have the groups id" do
-      expect(@group.members.first).to_not be_nil
-      expect(@group.members.first).to_not be_a(Blueprint)
-      expect(@group.members.first.group["id"]).to be == @group.id
+    it "must have the groups id" do
+      @group.members.each do |member|
+        expect(member.group["id"].to_i).to be == @group.id
+      end
     end
   end
 end
