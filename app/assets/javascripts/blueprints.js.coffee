@@ -7,29 +7,6 @@ $ ->
 		
 		we_must_go_deeper()
 	
-	$('.blueprint-toggle').bind(
-		"click"
-		() ->
-			panel = $(this).parent().parent()
-			group_id = panel.attr("id")
-			group_blueprints = panel.children("##{group_id}-collapse").children(".panel-body")
-			
-			console.log "clicked ID:#{group_id}"
-			
-			if group_blueprints.children(".blueprint").length != 0
-				console.log "Blueprints already loaded from evedata.  Displaying cached content"
-			else
-				console.log "No blueprints present.  Loading from evedata..."
-				evedata_url = "http://evedata.herokuapp.com/blueprints?group_id=#{group_id}&limit=100"
-				$.getJSON(
-					evedata_url
-					(data) ->
-						console.log "recieved data from evedata...\ncreating HTML..."
-						for blueprint in data
-							panel.children("##{group_id}-collapse").children(".panel-body").append("<table class='blueprint'><tr><td width='32' height='32' class='blueprint-image'><img src='#{blueprint['images']['small']}' /></td><td class='blueprint-name'><a href='#{blueprint['id']}'>#{blueprint['name']}</a></td></table>")
-				)
-	)
-	
 	$('.nav-history-title').bind(
 		"click"
 		() ->
