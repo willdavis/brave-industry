@@ -40,7 +40,7 @@ class Group
   end
   
   def self.evedata
-  	@connection ||= Faraday.new(:url => "http://evedata.herokuapp.com") do |conn|
+  	Faraday.new(:url => "http://evedata.herokuapp.com") do |conn|
   		conn.request :json
   		conn.response :json, :content_type => /\bjson$/
   		conn.adapter Faraday.default_adapter

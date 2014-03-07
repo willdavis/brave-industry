@@ -16,6 +16,7 @@
 <div class="panel panel-default">
 	<div class="panel-body">
 	
+	  <%= paginate @blueprint_groups %>
 		<div class="panel-group" id="blueprint-groups">
 			<% @blueprint_groups.each do |group| %>
 				<div id="<%= group.id %>" class="panel panel-default">

@@ -8,7 +8,7 @@ class BlueprintsController < ApplicationController
   end
   
   def browse
-  	@blueprint_groups = Group.find_by_category_id(9)
+  	@blueprint_groups = Kaminari.paginate_array(Group.find_by_category_id(9)).page(params[:page]).per(params[:limit])
   end
 
   def show
