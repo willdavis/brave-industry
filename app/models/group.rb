@@ -28,7 +28,7 @@ class Group
   def get_members
     query = lambda do
       members = Rails.cache.fetch("group.#{id}.members") { Group.evedata.get("/blueprints?group_id=#{id}&limit=200").body }
-      members.map{ |member| Blueprint.new(:id=>member["id"]) }
+      members.map{ |member| Blueprint.new(:id=>member["id"], :name=>member["name"], :images=>member["images"]) }
     end
     
     @members ||= query.call
