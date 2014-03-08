@@ -1,0 +1,8 @@
+<% group.members.each do |blueprint| %>
+  <table class='blueprint'>
+    <tr>
+      <td width='32' height='32' class='blueprint-image'><img src="<%= blueprint.images['small'] %>" /></td>
+      <td class='blueprint-name'><a href="<%= blueprint.id %>"><%= blueprint.name %></a></td>
+    <tr>
+  </table>
+<% end %>

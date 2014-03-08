@@ -13,14 +13,16 @@
 	</div>
 </div>
 
+<%= paginate @blueprint_groups %>
+
 <div class="panel panel-default">
 	<div class="panel-body">
 	
 		<div class="panel-group" id="blueprint-groups">
 			<% @blueprint_groups.each do |group| %>
-				<div id="<%= group['id'] %>" class="panel panel-default">
+				<div id="<%= group.id %>" class="panel panel-default">
 					<div class="panel-heading">
-						<a class="blueprint-toggle" data-toggle="collapse" data-parent="#blueprint-groups" href="#<%= group['id'] %>-collapse">
+						<a class="blueprint-toggle" data-toggle="collapse" data-parent="#blueprint-groups" href="#<%= group.id %>-collapse">
 							<div class="row">
 								<div class="col-xs-12">
 									<table>
@@ -28,18 +30,19 @@
 											<td><span class="glyphicon glyphicon-expand"></span></td>
 											<td>
 												<h4 class="panel-title">
-													<%= group["name"] %>
+													<%= group.name %>
 												</h4>
 											</td>
 										</tr>
 									</table>
 								</div>
 							</div>
-					
 						</a>
 					</div>
-					<div id="<%= group['id'] %>-collapse" class="panel-collapse collapse">
-						<div class="panel-body"></div>
+					<div id="<%= group.id %>-collapse" class="panel-collapse collapse">
+						<div class="panel-body">
+						  <%= render partial: "group", object: group %>
+						</div>
 					</div>
 				</div>
 			<% end %>

@@ -14,6 +14,9 @@ end
 
 gem 'nokogiri'
 
+# Pagination
+gem 'kaminari'
+
 # Memcachier
 gem 'memcachier'
 gem 'dalli'
