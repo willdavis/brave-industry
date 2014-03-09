@@ -7,30 +7,42 @@
 	</div>
 	
 	<div class="row">
-		<h2 class="text-center text-primary">Brave Industry can answer the big questions in production</h2>
+		<h2 class="text-center text-primary">What can Brave Industry do?</h2>
 	</div>
 
 	<div class="row">
 		<div class="col-md-4 col-xs-12">
-			<h2>Is it profitable?</h2>
-			<p>With the cutthroat competition in EVE, it can be difficult to figure out what's actually profitable to build.  And even then, is it maintainable?  Is the ISK/hour you're generating even worth while?<p>
-			<p>Brave Industry makes it easy to find blueprints. Even if you don't know what you're looking for!  You can easily search or browse blueprints to help narrow down your choices.</p>
-			<p><%= link_to "Example Blueprint", blueprint_path(2489), :class => "btn btn-default", :role => "button" %></p>
+			<h2>easily search or browse for blueprints</h2>
+			<p>Don't know what you're looking for?  But you want in on this whole market thingy.  Well, now you can easily <%= link_to "search", blueprints_path %> or <%= link_to "browse", browse_blueprints_path %> for blueprint details.</p>
+			
+			<h4>What do those details include?</h4>
+		  <ul>
+		    <li>Bill of Materials with price breakdown for each material</li>
+		    <li>Required skills for manufacturing (more coming soon!)</li>
+		    <li>Invention materials and their prices</li>
+		    <li>Overall profit margin with all costs included (NEVER fully trust this number!)</li>
+		  </ul>
+			
+			<h4>But wait!  There's more!</h4>
+			<p>
+			  call now to recieve a FREE slider bar!  It magically changes the Material Efficiency of your blueprint right before your eyes!<br />
+			  <small>Production Efficiency slider bar coming soon...</small>
+			</p>
 		</div>
 		
 		<div class="col-md-4 col-xs-12">
-			<h2>Can I afford it?</h2>
-			<p>Have you built your dream ship but are now wondering how much it would actually cost?  Perhaps you need to fill a bulk order of 30 Talwars plus their modules?  Or maybe your just sick of doing the math yourself!</p>
+			<h2>pretty market history graphs</h2>
+			<p>Brave Industry makes use of EveCentral's market history to bring you pretty market graphs.  Allowing you to easily view the volume and price fluctuations for an item in a specified region.  It only give you about a week of history, but that can still be useful for estimating market volume and prices.</p>
 			
-			<p>Brave Industry makes it easy to import ship fittings and see price breakdowns for their components.</p>
+			<p>For example!  Check out the price drops in Placid and market PVP in Derelik:</p>
+			<p> <%= link_to "Placid Atron", "/blueprints/955?region_id=10000048", :class => "btn btn-default", :role => "button" %> vs <%= link_to "Derelik Atron", "/blueprints/955?region_id=10000001", :class => "btn btn-default", :role => "button" %></p>
+		</div>
+		
+		<div class="col-md-4 col-xs-12">
+			<h2>price check ship fittings</h2>
+			<p>How much is that new cool ship fitting going to cost?  Brave Industry has a simple tool for that!  Simply export the fitting to .xml and then let Brave Industries Price Check tool do the rest.</p>
+			<p>Warning: it's currently hard coded use to Jita prices as a reference.</p>
 			<p><%= link_to "Price Check", price_check_index_path, :class => "btn btn-default", :role => "button" %></p>
-		</div>
-		
-		<div class="col-md-4 col-xs-12">
-			<h2>Is it maintainable?</h2>
-			<p>EVE Online can be extremely complicated and the market can swing on a moments notice.  Leaving a less savy industrialist in the cold.  Don't let this happen to you!</p>
-			
-			<p>Check if an item's price is stable with Brave Industries market history graphs!</p>
 		</div>
 	</div> <!-- end row -->
 </div>
