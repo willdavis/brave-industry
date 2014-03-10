@@ -7,7 +7,6 @@ $ ->
 		
 		we_must_go_deeper()
 	
-	window.station_ids = {}
 	$('#station_name').typeahead(
 	  source: (query, process) ->
 	    $.get(
@@ -17,13 +16,10 @@ $ ->
           names = []
           $.each(data, (key, val) ->
             names.push(data[key].name)
-            station_ids[data[key].name] = data[key].id
           )
           process(names)
 	    )
 	  updater: (item) ->
-	    $('#station_id').val(station_ids[item])
-	    console.log("'#{item}' selected with ID: #{station_ids[item]}")
 	    return item
 	)
 	
