@@ -14,6 +14,7 @@
 //= require jquery.turbolinks
 //= require jquery_ujs
 //= require bootstrap
+//= require bootstrap3-typeahead
 //= require jqplot
 //= require jqplot/plugins/cursor
 //= require jqplot/plugins/highlighter
