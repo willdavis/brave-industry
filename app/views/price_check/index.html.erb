@@ -23,40 +23,6 @@
 </div>
 
 <div class="col-xs-12 col-md-6">
-  <div class="panel panel-primary">
-	  <div class="panel-heading">Market Details</div>
-	  <div class="panel-body">
-	
-		  <div class="row">
-		    <div class="col-xs-12">
-		      <div class="form-group">
-            <div class="input-group">
-              <span class="input-group-addon">
-                <%= radio_button_tag :market_sort, :region, true %>
-              </span>
-              <span class="input-group-addon">Using Region</span>
-              <%= select_tag(:region_id, options_for_select(Region.all.map{ |r| [r.name, r.id] }, 10000002), :class=>"form-control") %>
-            </div>
-          </div>
-		    </div>
-	    </div>
-		
-		  <div class="row">
-			  <div class="col-xs-12">
-			    <div class="form-group">
-            <div class="input-group">
-              <span class="input-group-addon">
-                <%= radio_button_tag :market_sort, :solar_system %>
-              </span>
-              <span class="input-group-addon">Using Solar System</span>
-              <%= text_field_tag :solar_name, nil, :placeholder => "Name", :autocomplete => :off, :data => { :provide =>"typeahead" }, :class=>"form-control" %>
-              <%= hidden_field_tag :solar_id %>
-            </div>
-          </div>
-			  </div>
-		  </div>
-		
-	  </div>
-  </div> <!-- end market details panel -->
+  <%= render 'layouts/market_details' %>
 </div>
 <% end %>

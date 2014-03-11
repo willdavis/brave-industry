@@ -7,7 +7,7 @@ class PriceCheckController < ApplicationController
   	@fitting = @results.xpath("//fitting").first
   	@ship = @results.xpath("//shipType").first
   	
-  	@market = params[:market_sort]
+  	@market = params[:market_in]
   	@region = Region.find(params[:region_id])
   	@solar_name = params[:solar_name]
   	@solar_id = params[:solar_id]
