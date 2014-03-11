@@ -3,29 +3,26 @@
 </div>
 
 <%= form_tag({action: :results}, multipart: true) do %>
-<div class="col-xs-6">
-	<div class="form-group">
-    <label for="input_file">File input</label>
-    <%= file_field_tag :input_file,  :accept => 'text/xml' %>
-    <p class="help-block">Select an exported EFT file</p>
-  </div>
-  
-  <button type="submit" class="btn btn-primary">Submit</button>
+<div class="col-xs-12 col-md-6">
+  <div class="panel panel-primary">
+	  <div class="panel-heading">Ship Fitting</div>
+	  <div class="panel-body">
+	    
+	    <div class="row">
+		    <div class="col-xs-12">
+		      <div class="form-group">
+            <%= file_field_tag :input_file,  :accept => 'text/xml' %>
+          </div>
+          
+          <button type="submit" class="btn btn-primary">Submit</button>
+		    </div>
+	    </div>
+	    
+	  </div>
+	</div> <!-- end panel-primary -->
 </div>
-<div class="col-xs-6">
-  <div class="form-group">
-    <label for="region_id">Region</label>
-    <%= select_tag(:region_id, options_for_select(Region.all.map{ |r| [r.name, r.id] }, 10000002), :class=>"form-control") %>
-    <p class="help-block">Select a region for price information</p>
-    
-    -OR-
-    
-    <br />
-    <br />
-    <label for="solar_name">Solar System</label>
-    <%= text_field_tag :solar_name, nil, :placeholder => "solar system name", :autocomplete => :off, :data => { :provide =>"typeahead" }, :class=>"form-control" %>
-	  <%= hidden_field_tag :solar_id %>
-    <p class="help-block">Select a solar system for price information</p>
-  </div>
+
+<div class="col-xs-12 col-md-6">
+  <%= render 'layouts/market_details', :item => Blueprint.new(:region_id=>10000002, :market_in=>"region") %>
 </div>
 <% end %>

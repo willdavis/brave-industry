@@ -6,8 +6,14 @@
 	<h3><%= @fitting[:name] %></h3>
 
 	<p>Total Price: <span id="total-price">loading...</span> Isk</p>
-	<p>Priced in region: Region (id:<span id="region-id"><%= @region_id %></span>)</p>
-	<p>Priced in solar system: <span id="solar-name"><%= @solar_name.nil? ? "N/A" : @solar_name %></span> (id:<span id="solar-id" class="display:none"><%= @solar_id %></span>)</p>
+	
+	<% if @market == "region" %>
+	  <span id="region-id" style="display:none"><%= @region.id %></span>
+	  <p>Prices gathered from: <%= @region.name %></p>
+	<% else %>
+	  <span id="solar-id" style="display:none"><%= @solar_id %></span>
+	  <p>Prices gathered from: <span id="solar-name"><%= @solar_name %></span></p>
+	<% end %>
 
 	<table class="table table-condensed">
 		<tr>
