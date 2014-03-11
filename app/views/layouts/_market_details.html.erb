@@ -27,8 +27,8 @@
               <%= radio_button_tag :market_in, :solar_system, item.market_in == "solar_system" %>
             </span>
             <span class="input-group-addon">Using Solar System</span>
+            <span id="solar_id" style="display:none"><%= item.solar_id %></span>
             <%= text_field_tag :solar_name, item.solar_name, :placeholder => "Name", :autocomplete => :off, :data => { :provide =>"typeahead", :source => SolarSystem.all.map{ |s| s.name } }, :class=>"form-control" %>
-            <%= hidden_field_tag :solar_id, item.solar_id %>
           </div>
         </div>
 		  </div>

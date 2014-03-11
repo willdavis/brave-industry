@@ -19,7 +19,7 @@ $ ->
 			
 			product_id = $('.item-sell-price').attr("id")
 			region_id = $('#region_id').val()
-			solar_id = $('#solar_id').val()
+			solar_id = $('#solar_id').text()
 			solar_name = $('#solar_name').val()
 			
 			if $("#market_in_solar_system").is(':checked') and solar_id != ""
@@ -121,7 +121,7 @@ we_must_go_deeper = () ->
 lookup_invention_costs = () ->
 	total_production_cost = 0
 	region_id = $('#region_id').val()
-	solar_id = $('#solar_id').val()
+	solar_id = $('#solar_id').text()
 	
 	if $("#market_in_solar_system").is(':checked') and solar_id != ""
 	  evecentral_url = "http://api.eve-central.com/api/marketstat?usesystem=#{solar_id}"
@@ -192,7 +192,7 @@ lookup_production_costs = () ->
 	units_produced = $('.item-units-produced').text()
 	product_id = $('.item-sell-price').attr("id")
 	region_id = $('#region_id').val()
-	solar_id = $('#solar_id').val()
+	solar_id = $('#solar_id').text()
 	
 	if $("#market_in_solar_system").is(':checked') and solar_id != ""
 	  evecentral_url = "http://api.eve-central.com/api/marketstat?usesystem=#{solar_id}&typeid=#{product_id}"

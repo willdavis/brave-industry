@@ -13,6 +13,7 @@ class BlueprintsController < ApplicationController
 
   def show
 		params["material_efficiency"] = params["ME"].to_i
+		params["solar_id"] = SolarSystem.find_by_name(params["solar_name"]).id if params["solar_name"]
   	@blueprint = Blueprint.new(params)
   end
   
