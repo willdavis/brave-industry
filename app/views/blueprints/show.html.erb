@@ -90,7 +90,17 @@
 								<div class="row">
 									<div class="col-xs-5">Region</div>
 									<div class="col-xs-7">
-									  <%= select_tag(:region_id, options_for_select(Region.all.map{ |r| [r.name, r.id] }, @blueprint.region_id ? @blueprint.region_id : 10000002)) %>
+									  <%= select_tag(:region_id, options_for_select(Region.all.map{ |r| [r.name, r.id] }, @blueprint.region_id ? @blueprint.region_id : 10000002), :class=>"form-control") %>
+									</div>
+								</div>
+							</div>
+							
+							<div class="panel-heading">
+								<div class="row">
+									<div class="col-xs-5">Solar System</div>
+									<div class="col-xs-7">
+									  <%= text_field_tag :solar_name, @blueprint.solar_name, :placeholder => "solar system name", :autocomplete => :off, :data => { :provide =>"typeahead" }, :class=>"form-control" %>
+									  <%= hidden_field_tag :solar_id, @blueprint.solar_id %>
 									</div>
 								</div>
 							</div>
