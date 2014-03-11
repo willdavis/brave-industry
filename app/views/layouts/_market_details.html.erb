@@ -9,7 +9,7 @@
 	      <div class="form-group">
           <div class="input-group">
             <span class="input-group-addon">
-              <%= radio_button_tag :market_in, :region, true %>
+              <%= radio_button_tag :market_in, :region, item.market_in.nil? || item.market_in == "region" %>
             </span>
             <span class="input-group-addon">Using Region</span>
             <% item.region_id.nil? ? region = 10000002 : region = item.region_id %>
@@ -24,7 +24,7 @@
 		    <div class="form-group">
           <div class="input-group">
             <span class="input-group-addon">
-              <%= radio_button_tag :market_in, :solar_system %>
+              <%= radio_button_tag :market_in, :solar_system, item.market_in == "solar_system" %>
             </span>
             <span class="input-group-addon">Using Solar System</span>
             <%= text_field_tag :solar_name, item.solar_name, :placeholder => "Name", :autocomplete => :off, :data => { :provide =>"typeahead" }, :class=>"form-control" %>
