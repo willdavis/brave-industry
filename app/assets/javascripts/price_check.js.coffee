@@ -5,7 +5,13 @@ $ ->
 
 query_evecentral = () ->
 	total_price = 0
-	evecentral_url = "http://api.eve-central.com/api/marketstat?regionlimit=10000002"
+	region_id = $('#region_id').val()
+	solar_id = $('#solar_id').val()
+	
+	if solar_id != ""
+	  evecentral_url = "http://api.eve-central.com/api/marketstat?usesystem=#{solar_id}"
+	else
+	  evecentral_url = "http://api.eve-central.com/api/marketstat?regionlimit=#{region_id}"
 	
 	$('.item').each(
     () ->
