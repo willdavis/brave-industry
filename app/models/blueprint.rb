@@ -9,7 +9,7 @@ class Blueprint
   def save!; true; end
   
   # Dynamic attributes should match the values supplied by form_for params
-  ATTRIBUTES = [:id, :name, :images, :invented, :material_efficiency, :region_id]
+  ATTRIBUTES = [:id, :name, :images, :invented, :material_efficiency, :region_id, :station_name]
   attr_accessor *ATTRIBUTES
   
   def initialize(attributes = {})

@@ -10,8 +10,8 @@ $ ->
 	$('#station_name').typeahead(
 	  source: (query, process) ->
 	    $.get(
-        'http://evedata.herokuapp.com/solar_systems'
-        { limit: 5, name: query }
+        'http://evedata.herokuapp.com/stations'
+        { limit: 10, name: query }
         (data) ->
           names = []
           $.each(data, (key, val) ->
@@ -21,6 +21,8 @@ $ ->
 	    )
 	  updater: (item) ->
 	    return item
+	    
+	  minLength: 3
 	)
 	
 	$('.nav-history-title').bind(
