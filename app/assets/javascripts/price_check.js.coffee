@@ -5,8 +5,8 @@ $ ->
 
 query_evecentral = () ->
 	total_price = 0
-	region_id = $('#region_id').val()
-	solar_id = $('#solar_id').val()
+	region_id = $('#region-id').text()
+	solar_id = $('#solar-id').text()
 	
 	if solar_id != ""
 	  evecentral_url = "http://api.eve-central.com/api/marketstat?usesystem=#{solar_id}"
