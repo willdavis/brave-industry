@@ -30,7 +30,18 @@ describe SolarSystem do
 	context "search" do
 	  context "with valid id" do
 	    it "returns a solar system" do
-	      solar = SolarSystem.find(30000015)
+	      solar = SolarSystem.find_by_id(30000015)
+	      expect(solar.id).to_not be_nil
+	      expect(solar.name).to_not be_nil
+	      
+	      expect(solar.id).to be_a(Integer)
+	      expect(solar.name).to be_a(String)
+	    end
+	  end
+	  
+	  context "with a valid name" do
+	    it "returns a solar system" do
+	      solar = SolarSystem.find_by_name("Sendaya")
 	      expect(solar.id).to_not be_nil
 	      expect(solar.name).to_not be_nil
 	      
@@ -41,7 +52,16 @@ describe SolarSystem do
 	  
 	  context "with invalid id" do
 	    it "returns nil" do
-	      solar = SolarSystem.find(0)
+	      solar = SolarSystem.find_by_id(0)
+	      
+	      expect(solar.id).to be_nil
+	      expect(solar.name).to be_nil
+	    end
+	  end
+	  
+	  context "with invalid name" do
+	    it "returns nil" do
+	      solar = SolarSystem.find_by_name("NOT A SYSTEM")
 	      
 	      expect(solar.id).to be_nil
 	      expect(solar.name).to be_nil

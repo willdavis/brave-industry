@@ -10,7 +10,8 @@ class SolarSystem
   
   # ActiveRecord queries
   def self.all; SolarSystem.get_all_systems; end
-  def self.find(solar_id); SolarSystem.get_system(solar_id); end
+  def self.find_by_id(solar_id); SolarSystem.get_system_by_id(solar_id); end
+  def self.find_by_name(solar_name); SolarSystem.get_system_by_name(solar_name); end
   
   # Dynamic attributes should match the values supplied by form_for params
   ATTRIBUTES = [:id, :name]
@@ -29,8 +30,14 @@ class SolarSystem
     systems.map{ |system| SolarSystem.new(:id=>system["id"], :name=>system["name"]) }
   end
   
-  def self.get_system(solar_id)
+  def self.get_system_by_id(solar_id)
     system = Rails.cache.fetch("solar_system.#{solar_id}") { SolarSystem.evedata.get("/solar_systems/#{solar_id}").body.first }
+    return SolarSystem.new(:id => system["id"], :name => system["name"]) if !system.nil?
+    return SolarSystem.new if system.nil?
+  end
+  
+  def self.get_system_by_name(solar_name)
+    system = Rails.cache.fetch("solar_system.#{solar_name}") { SolarSystem.evedata.get("/solar_systems?name=#{solar_name}").body.first }
     return SolarSystem.new(:id => system["id"], :name => system["name"]) if !system.nil?
     return SolarSystem.new if system.nil?
   end
