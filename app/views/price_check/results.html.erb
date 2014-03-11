@@ -9,9 +9,10 @@
 	
 	<% if @market == "region" %>
 	  <span id="region-id" style="display:none"><%= @region.id %></span>
-	  <p>Priced in region: <%= @region.name %></p>
+	  <p>Prices gathered from: <%= @region.name %></p>
 	<% else %>
-	  <p>Priced in solar system: <span id="solar-name"><%= @solar_name.nil? ? "N/A" : @solar_name %></span> (id:<span id="solar-id" class="display:none"><%= @solar_id %></span>)</p>
+	  <span id="solar-id" style="display:none"><%= @solar_id %></span>
+	  <p>Prices gathered from: <span id="solar-name"><%= @solar_name %></span></p>
 	<% end %>
 
 	<table class="table table-condensed">
