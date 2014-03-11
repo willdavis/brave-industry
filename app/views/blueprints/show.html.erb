@@ -97,9 +97,10 @@
 							
 							<div class="panel-heading">
 								<div class="row">
-									<div class="col-xs-5">Station</div>
+									<div class="col-xs-5">Solar System</div>
 									<div class="col-xs-7">
-									  <%= text_field_tag :station_name, @blueprint.station_name, :placeholder => "station name", :autocomplete => :off, :data => { :provide =>"typeahead" }, :class=>"form-control" %>
+									  <%= text_field_tag :solar_name, @blueprint.solar_name, :placeholder => "solar system name", :autocomplete => :off, :data => { :provide =>"typeahead" }, :class=>"form-control" %>
+									  <%= hidden_field_tag :solar_id, @blueprint.solar_id %>
 									</div>
 								</div>
 							</div>
