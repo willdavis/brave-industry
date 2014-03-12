@@ -15,6 +15,9 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require bootstrap3-typeahead
+
+//= require market_details
+
 //= require jqplot
 //= require jqplot/plugins/cursor
 //= require jqplot/plugins/highlighter
@@ -22,5 +25,4 @@
 //= require jqplot/plugins/canvasTextRenderer
 //= require jqplot/plugins/canvasAxisLabelRenderer
 //= require jquery.ui.slider
-//= require turbolinks
 //= require_tree .

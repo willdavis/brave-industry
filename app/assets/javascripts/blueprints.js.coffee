@@ -7,32 +7,6 @@ $ ->
 		
 		we_must_go_deeper()
 	
-	window.solar_system_ids = {}
-	$('#solar_name').typeahead(
-	  source: (query, process) ->
-	    $.get(
-        'http://evedata.herokuapp.com/solar_systems'
-        { limit: 5, name: query }
-        (data) ->
-          names = []
-          $.each(data, (key, val) ->
-            names.push(data[key].name)
-            solar_system_ids[data[key].name] = data[key].id
-          )
-          process(names)
-	    )
-	  updater: (item) ->
-	    $('#solar_id').val(solar_system_ids[item])
-	    return item
-	    
-	  minLength: 3
-	)
-	
-	$('#solar_name').change(
-	  () ->
-	    $('#solar_id').val("") if $(this).val() == ""
-	)
-	
 	$('.nav-history-title').bind(
 		"click"
 		() ->
@@ -45,7 +19,7 @@ $ ->
 			
 			product_id = $('.item-sell-price').attr("id")
 			region_id = $('#region_id').val()
-			solar_id = $('#solar_id').val()
+			solar_id = $('#solar_id').text()
 			solar_name = $('#solar_name').val()
 			
 			if $("#market_in_solar_system").is(':checked') and solar_id != ""
@@ -147,7 +121,7 @@ we_must_go_deeper = () ->
 lookup_invention_costs = () ->
 	total_production_cost = 0
 	region_id = $('#region_id').val()
-	solar_id = $('#solar_id').val()
+	solar_id = $('#solar_id').text()
 	
 	if $("#market_in_solar_system").is(':checked') and solar_id != ""
 	  evecentral_url = "http://api.eve-central.com/api/marketstat?usesystem=#{solar_id}"
@@ -218,7 +192,7 @@ lookup_production_costs = () ->
 	units_produced = $('.item-units-produced').text()
 	product_id = $('.item-sell-price').attr("id")
 	region_id = $('#region_id').val()
-	solar_id = $('#solar_id').val()
+	solar_id = $('#solar_id').text()
 	
 	if $("#market_in_solar_system").is(':checked') and solar_id != ""
 	  evecentral_url = "http://api.eve-central.com/api/marketstat?usesystem=#{solar_id}&typeid=#{product_id}"

@@ -10,7 +10,7 @@ class PriceCheckController < ApplicationController
   	@market = params[:market_in]
   	@region = Region.find(params[:region_id])
   	@solar_name = params[:solar_name]
-  	@solar_id = params[:solar_id]
+  	@solar_id = SolarSystem.find_by_name(params[:solar_name]).id if params[:solar_name]
   	
   	ship_data = Rails.cache.fetch("Items.by_name=#{@ship[:value]}") { evedata.get("/items?name=#{@ship[:value]}").body.first }
   	@ship[:id] = ship_data["id"]
