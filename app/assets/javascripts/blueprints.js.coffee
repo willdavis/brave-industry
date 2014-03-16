@@ -46,17 +46,25 @@ $ ->
 			  get_market_history(evecentral_market_sell_history, "min", market_sell_history_data, market_sell_volume)
 			).done(
 			  (results) ->
-			    console.log results
-			    console.log market_sell_history_data
-			    console.log market_buy_history_data
+			    #console.log market_sell_history_data
+			    #console.log market_buy_history_data
 			    
-			    $.jqplot(
+          $.jqplot(
             'min_sell_history_chart'
-            [market_sell_history_data]
-            title:"Minimum Sell Price"
+            [market_sell_history_data, market_buy_history_data]
+            title:"Price History"
             series:[
-              showMarker:false
+              {
+                label: "Min Sell Price"
+                showMarker:false
+              }
+              {
+                label: "Max Buy Price"
+                showMarker:false
+              }
             ]
+            legend:
+              show: true
             cursor:
               show: true
               zoom: true
@@ -75,11 +83,20 @@ $ ->
 
           $.jqplot(
             'trade_volume_history_chart'
-            [market_sell_volume]
+            [market_sell_volume, market_buy_volume]
             title:"Trade Volume"
             series:[
-              showMarker:false
+              {
+                label: 'Sell Volume'
+                showMarker:false
+              }
+              {
+                label: 'Buy Volume'
+                showMarker:false
+              }
             ]
+            legend:
+              show: true
             cursor:
               show: true
               zoom: true
