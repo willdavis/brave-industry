@@ -13,34 +13,47 @@ $ ->
 			$('#min_sell_history_chart').empty()
 			$('#trade_volume_history_chart').empty()
 			
-			#lookup market history
-			market_history_data = []
-			item_trade_volume = []
+			# setup market buy/sell history
+			market_sell_history_data = []
+			market_buy_history_data = []
 			
+			# setup market buy/sell volume
+			market_sell_volume = []
+			market_buy_volume = []
+			
+			# get info from the HTML page
 			product_id = $('.item-sell-price').attr("id")
 			region_id = $('#region_id').val()
 			solar_id = $('#solar_id').text()
 			solar_name = $('#solar_name').val()
 			
+			# build eve central URLs
 			if $("#market_in_solar_system").is(':checked') and solar_id != ""
-			  evecentral_market_history = "http://api.eve-central.com/api/history/for/type/#{product_id}/system/#{solar_id}/bid/0"
+			  evecentral_market_sell_history = "http://api.eve-central.com/api/history/for/type/#{product_id}/system/#{solar_id}/bid/0"
 			else
-			  evecentral_market_history = "http://api.eve-central.com/api/history/for/type/#{product_id}/region/#{region_id}/bid/0"
+			  evecentral_market_sell_history = "http://api.eve-central.com/api/history/for/type/#{product_id}/region/#{region_id}/bid/0"
 			  
-			console.log evecentral_market_history
+			if $("#market_in_solar_system").is(':checked') and solar_id != ""
+			  evecentral_market_buy_history = "http://api.eve-central.com/api/history/for/type/#{product_id}/system/#{solar_id}/bid/1"
+			else
+			  evecentral_market_buy_history = "http://api.eve-central.com/api/history/for/type/#{product_id}/region/#{region_id}/bid/1"
+			  
+			console.log evecentral_market_sell_history
+			console.log evecentral_market_buy_history
 			
+			# lookup eve central data
 			$.getJSON(
-				evecentral_market_history
+				evecentral_market_sell_history
 				(data) ->
 					temp = []
 					for obj in data["values"]
 						time = new Date(obj["at"])
-						market_history_data.push([time, obj["min"]]) if obj["min"] != 0
-						item_trade_volume.push([time, obj["volume"]]) if obj["volume"] != 0
+						market_sell_history_data.push([time, obj["min"]]) if obj["min"] != 0
+						market_sell_volume.push([time, obj["volume"]]) if obj["volume"] != 0
 					
 					$.jqplot(
 						'min_sell_history_chart'
-						[market_history_data]
+						[market_sell_history_data]
 						title:"Minimum Sell Price"
 						series:[
 							showMarker:false
@@ -63,7 +76,7 @@ $ ->
 					
 					$.jqplot(
 						'trade_volume_history_chart'
-						[item_trade_volume]
+						[market_sell_volume]
 						title:"Trade Volume"
 						series:[
 							showMarker:false
