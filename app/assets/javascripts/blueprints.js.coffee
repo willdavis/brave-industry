@@ -13,78 +13,119 @@ $ ->
 			$('#min_sell_history_chart').empty()
 			$('#trade_volume_history_chart').empty()
 			
-			#lookup market history
-			market_history_data = []
-			item_trade_volume = []
+			# setup market buy/sell history
+			market_sell_history_data = []
+			market_buy_history_data = []
 			
+			# setup market buy/sell volume
+			market_sell_volume = []
+			market_buy_volume = []
+			
+			# get info from the HTML page
 			product_id = $('.item-sell-price').attr("id")
 			region_id = $('#region_id').val()
 			solar_id = $('#solar_id').text()
 			solar_name = $('#solar_name').val()
 			
+			# build eve central URLs
 			if $("#market_in_solar_system").is(':checked') and solar_id != ""
-			  evecentral_market_history = "http://api.eve-central.com/api/history/for/type/#{product_id}/system/#{solar_id}/bid/0"
+			  evecentral_market_sell_history = "http://api.eve-central.com/api/history/for/type/#{product_id}/system/#{solar_id}/bid/0"
 			else
-			  evecentral_market_history = "http://api.eve-central.com/api/history/for/type/#{product_id}/region/#{region_id}/bid/0"
+			  evecentral_market_sell_history = "http://api.eve-central.com/api/history/for/type/#{product_id}/region/#{region_id}/bid/0"
 			  
-			console.log evecentral_market_history
+			if $("#market_in_solar_system").is(':checked') and solar_id != ""
+			  evecentral_market_buy_history = "http://api.eve-central.com/api/history/for/type/#{product_id}/system/#{solar_id}/bid/1"
+			else
+			  evecentral_market_buy_history = "http://api.eve-central.com/api/history/for/type/#{product_id}/region/#{region_id}/bid/1"
+			  
+			console.log evecentral_market_sell_history
+			console.log evecentral_market_buy_history
 			
-			$.getJSON(
-				evecentral_market_history
-				(data) ->
-					temp = []
-					for obj in data["values"]
-						time = new Date(obj["at"])
-						market_history_data.push([time, obj["min"]]) if obj["min"] != 0
-						item_trade_volume.push([time, obj["volume"]]) if obj["volume"] != 0
-					
-					$.jqplot(
-						'min_sell_history_chart'
-						[market_history_data]
-						title:"Minimum Sell Price"
-						series:[
-							showMarker:false
-						]
-						cursor:
-							show: true
-							zoom: true
-							showTooltip: false
-						highlighter:
-							show: true
-						axes:
-						  xaxis:
-						    renderer: $.jqplot.DateAxisRenderer
-						    tickOptions:
-						      formatString:'%b&nbsp;%#d'
-						  yaxis:
-						    label:'Isk per Unit'
-						    labelRenderer: $.jqplot.CanvasAxisLabelRenderer
-					)
-					
-					$.jqplot(
-						'trade_volume_history_chart'
-						[item_trade_volume]
-						title:"Trade Volume"
-						series:[
-							showMarker:false
-						]
-						cursor:
-							show: true
-							zoom: true
-							showTooltip: false
-						highlighter:
-							show: true
-						axes:
-						  xaxis:
-						    renderer: $.jqplot.DateAxisRenderer
-						    tickOptions:
-						      formatString:'%b&nbsp;%#d'
-						  yaxis:
-						    label:'Units Sold'
-						    labelRenderer: $.jqplot.CanvasAxisLabelRenderer
-					)
+			$.when(
+			  get_market_history(evecentral_market_buy_history, "max", market_buy_history_data, market_buy_volume)
+			  get_market_history(evecentral_market_sell_history, "min", market_sell_history_data, market_sell_volume)
+			).done(
+			  (results) ->
+			    #console.log market_sell_history_data
+			    #console.log market_buy_history_data
+			    
+          $.jqplot(
+            'min_sell_history_chart'
+            [market_sell_history_data, market_buy_history_data]
+            title:"Price History"
+            series:[
+              {
+                label: "Min Sell Price"
+                showMarker:false
+              }
+              {
+                label: "Max Buy Price"
+                showMarker:false
+              }
+            ]
+            legend:
+              show: true
+            cursor:
+              show: true
+              zoom: true
+              showTooltip: false
+            highlighter:
+              show: true
+            axes:
+              xaxis:
+                renderer: $.jqplot.DateAxisRenderer
+                tickOptions:
+                  formatString:'%b&nbsp;%#d'
+              yaxis:
+                label:'Isk per Unit'
+                labelRenderer: $.jqplot.CanvasAxisLabelRenderer
+          )
+
+          $.jqplot(
+            'trade_volume_history_chart'
+            [market_sell_volume, market_buy_volume]
+            title:"Trade Volume"
+            series:[
+              {
+                label: 'Sell Volume'
+                showMarker:false
+              }
+              {
+                label: 'Buy Volume'
+                showMarker:false
+              }
+            ]
+            legend:
+              show: true
+            cursor:
+              show: true
+              zoom: true
+              showTooltip: false
+            highlighter:
+              show: true
+            axes:
+              xaxis:
+                renderer: $.jqplot.DateAxisRenderer
+                tickOptions:
+                  formatString:'%b&nbsp;%#d'
+              yaxis:
+                label:'Units Sold'
+                labelRenderer: $.jqplot.CanvasAxisLabelRenderer
+          )
 			)
+			
 	)
+	
+get_market_history = (url, key, price_array, volume_array) ->
+  # lookup eve central data
+  $.getJSON(
+	  url
+	  (data) ->
+		  for obj in data["values"]
+			  time = new Date(obj["at"])
+			  price_array.push([time, obj[key]]) if obj[key] != 0
+			  volume_array.push([time, obj["volume"]]) if obj["volume"] != 0
+  )
 
 #Configure the material effeciency slider bar	
 setup_ME_slider_bar = () ->
