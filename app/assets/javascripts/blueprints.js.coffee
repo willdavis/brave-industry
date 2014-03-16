@@ -50,7 +50,7 @@ $ ->
 			    #console.log market_buy_history_data
 			    
           $.jqplot(
-            'min_sell_history_chart'
+            'price_history_chart'
             [market_sell_history_data, market_buy_history_data]
             title:"Price History"
             series:[
@@ -65,6 +65,8 @@ $ ->
             ]
             legend:
               show: true
+              location: 'e'
+              placement: 'outside'
             cursor:
               show: true
               zoom: true
@@ -78,25 +80,28 @@ $ ->
                   formatString:'%b&nbsp;%#d'
               yaxis:
                 label:'Isk per Unit'
+                padMin: 0
                 labelRenderer: $.jqplot.CanvasAxisLabelRenderer
           )
 
           $.jqplot(
-            'trade_volume_history_chart'
+            'volume_history_chart'
             [market_sell_volume, market_buy_volume]
-            title:"Trade Volume"
+            title: "Market Volume"
+            stackSeries: true
+            seriesDefaults:
+              renderer: $.jqplot.BarRenderer
+              rendererOptions:
+                barMargin: 10
+                barWidth: 10
             series:[
-              {
-                label: 'Sell Volume'
-                showMarker:false
-              }
-              {
-                label: 'Buy Volume'
-                showMarker:false
-              }
+              {label: 'Sell Orders'}
+              {label: 'Buy Orders'}
             ]
             legend:
               show: true
+              location: 'e'
+              placement: 'outside'
             cursor:
               show: true
               zoom: true
@@ -109,7 +114,7 @@ $ ->
                 tickOptions:
                   formatString:'%b&nbsp;%#d'
               yaxis:
-                label:'Units Sold'
+                label:'Units Available'
                 labelRenderer: $.jqplot.CanvasAxisLabelRenderer
           )
 			)
@@ -123,8 +128,8 @@ get_market_history = (url, key, price_array, volume_array) ->
 	  (data) ->
 		  for obj in data["values"]
 			  time = new Date(obj["at"])
-			  price_array.push([time, obj[key]]) if obj[key] != 0
-			  volume_array.push([time, obj["volume"]]) if obj["volume"] != 0
+			  price_array.push([time, obj[key]])
+			  volume_array.push([time, obj["volume"]])
   )
 
 #Configure the material effeciency slider bar	
