@@ -13,13 +13,13 @@ $ ->
 			$('#min_sell_history_chart').empty()
 			$('#trade_volume_history_chart').empty()
 			
-			# setup market buy/sell history
-			market_sell_history_data = []
-			market_buy_history_data = []
+			# setup market history
+			min_sell_history = []
+			max_sell_history = []
 			
-			# setup market buy/sell volume
-			market_sell_volume = []
-			market_buy_volume = []
+			# setup market volume & count
+			market_volume = []
+			market_order_count = []
 			
 			# get info from the HTML page
 			product_id = $('.item-sell-price').attr("id")
@@ -27,39 +27,24 @@ $ ->
 			solar_id = $('#solar_id').text()
 			solar_name = $('#solar_name').val()
 			
-			# build eve central URLs
-			if $("#market_in_solar_system").is(':checked') and solar_id != ""
-			  evecentral_market_sell_history = "http://api.eve-central.com/api/history/for/type/#{product_id}/system/#{solar_id}/bid/0"
-			else
-			  evecentral_market_sell_history = "http://api.eve-central.com/api/history/for/type/#{product_id}/region/#{region_id}/bid/0"
-			  
-			if $("#market_in_solar_system").is(':checked') and solar_id != ""
-			  evecentral_market_buy_history = "http://api.eve-central.com/api/history/for/type/#{product_id}/system/#{solar_id}/bid/1"
-			else
-			  evecentral_market_buy_history = "http://api.eve-central.com/api/history/for/type/#{product_id}/region/#{region_id}/bid/1"
-			  
-			console.log evecentral_market_sell_history
-			console.log evecentral_market_buy_history
+			market_url = "http://public-crest.eveonline.com/market/#{region_id}/types/#{product_id}/history/"
+			console.log market_url
 			
 			$.when(
-			  get_market_history(evecentral_market_buy_history, "max", market_buy_history_data, market_buy_volume)
-			  get_market_history(evecentral_market_sell_history, "min", market_sell_history_data, market_sell_volume)
+			  get_market_data(market_url, min_sell_history, max_sell_history, market_volume, market_order_count)
 			).done(
 			  (results) ->
-			    #console.log market_sell_history_data
-			    #console.log market_buy_history_data
-			    
           $.jqplot(
             'price_history_chart'
-            [market_sell_history_data, market_buy_history_data]
+            [min_sell_history, max_sell_history]
             title:"Price History"
             series:[
               {
-                label: "Min Sell Price"
+                label: "Low Price"
                 showMarker:false
               }
               {
-                label: "Max Buy Price"
+                label: "High Price"
                 showMarker:false
               }
             ]
@@ -77,26 +62,24 @@ $ ->
               xaxis:
                 renderer: $.jqplot.DateAxisRenderer
                 tickOptions:
-                  formatString:'%b&nbsp;%#d'
+                  formatString:'%v'
               yaxis:
                 label:'Isk per Unit'
-                padMin: 0
                 labelRenderer: $.jqplot.CanvasAxisLabelRenderer
           )
 
           $.jqplot(
             'volume_history_chart'
-            [market_sell_volume, market_buy_volume]
-            title: "Market Volume"
-            stackSeries: true
+            [market_volume, market_order_count]
+            title: "Trade Volume"
             seriesDefaults:
               renderer: $.jqplot.BarRenderer
               rendererOptions:
                 barMargin: 10
                 barWidth: 10
             series:[
-              {label: 'Sell Orders'}
-              {label: 'Buy Orders'}
+              {label: 'Volume'}
+              {label: 'Orders'}
             ]
             legend:
               show: true
@@ -112,24 +95,26 @@ $ ->
               xaxis:
                 renderer: $.jqplot.DateAxisRenderer
                 tickOptions:
-                  formatString:'%b&nbsp;%#d'
+                  formatString:'%v'
               yaxis:
-                label:'Units Available'
+                label:'Units'
                 labelRenderer: $.jqplot.CanvasAxisLabelRenderer
           )
 			)
 			
 	)
 	
-get_market_history = (url, key, price_array, volume_array) ->
+get_market_data = (url, min_price_array, max_price_array, volume_array, order_array) ->
   # lookup eve central data
   $.getJSON(
 	  url
 	  (data) ->
-		  for obj in data["values"]
-			  time = new Date(obj["at"])
-			  price_array.push([time, obj[key]])
-			  volume_array.push([time, obj["volume"]])
+      for item in data.items
+        time = new Date(item["date"])
+        min_price_array.push([time, item["lowPrice"]])
+        max_price_array.push([time, item["highPrice"]])
+        volume_array.push([time, item["volume"]])
+        order_array.push([time, item["orderCount"]])
   )
 
 #Configure the material effeciency slider bar	
