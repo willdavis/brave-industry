@@ -10,6 +10,9 @@ BraveIndustry::Application.routes.draw do
   resources :price_check, :only => [:index] do
   	post "results", on: :collection
   end
+  
+  get '/markets/:region_id/types/:product_id', to: 'markets#show', as: 'market'
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
