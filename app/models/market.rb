@@ -21,6 +21,10 @@ class Market
     end
   end
   
+  def region
+    @region ||= Region.new(:id=>region_id)
+  end
+  
   def raw_data
     @raw_data ||= Rails.cache.fetch("market.#{region_id}.#{product_id}") { Market.evedata.get("/market/#{region_id}/types/#{product_id}/history/").body }
   end

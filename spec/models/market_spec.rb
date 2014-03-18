@@ -25,6 +25,16 @@ describe Market do
 	  end
 	end
 	
+	context "region" do
+	  it "has a name" do
+	    expect(@market.region).to_not be_nil
+	    expect(@market.region).to be_a(Region)
+	    
+	    expect(@market.region.name).to_not be_nil
+	    expect(@market.region.name).to be_a(String)
+	  end
+	end
+	
 	context "search" do
 	  context "with valid ids" do
 	    it "returns a market" do

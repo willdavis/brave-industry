@@ -22,6 +22,15 @@ class Region
     end
   end
   
+  def name
+    query = lambda do
+      data = Rails.cache.fetch("region.#{id}") { Region.evedata.get("/regions/#{id}").body.first }
+      data["name"]
+    end
+    
+    @name ||= query.call
+  end
+  
   private
   
   def self.get_all_regions
