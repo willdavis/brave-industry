@@ -82,7 +82,7 @@
 				
 				<%= form_tag("/blueprints/#{@blueprint.id}", :method => :get) do %>
 				<div class="col-xs-12 col-md-6">
-				  <%= render 'layouts/market_details', :item => @blueprint %>
+				  <%= render 'layouts/market_details', :item => @blueprint, :region_only => false %>
 				  
 					<div class="panel panel-primary">
 						<div class="panel-heading">Research Details</div>
