@@ -91,6 +91,13 @@ $ ->
         )
     )
     
+  $('#region_id').change(
+    () ->
+      region_id = $(this).find("option:selected").val()
+      item_id = $('#item-id').text()
+      $('#update-region').prop("href", "/markets/#{region_id}/types/#{item_id}")
+  )
+    
 get_market_data = (url, min_price_array, max_price_array, volume_array, order_array) ->
   # lookup eve central data
   $.getJSON(
