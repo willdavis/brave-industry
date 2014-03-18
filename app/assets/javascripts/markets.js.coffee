@@ -1,8 +1,5 @@
 $ ->
 	if $('.markets-show').length != 0
-    $('#min_sell_history_chart').empty()
-    $('#trade_volume_history_chart').empty()
-
     # setup market history
     min_sell_history = []
     max_sell_history = []
@@ -23,6 +20,9 @@ $ ->
       get_market_data(market_url, min_sell_history, max_sell_history, market_volume, market_order_count)
     ).done(
       (results) ->
+        $('#price_history_chart').empty()
+        $('#volume_history_chart').empty()
+        
         $.jqplot(
           'price_history_chart'
           [min_sell_history, max_sell_history]
