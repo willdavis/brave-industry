@@ -36,16 +36,9 @@ describe Market do
 	end
 	
 	context "item" do
-	  it "has an id" do
-	    expect(@market.item.id).to_not be_nil
-	    expect(@market.item.id).to be_a(Integer)
-	  end
-	  
-	  it "has a name" do
-	    expect(@market.item.name).to_not be_nil
-	    expect(@market.item.name).to be_a(String)
-	    expect(@market.item.image['thumb']).to_not be_nil
-	    expect(@market.item.image['thumb']).to be_a(String)
+	  it "is an Item object" do
+	    expect(@market.item).to_not be_nil
+	    expect(@market.item).to be_a(Item)
 	  end
 	end
 	

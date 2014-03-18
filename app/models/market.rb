@@ -37,7 +37,7 @@ class Market
   
   def self.get_market(r_id, t_id)
     data = Rails.cache.fetch("market.#{r_id}.#{t_id}", expires_in: 1.days, compress: true) { Market.evedata.get("/market/#{r_id}/types/#{t_id}/history/").body }
-    return Market.new(:region_id => r_id, :product_id => t_id, :raw_data => data) if !data.nil?
+    return Market.new(:region_id => r_id, :type_id => t_id, :raw_data => data) if !data.nil?
     return Market.new if data.nil?
   end
   
