@@ -26,13 +26,13 @@ class Market
   end
   
   def raw_data
-    @raw_data ||= Rails.cache.fetch("market.#{region_id}.#{product_id}") { Market.evedata.get("/market/#{region_id}/types/#{product_id}/history/").body }
+    @raw_data ||= Rails.cache.fetch("market.#{region_id}.#{product_id}", expires_in: 1.days, compress: true) { Market.evedata.get("/market/#{region_id}/types/#{product_id}/history/").body }
   end
   
   private
   
   def self.get_market(r_id, p_id)
-    data = Rails.cache.fetch("market.#{r_id}.#{p_id}") { Market.evedata.get("/market/#{r_id}/types/#{p_id}/history/").body }
+    data = Rails.cache.fetch("market.#{r_id}.#{p_id}", expires_in: 1.days, compress: true) { Market.evedata.get("/market/#{r_id}/types/#{p_id}/history/").body }
     return Market.new(:region_id => r_id, :product_id => p_id, :raw_data => data) if !data.nil?
     return Market.new if data.nil?
   end
