@@ -1,11 +1,15 @@
 <!-- Market Details -->
 <!-- Must be inside a <form> tag!-->
 <div id="market-details-panel" class="panel panel-primary">
-  <div class="panel-heading">Market Details</div>
+  <div class="panel-heading">Market Filter</div>
   <div class="panel-body">
 
 	  <div class="row">
+	    <% if region_only %>
+	    <div class="col-xs-12 col-md-8">
+	    <% else %>
 	    <div class="col-xs-12">
+	    <% end %>
 	      <div class="form-group">
           <div class="input-group">
             <span class="input-group-addon">
@@ -17,9 +21,18 @@
           </div>
         </div>
 	    </div>
+	    
+	    <% if region_only %>
+	    <div class="col-xs-12 col-md-4">
+	      <div class="form-group">
+          <%= link_to "Update Region", "/markets/#{item.region_id}/types/#{item.type_id}", :id => "update-region", :class => "btn btn-primary" %>
+	      </div>
+	    </div>
+	    <% end %>
     </div>
-	
-	  <div class="row">
+    
+    <% if !region_only %>
+    <div class="row">
 		  <div class="col-xs-12">
 		    <div class="form-group">
           <div class="input-group">
@@ -33,6 +46,7 @@
         </div>
 		  </div>
 	  </div>
+    <% end %>
 	
   </div>
 </div>

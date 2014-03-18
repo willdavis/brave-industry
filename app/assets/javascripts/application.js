@@ -16,7 +16,7 @@
 //= require bootstrap
 //= require bootstrap3-typeahead
 
-//= require market_details
+//= require markets
 
 //= require jqplot
 //= require jqplot/plugins/cursor

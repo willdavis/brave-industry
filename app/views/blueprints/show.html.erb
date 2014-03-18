@@ -16,7 +16,7 @@
 				<li class="nav-home-title active"><a href="#home" data-toggle="tab">Home</a></li>
 				<li class="nav-materials-title"><a href="#materials" data-toggle="tab">Bill of Materials</a></li>
 				<li class="nav-invention-title"><a href="#invention" data-toggle="tab">Invention</a></li>
-				<li class="nav-history-title"><a href="#history" data-toggle="tab">Market History</a></li>
+				<li class="nav-market-history"><%= link_to "Market History", "/markets/#{@blueprint.region_id}/types/#{@blueprint.product['id']}" %></li>
 				<li class="nav-skills-title"><a href="#skills" data-toggle="tab">Required Skills</a></li>
 			</ul>
 		</div>
@@ -82,7 +82,7 @@
 				
 				<%= form_tag("/blueprints/#{@blueprint.id}", :method => :get) do %>
 				<div class="col-xs-12 col-md-6">
-				  <%= render 'layouts/market_details', :item => @blueprint %>
+				  <%= render 'layouts/market_details', :item => @blueprint, :region_only => false %>
 				  
 					<div class="panel panel-primary">
 						<div class="panel-heading">Research Details</div>
@@ -351,31 +351,6 @@
 				</div> <!-- end column -->
 			</div>
 		</div> <!-- end invention -->
-		
-		<div class="tab-pane" id="history">
-		  <div class="panel panel-info">
-	      <div class="panel-heading">
-		      <table>
-			      <tr>
-				      <td class="info-icon"><span class="glyphicon glyphicon-info-sign"></span></td>
-				      <td class="info-text">Click and drag over a graph to zoom in.  Double click to reset the view</td>
-			      </tr>
-		      </table>
-	      </div>
-      </div>
-      
-			<div class="row">
-				<div class="col-xs-12 col-md-8">
-					<div id="price_history_chart"></div>
-				</div>
-		  </div>
-		  
-		  <div class="row">
-				<div class="col-xs-12 col-md-8">
-					<div id="volume_history_chart"></div>
-				</div>
-			</div>
-		</div> <!-- end history -->
 		
 		<div class="tab-pane" id="skills">
 			<div class="row">

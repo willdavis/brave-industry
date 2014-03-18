@@ -1,0 +1,54 @@
+<div class="markets-show" id="<%= @market.region_id %>">
+  <div class="row">
+		<div class="col-xs-12">
+			<table class="market-header">
+				<tr>
+					<td class="item-image"><img src="<%= @market.item.images['thumb'] %>" width='64' height='64' /></td>
+					<td class="item-name"><h3><%= @market.item.name %> Market History</h3></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	
+	<span id="region-id" style="display:none"><%= @market.region.id %></span>
+	<span id="item-id" style="display:none"><%= @market.item.id %></span>
+	
+	<br />
+	
+	<div class="row">
+	  <div class="col-xs-12">
+      <%= render 'layouts/market_details', :item => @market, :region_only => true %>
+    </div>
+	</div>
+	
+	<div class="row">
+	  <div class="col-xs-12">
+	    <div class="panel panel-info">
+        <div class="panel-heading">
+          <table>
+            <tr>
+	            <td class="info-icon"><span class="glyphicon glyphicon-info-sign"></span></td>
+	            <td class="info-text">Click and drag over a graph to zoom in.</td>
+            </tr>
+            <tr>
+	            <td class="info-icon"><span class="glyphicon glyphicon-info-sign"></span></td>
+	            <td class="info-text">Double click on a graph to reset it.</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+	</div>
+	
+	<div class="row">
+    <div class="col-xs-12">
+      <div id="price_history_chart">loading price history <%= image_tag "loading-big.gif" %></div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <div id="volume_history_chart">loading volume history <%= image_tag "loading-big.gif" %></div>
+    </div>
+  </div>
+</div>
