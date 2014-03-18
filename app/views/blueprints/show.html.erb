@@ -16,6 +16,7 @@
 				<li class="nav-home-title active"><a href="#home" data-toggle="tab">Home</a></li>
 				<li class="nav-materials-title"><a href="#materials" data-toggle="tab">Bill of Materials</a></li>
 				<li class="nav-invention-title"><a href="#invention" data-toggle="tab">Invention</a></li>
+				<li class="nav-market-history"><%= link_to "Market History", "/markets/#{@blueprint.region_id}/types/#{@blueprint.product['id']}" %></li>
 				<li class="nav-skills-title"><a href="#skills" data-toggle="tab">Required Skills</a></li>
 			</ul>
 		</div>
