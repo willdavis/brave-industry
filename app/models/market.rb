@@ -25,6 +25,10 @@ class Market
     @region ||= Region.new(:id=>region_id)
   end
   
+  def item
+    @item ||= Item.new(:id=>type_id)
+  end
+  
   def raw_data
     @raw_data ||= Rails.cache.fetch("market.#{region_id}.#{type_id}", expires_in: 1.days, compress: true) { Market.evedata.get("/market/#{region_id}/types/#{type_id}/history/").body }
   end

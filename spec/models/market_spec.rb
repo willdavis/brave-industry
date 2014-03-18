@@ -13,9 +13,9 @@ describe Market do
 	  end
 	  
 	  it "has a product id" do
-	    expect(@market.product_id).to_not be_nil
-	    expect(@market.product_id).to be_a(Integer)
-	    expect(@market.product_id).to eq(622)
+	    expect(@market.type_id).to_not be_nil
+	    expect(@market.type_id).to be_a(Integer)
+	    expect(@market.type_id).to eq(622)
 	  end
 	  
 	  it "has raw market data" do
@@ -35,16 +35,30 @@ describe Market do
 	  end
 	end
 	
+	context "item" do
+	  it "has an id" do
+	    expect(@market.item.id).to_not be_nil
+	    expect(@market.item.id).to be_a(Integer)
+	  end
+	  
+	  it "has a name" do
+	    expect(@market.item.name).to_not be_nil
+	    expect(@market.item.name).to be_a(String)
+	    expect(@market.item.image['thumb']).to_not be_nil
+	    expect(@market.item.image['thumb']).to be_a(String)
+	  end
+	end
+	
 	context "search" do
 	  context "with valid ids" do
 	    it "returns a market" do
 	      market = Market.find(10000002, 622)
 	      expect(market.region_id).to_not be_nil
-	      expect(market.product_id).to_not be_nil
+	      expect(market.type_id).to_not be_nil
 	      expect(market.raw_data).to_not be_nil
 	      
 	      expect(market.region_id).to be_a(Integer)
-	      expect(market.product_id).to be_a(Integer)
+	      expect(market.type_id).to be_a(Integer)
 	      
 	      expect(market.raw_data).to be_a(Hash)
 	      expect(market.raw_data["totalCount"]).to be_a(Integer)
@@ -57,7 +71,7 @@ describe Market do
 	      market = Market.find(0,0)
 	      
 	      expect(market.region_id).to eq(0)
-	      expect(market.product_id).to eq(0)
+	      expect(market.type_id).to eq(0)
 	      expect(market.raw_data).to be_a(Hash)
 	      
 	      expect(market.raw_data["exceptionType"]).to be_a(String)
