@@ -3,11 +3,8 @@
 		<div class="col-xs-12">
 			<table class="market-header">
 				<tr>
-					<td class="item-image"><img src="<%= @market.item.image['thumb'] %>" width='64' height='64' /></td>
-					<td class="item-name"><h3><%= @market.item.name %></h3></td>
-				</tr>
-				<tr>
-				  <td class="region-name"><%= @market.region.name %></td>
+					<td class="item-image"><img src="<%= @market.item.images['thumb'] %>" width='64' height='64' /></td>
+					<td class="item-name"><h3><%= @market.item.name %> Market History <small><%= @market.region.name %></small></h3></td>
 				</tr>
 			</table>
 		</div>
