@@ -1,5 +1,6 @@
 class MarketsController < ApplicationController
   def index
+    @market = Market.new(:region_id=>10000002)
   end
 
 	def show

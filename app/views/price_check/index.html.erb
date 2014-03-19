@@ -23,6 +23,10 @@
 </div>
 
 <div class="col-xs-12 col-md-6">
-  <%= render 'layouts/market_details', :item => Blueprint.new(:region_id=>10000002, :market_in=>"region"), :region_only => false %>
+  <%= render 'layouts/market_details', 
+    :item => Blueprint.new(:region_id=>10000002, :market_in=>"region"), 
+    :exclude_solar_systems => true, 
+    :exclude_items => true, 
+    :can_submit => false %>
 </div>
 <% end %>

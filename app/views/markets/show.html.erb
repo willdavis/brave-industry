@@ -17,7 +17,11 @@
 	
 	<div class="row">
 	  <div class="col-xs-12">
-      <%= render 'layouts/market_details', :item => @market, :region_only => true %>
+      <%= render 'layouts/market_details', 
+        :item => @market, 
+        :exclude_solar_systems => true, 
+        :exclude_items => false, 
+        :can_submit => true %>
     </div>
 	</div>
 	
