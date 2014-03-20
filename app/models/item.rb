@@ -11,6 +11,7 @@ class Item
   # ActiveRecord support
   def self.all; Item.get_all; end
   def self.find(item_id); Item.get_item(item_id); end
+  def self.find_by_name(name); Item.get_item_by_name(name); end
   
   # Dynamic attributes should match the values supplied by form_for params
   ATTRIBUTES = [:id, :name, :images]
@@ -39,6 +40,12 @@ class Item
   def self.get_all
     items = Rails.cache.fetch("items.all", compress: true) { Region.evedata.get("/items?limit=1000000").body }
     items.map{ |item| Item.new(:id=>item["id"], :name=>item["name"], :images => item["images"]) }
+  end
+  
+  def self.get_item_by_name(item_name)
+    data = Rails.cache.fetch("item.#{item_name}") { Item.evedata.get("/items?name=#{item_name}").body.first }
+    return Item.new(:id => data["id"], :name => data["name"], :images => data["images"]) if !data.nil?
+    return Item.new if data.nil?
   end
   
   def self.get_item(item_id)

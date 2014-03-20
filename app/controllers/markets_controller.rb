@@ -4,6 +4,11 @@ class MarketsController < ApplicationController
   end
 
 	def show
+	  if params[:type_id].match(/\D+/)
+	    params[:type_name] = params[:type_id]
+	    params[:type_id] = Item.get_item_by_name(params[:type_id]).id
+	  end
+	  
 	  @market = Market.find(params[:region_id], params[:type_id])
 	end
 end

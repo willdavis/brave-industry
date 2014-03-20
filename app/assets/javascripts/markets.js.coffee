@@ -94,15 +94,15 @@ $ ->
   $('#region_id').change(
     () ->
       region_id = $(this).find("option:selected").val()
-      item_id = $('#item_id').val()
-      $('#update-region').prop("href", "/markets/#{region_id}/types/#{item_id}")
+      type_id = $('#type_name').val()
+      $('#update-region').prop("href", "/markets/#{region_id}/types/#{type_id}")
   )
   
-  $('#item_name').change(
+  $('#type_name').change(
     () ->
       region_id = $('#region_id').find("option:selected").val()
-      item_name = $(this).val()
-      console.log item_name
+      type_name = $('#type_name').val()
+      $('#update-region').prop("href", "/markets/#{region_id}/types/#{type_name}")
   )
     
 get_market_data = (url, min_price_array, max_price_array, volume_array, order_array) ->

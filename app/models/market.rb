@@ -9,7 +9,7 @@ class Market
   def save!; true; end
   
   # ActiveRecord queries
-  def self.find(region_id, product_id); Market.get_market(region_id, product_id); end
+  def self.find(region_id, type_id); Market.get_market(region_id, type_id); end
   
   # Dynamic attributes should match the values supplied by form_for params
   ATTRIBUTES = [:region_id, :solar_name, :type_name, :type_id, :raw_data, :market_in]
@@ -26,7 +26,7 @@ class Market
   end
   
   def item
-    @item ||= Item.new(:id=>type_id)
+    @item ||= Item.new(:id=>type_id, :name=>type_name)
   end
   
   def raw_data
