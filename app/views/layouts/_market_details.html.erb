@@ -1,37 +1,41 @@
 <!-- Market Details -->
-<!-- Must be inside a <form> tag!-->
 <div id="market-details-panel" class="panel panel-primary">
   <div class="panel-heading">Market Filter</div>
   <div class="panel-body">
 
 	  <div class="row">
-	    <% if region_only %>
+	    <% if can_submit and exclude_items and exclude_solar_systems %>
 	    <div class="col-xs-12 col-md-8">
 	    <% else %>
 	    <div class="col-xs-12">
 	    <% end %>
+	    
 	      <div class="form-group">
           <div class="input-group">
+            <% if !exclude_solar_systems %>
             <span class="input-group-addon">
               <%= radio_button_tag :market_in, :region, item.market_in.nil? || item.market_in == "region" %>
             </span>
+            <% end %>
+            
             <span class="input-group-addon">Region</span>
             <% item.region_id.nil? ? region = 10000002 : region = item.region_id %>
             <%= select_tag(:region_id, options_for_select(Region.all.map{ |r| [r.name, r.id] }, region), :class=>"form-control") %>
           </div>
         </div>
+        
 	    </div>
 	    
-	    <% if region_only %>
+	    <% if can_submit and exclude_items and exclude_solar_systems %>
 	    <div class="col-xs-12 col-md-4">
 	      <div class="form-group">
-          <%= link_to "Update Region", "/markets/#{item.region_id}/types/#{item.type_id}", :id => "update-region", :class => "btn btn-primary" %>
+          <%= link_to "Update", "/markets/#{item.region_id}/types/#{item.type_id}", :id => "update-region", :class => "btn btn-primary" %>
 	      </div>
 	    </div>
 	    <% end %>
     </div>
     
-    <% if !region_only %>
+    <% if !exclude_solar_systems %>
     <div class="row">
 		  <div class="col-xs-12">
 		    <div class="form-group">
@@ -46,6 +50,27 @@
         </div>
 		  </div>
 	  </div>
+    <% end %>
+    
+    <% if !exclude_items %>
+    <div class="row">
+		  <div class="col-xs-12">
+		    <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">Item</span>
+            <%= text_field_tag :type_name, item.item.name, :placeholder => "Name", :autocomplete => :off, :data => { :provide =>"typeahead", :source => Item.all.map{ |i| i.name } }, :class=>"form-control" %>
+          </div>
+        </div>
+		  </div>
+	  </div>
+    <% end %>
+    
+    <% if can_submit and !exclude_items and exclude_solar_systems %>
+    <div class="col-xs-12">
+      <div class="form-group">
+        <%= link_to "Update", "/markets/#{item.region_id}/types/#{item.type_id}", :id => "update-region", :class => "btn btn-primary" %>
+      </div>
+    </div>
     <% end %>
 	
   </div>

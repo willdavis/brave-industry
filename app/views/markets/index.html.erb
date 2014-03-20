@@ -1,4 +1,17 @@
 <div class="markets-index">
-  <h1>Find Market Regions</h1>
-  <p>Coming soon... stay tuned for further updates.</p>
+  <!-- page header -->
+  <div class="page-header">
+		<h1>Market Trading</h1>
+	</div>
+  
+  <!-- page content -->
+  <div class="row">
+    <div class="col-xs-12">
+      <%= render 'layouts/market_details', 
+        :item => @market, 
+        :exclude_solar_systems => true, 
+        :exclude_items => false, 
+        :can_submit => true %>
+    </div>
+  </div>
 </div>

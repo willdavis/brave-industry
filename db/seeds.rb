@@ -24,4 +24,8 @@ all_groups.each do |group|
   blueprints = Rails.cache.fetch("group.#{group['id']}.members") { evedata.get("/blueprints?group_id=#{group['id']}&limit=200").body }
 end
 
+puts "Caching: all items: /items?limit=1000000"
+puts "and you thought the last one took a while..."
+Rails.cache.fetch("items.all", compress: true) { Region.evedata.get("/items?limit=1000000").body }
+
 puts "Whew... all done!!"
