@@ -9,6 +9,7 @@ class Item
   def save!; true; end
   
   # ActiveRecord support
+  def self.all; Item.get_all; end
   def self.find(item_id); Item.get_item(item_id); end
   
   # Dynamic attributes should match the values supplied by form_for params
@@ -33,6 +34,11 @@ class Item
   
   def get_details
     Rails.cache.fetch("item.#{id}") { Item.evedata.get("/items/#{id}").body.first }
+  end
+  
+  def self.get_all
+    items = Rails.cache.fetch("items.all", compress: true) { Region.evedata.get("/items?limit=1000000").body }
+    items.map{ |item| Item.new(:id=>item["id"], :name=>item["name"], :images => item["images"]) }
   end
   
   def self.get_item(item_id)
