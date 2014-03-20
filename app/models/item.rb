@@ -38,8 +38,11 @@ class Item
   end
   
   def self.get_all
-    items = Rails.cache.fetch("items.all", compress: true) { Item.evedata.get("/items?limit=1000000").body }
-    items.map{ |item| Item.new(:id=>item["id"], :name=>item["name"], :images => item["images"]) }
+    items = Rails.cache.fetch("item.all.names", compress: true) do
+      Item.evedata.get("/items?limit=1000000").body.map{ |item| item["name"] }
+    end
+    
+    items.map{ |name| Item.new(:name=>name) }
   end
   
   def self.get_item_by_name(item_name)
