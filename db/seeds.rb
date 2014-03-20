@@ -26,6 +26,6 @@ end
 
 puts "Caching: all items: /items?limit=1000000"
 puts "and you thought the last one took a while..."
-Rails.cache.fetch("items.all", compress: true) { evedata.get("/items?limit=1000000").body }
+Item.all
 
 puts "Whew... all done!!"
