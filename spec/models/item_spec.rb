@@ -36,6 +36,14 @@ describe Item do
 	  end
 	end
 	
+	context "search all" do
+	  it "returns a list of Items" do
+	    expect(Item.all).to_not be_nil
+	    expect(Item.all).to be_a(Array)
+	    Item.all.each{ |item| expect(item).to be_a(Item) }
+	  end
+	end
+	
 	context "search" do
 	  context "with valid id" do
 	    it "returns an Item" do
