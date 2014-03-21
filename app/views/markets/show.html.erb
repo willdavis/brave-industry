@@ -1,10 +1,12 @@
 <div class="markets-show" id="<%= @market.region_id %>">
+  <h1>Market History</h1>
+  
   <div class="row">
 		<div class="col-xs-12">
 			<table class="market-header">
 				<tr>
 					<td class="item-image"><img src="<%= @market.item.images['thumb'] %>" width='64' height='64' /></td>
-					<td class="item-name"><h3><%= @market.item.name %> Market History <small><%= @market.region.name %></small></h3></td>
+					<td class="item-name"><h3><%= @market.item.name %> <small>in <%= @market.region.name %></small></h3></td>
 				</tr>
 			</table>
 		</div>
