@@ -1,9 +1,10 @@
 $ ->
 	if $('.blueprints-show').length != 0
 		setup_ME_slider_bar()
-		
 		lookup_production_costs()
-		lookup_invention_costs()
+		
+		if $('#invention').length != 0
+		  lookup_invention_costs()
 		
 		we_must_go_deeper()
 
