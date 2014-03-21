@@ -84,6 +84,7 @@
 				
 				<%= form_tag("/blueprints/#{@blueprint.id}", :method => :get) do %>
 				<div class="col-xs-12 col-md-6 col-lg-4">
+				  
 				  <%= render 'layouts/market_details', 
             :item => @blueprint,
             :exclude_solar_systems => false,
@@ -93,14 +94,13 @@
 					<div class="panel panel-primary">
 						<div class="panel-heading">Research Details</div>
 						<div class="panel-body">
-						
-							<div class="panel-heading">
-								<div class="row">
-									<div class="col-xs-5">Material Efficiency</div>
-									<div class="col-xs-5"><div id="ME-slider"></div></div>
-									<div class="col-xs-2"><div id="ME-slider-value" class="pull-right">0</div></div>
-								</div>
-							</div>
+						  
+						  <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">Material Efficiency</span>
+                  <%= select_tag(:ME, options_for_select(-4..20, @blueprint.material_efficiency), :class=>"form-control") %>
+                </div>
+              </div>
 							
 							<div class="panel-heading">
 								<div class="row">
@@ -111,12 +111,6 @@
 												<%= check_box_tag(:invented, "yes", @blueprint.invented ? true : false) %> Include Invention Costs
 											</label>
 										</div>
-										<span class="pull-right">
-											<%= hidden_field_tag(:ME, @blueprint.material_efficiency) %>
-											<div class="form-group">
-												<button type="submit" id="update-blueprint" class="btn btn-primary">Update</button>
-											</div>
-										</span>
 										
 									</div>
 								</div>
@@ -124,6 +118,12 @@
 							
 						</div>
 					</div> <!-- end research details panel -->
+					
+					<!-- Submit button -->
+					<div class="form-group">
+						<button type="submit" id="update-blueprint" class="btn btn-success btn-lg btn-block">Update Blueprint</button>
+					</div>
+					
 				</div> <!-- end column -->
 			</div>
 			<% end %> <!-- end blueprint form-->
