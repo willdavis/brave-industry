@@ -1,28 +1,11 @@
 $ ->
 	if $('.blueprints-show').length != 0
-		setup_ME_slider_bar()
 		lookup_production_costs()
+		we_must_go_deeper()
 		
 		if $('#invention').length != 0
 		  lookup_invention_costs()
-		
-		we_must_go_deeper()
 
-#Configure the material effeciency slider bar	
-setup_ME_slider_bar = () ->
-	me_level = $('#ME').val()
-	$('#ME-slider-value').text(me_level)
-	$("#ME-slider").slider(
-		min: -10
-		max: 30
-		value: me_level
-		slide:
-			(event,ui) ->
-				$('#ME-slider-value').text(ui.value)
-		change:
-			(event,ui) ->
-				$('#ME').val(ui.value)
-	)
 	
 #Materials may be components with their own blueprints.
 #Look up component blueprints
