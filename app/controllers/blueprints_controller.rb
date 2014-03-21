@@ -12,10 +12,14 @@ class BlueprintsController < ApplicationController
   end
 
   def show
-		params["material_efficiency"] = params["ME"].to_i
-		params["solar_id"] = SolarSystem.find_by_name(params["solar_name"]).id if !params["solar_name"].nil?
-		params["region_id"] = 10000002 if params["region_id"].nil?
-  	@blueprint = Blueprint.new(params)
+    params["material_efficiency"] = params["ME"].to_i
+    params["solar_id"] = SolarSystem.find_by_name(params["solar_name"]).id if !params["solar_name"].nil?
+    params["region_id"] = 10000002 if params["region_id"].nil?
+    @blueprint = Blueprint.new(params)
+  	
+    #adjust material efficiency if :ME param is nil
+    @blueprint.material_efficiency = 0 if params["ME"].nil? and @blueprint.tech_level == 1
+    @blueprint.material_efficiency = -4 if params["ME"].nil? and @blueprint.tech_level == 2
   end
   
   private

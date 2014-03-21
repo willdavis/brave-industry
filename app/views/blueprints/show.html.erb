@@ -13,10 +13,11 @@
 	<div class="row blueprint-nav">
 		<div class="col-md-12">
 			<ul class="nav nav-tabs">
-				<li class="nav-home-title active"><a href="#home" data-toggle="tab">Home</a></li>
+				<li class="nav-home-title active"><a href="#home" data-toggle="tab">Statistics</a></li>
 				<li class="nav-materials-title"><a href="#materials" data-toggle="tab">Bill of Materials</a></li>
-				<li class="nav-invention-title"><a href="#invention" data-toggle="tab">Invention</a></li>
-				<li class="nav-market-history"><%= link_to "Market History", "/markets/#{@blueprint.region_id}/types/#{@blueprint.product['id']}" %></li>
+				<% if @blueprint.tech_level == 2 %>
+				<li class="nav-invention-title"><a href="#invention" data-toggle="tab">Invention Materials</a></li>
+				<% end %>
 				<li class="nav-skills-title"><a href="#skills" data-toggle="tab">Required Skills</a></li>
 			</ul>
 		</div>
@@ -25,15 +26,15 @@
 	<div class="tab-content">
 		<div class="tab-pane active" id="home">
 			<div class="row">
-				<div class="col-xs-12 col-md-6">
+				<div class="col-xs-12 col-md-6 col-lg-8">
 					<div class="panel panel-primary">
-						<div class="panel-heading">Production Details</div>
+						<div class="panel-heading">Manufacturing Results</div>
 						<div class="panel-body">
 							<div class="panel panel-default">
 								<div class="panel-heading">
 								
 									<div class="row">
-										<div class="col-xs-5">Waste</div>
+										<div class="col-xs-5">Material Waste</div>
 										<div class="col-xs-7"><span class="pull-right item-waste-factor"><%= (@blueprint.waste["current"] * 100).round(2) %>%</span></div>
 									</div>
 								</div>
@@ -78,10 +79,24 @@
 							</div>
 						</div> <!-- end panel body -->
 					</div>
+					
+					<div class="panel panel-primary">
+	          <div class="panel-heading">View Market History</div>
+	          <div class="panel-body">
+	            <div class="panel-heading">
+                <%= link_to "#{@blueprint.name} Price History", "/markets/#{@blueprint.region_id}/types/#{@blueprint.id}", :class=>"btn btn-success btn-lg btn-block" %>
+              </div>
+              
+              <div class="panel-heading">
+                <%= link_to "Product Price History", "/markets/#{@blueprint.region_id}/types/#{@blueprint.product['id']}", :class=>"btn btn-success btn-lg btn-block" %>
+              </div>
+	          </div>
+          </div>
 				</div> <!-- end column -->
 				
 				<%= form_tag("/blueprints/#{@blueprint.id}", :method => :get) do %>
-				<div class="col-xs-12 col-md-6">
+				<div class="col-xs-12 col-md-6 col-lg-4">
+				  
 				  <%= render 'layouts/market_details', 
             :item => @blueprint,
             :exclude_solar_systems => false,
@@ -89,39 +104,35 @@
             :can_submit => false %>
 				  
 					<div class="panel panel-primary">
-						<div class="panel-heading">Research Details</div>
+						<div class="panel-heading">Blueprint Research Options</div>
 						<div class="panel-body">
-						
-							<div class="panel-heading">
-								<div class="row">
-									<div class="col-xs-5">Material Efficiency</div>
-									<div class="col-xs-5"><div id="ME-slider"></div></div>
-									<div class="col-xs-2"><div id="ME-slider-value" class="pull-right">0</div></div>
-								</div>
-							</div>
-							
-							<div class="panel-heading">
-								<div class="row">
-									<div class="col-xs-12">
-									
-										<div class="checkbox">
-											<label>
-												<%= check_box_tag(:invented, "yes", @blueprint.invented ? true : false) %> Include Invention Costs
-											</label>
-										</div>
-										<span class="pull-right">
-											<%= hidden_field_tag(:ME, @blueprint.material_efficiency) %>
-											<div class="form-group">
-												<button type="submit" id="update-blueprint" class="btn btn-primary">Update</button>
-											</div>
-										</span>
-										
-									</div>
-								</div>
-							</div>
+						  
+						  <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">Material Efficiency</span>
+                  <%= select_tag(:ME, options_for_select(-4..20, @blueprint.material_efficiency), :class=>"form-control") %>
+                </div>
+              </div>
+              
+              <% if @blueprint.tech_level == 2 %>
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <%= check_box_tag(:invented, "yes", @blueprint.invented ? true : false) %>
+                  </span>
+                  <span class="input-group-addon">Include Invention Prices</span>
+                </div>
+              </div>
+              <% end %>
 							
 						</div>
 					</div> <!-- end research details panel -->
+					
+					<!-- Submit button -->
+					<div class="form-group">
+						<button type="submit" id="update-blueprint" class="btn btn-success btn-lg btn-block">Update Blueprint</button>
+					</div>
+					
 				</div> <!-- end column -->
 			</div>
 			<% end %> <!-- end blueprint form-->
@@ -300,6 +311,7 @@
 			</div>
 		</div> <!-- end materials -->
 		
+		<% if @blueprint.tech_level == 2 %>
 		<div class="tab-pane" id="invention">
 			<div class="row">
 				<div class="col-xs-12 col-md-6">
@@ -355,12 +367,14 @@
 				</div> <!-- end column -->
 			</div>
 		</div> <!-- end invention -->
+		<% end %>
 		
 		<div class="tab-pane" id="skills">
 			<div class="row">
 				<div class="col-xs-12 col-md-6">
 					<div class="panel panel-primary">
-						<div class="panel-heading">Required Skills</div>
+					
+						<div class="panel-heading">Required Manufacturing Skills</div>
 						<div class="panel-body">
 							<div class="panel panel-default">
 							

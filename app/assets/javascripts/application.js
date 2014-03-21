@@ -25,5 +25,4 @@
 //= require jqplot/plugins/canvasTextRenderer
 //= require jqplot/plugins/canvasAxisLabelRenderer
 //= require jqplot/plugins/barRenderer
-//= require jquery.ui.slider
 //= require_tree .
