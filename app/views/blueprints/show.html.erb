@@ -101,20 +101,17 @@
                   <%= select_tag(:ME, options_for_select(-4..20, @blueprint.material_efficiency), :class=>"form-control") %>
                 </div>
               </div>
-							
-							<div class="panel-heading">
-								<div class="row">
-									<div class="col-xs-12">
-									
-										<div class="checkbox">
-											<label>
-												<%= check_box_tag(:invented, "yes", @blueprint.invented ? true : false) %> Include Invention Costs
-											</label>
-										</div>
-										
-									</div>
-								</div>
-							</div>
+              
+              <% if @blueprint.tech_level == 2 %>
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <%= check_box_tag(:invented, "yes", @blueprint.invented ? true : false) %>
+                  </span>
+                  <span class="input-group-addon">Include Invention Prices</span>
+                </div>
+              </div>
+              <% end %>
 							
 						</div>
 					</div> <!-- end research details panel -->
