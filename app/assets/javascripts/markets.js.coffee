@@ -14,6 +14,8 @@ $ ->
       (results) ->
         console.log results
         price_range = []
+        sell_volume = []
+        order_count = []
         
         if typeof document.ontouchstart == "undefined"
           subtitle_text = 'Click and drag in the plot area to zoom in'
@@ -22,6 +24,8 @@ $ ->
         
         for item in results.items
           price_range.push([item["date"], item["lowPrice"], item["highPrice"]])
+          sell_volume.push([item["date"], item["volume"]])
+          order_count.push([item["date"], item["orderCount"]])
         
         $('#price_history_chart').empty()
         $('#volume_history_chart').empty()
@@ -49,6 +53,41 @@ $ ->
               type: 'arearange'
               name: 'Sell Prices'
               data: price_range
+            }
+          ]
+        )
+        
+        $('#volume_history_chart').highcharts(
+          chart:
+            zoomType: 'x'
+          title:
+            text: 'Market Volume History'
+          subtitle:
+            text: subtitle_text
+          xAxis:
+            type: 'datetime'
+            title:
+              text: null
+          yAxis:
+            title:
+              text: null
+          tooltip:
+            crosshairs: true
+            shared: true
+          series: [
+            {
+              type: 'column'
+              name: 'Units Sold'
+              data: sell_volume
+              tooltip:
+                valueSuffix: ' Units'
+            }
+            {
+              type: 'column'
+              name: 'Sell Orders'
+              data: order_count
+              tooltip:
+                valueSuffix: ' Orders'
             }
           ]
         )
