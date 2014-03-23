@@ -25,4 +25,8 @@
 //= require jqplot/plugins/canvasTextRenderer
 //= require jqplot/plugins/canvasAxisLabelRenderer
 //= require jqplot/plugins/barRenderer
+
+//= require highcharts
+//= require highcharts/highcharts-more
+
 //= require_tree .
