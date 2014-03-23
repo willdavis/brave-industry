@@ -20,74 +20,38 @@ $ ->
       get_market_data(market_url, min_sell_history, max_sell_history, market_volume, market_order_count)
     ).done(
       (results) ->
+        console.log results
+        price_history_range = []
+        
+        for item in results.items
+          price_history_range.push([item["date"], item["lowPrice"], item["highPrice"]])
+        
         $('#price_history_chart').empty()
         $('#volume_history_chart').empty()
         
-        $.jqplot(
-          'price_history_chart'
-          [min_sell_history, max_sell_history]
-          title:"Price History"
-          series:[
+        $('#price_history_chart').highcharts(
+          chart:
+            zoomType: 'x'
+          title:
+            text: 'Price History'
+          xAxis:
+            type: 'datetime'
+            title:
+              text: null
+          yAxis:
+            title:
+              text: null
+          tooltip:
+            crosshairs: true
+            shared: true
+            valueSuffix: ' ISK'
+          series: [
             {
-              label: "Low Price"
-              showMarker:false
-            }
-            {
-              label: "High Price"
-              showMarker:false
+              type: 'arearange'
+              name: 'Sell Prices'
+              data: price_history_range
             }
           ]
-          legend:
-            show: true
-            location: 'e'
-            placement: 'outside'
-          cursor:
-            show: true
-            zoom: true
-            showTooltip: false
-          highlighter:
-            show: true
-          axes:
-            xaxis:
-              renderer: $.jqplot.DateAxisRenderer
-              tickOptions:
-                formatString:'%v'
-            yaxis:
-              label:'Isk per Unit'
-              labelRenderer: $.jqplot.CanvasAxisLabelRenderer
-        )
-
-        $.jqplot(
-          'volume_history_chart'
-          [market_volume, market_order_count]
-          title: "Trade Volume"
-          seriesDefaults:
-            renderer: $.jqplot.BarRenderer
-            rendererOptions:
-              barMargin: 10
-              barWidth: 10
-          series:[
-            {label: 'Volume'}
-            {label: 'Orders'}
-          ]
-          legend:
-            show: true
-            location: 'e'
-            placement: 'outside'
-          cursor:
-            show: true
-            zoom: true
-            showTooltip: false
-          highlighter:
-            show: true
-          axes:
-            xaxis:
-              renderer: $.jqplot.DateAxisRenderer
-              tickOptions:
-                formatString:'%v'
-            yaxis:
-              label:'Units'
-              labelRenderer: $.jqplot.CanvasAxisLabelRenderer
         )
     )
     
@@ -112,7 +76,7 @@ get_market_data = (url, min_price_array, max_price_array, volume_array, order_ar
 	  (data) ->
       for item in data.items
         time = new Date(item["date"])
-        min_price_array.push([time, item["lowPrice"]])
+        #min_price_array.push([time, item["lowPrice"]])
         max_price_array.push([time, item["highPrice"]])
         volume_array.push([time, item["volume"]])
         order_array.push([time, item["orderCount"]])
