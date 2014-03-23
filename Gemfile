@@ -12,6 +12,7 @@ group :production do
   gem 'rails_12factor'	#needed for heroku.  Serves assets in production
 end
 
+# XML Parsing
 gem 'nokogiri'
 
 # Pagination
@@ -27,6 +28,9 @@ gem 'sass-rails', '~> 4.0.0'
 # Twitter Bootstrap 3
 gem 'bootstrap-sass', github: 'thomas-mcdonald/bootstrap-sass'
 
+# Highcharts for pretty graphs
+gem "highcharts-rails", "~> 3.0.0"
+
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 
@@ -38,8 +42,6 @@ gem 'therubyracer', platforms: :ruby
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
-gem 'jquery-ui-rails'
-gem "jqplot-rails"
 
 # Fix for jquery bindings and turbolinks
 gem 'jquery-turbolinks'

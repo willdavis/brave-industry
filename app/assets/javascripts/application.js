@@ -11,18 +11,13 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery.turbolinks
 //= require jquery_ujs
 //= require bootstrap
 //= require bootstrap3-typeahead
 
 //= require markets
 
-//= require jqplot
-//= require jqplot/plugins/cursor
-//= require jqplot/plugins/highlighter
-//= require jqplot/plugins/dateAxisRenderer
-//= require jqplot/plugins/canvasTextRenderer
-//= require jqplot/plugins/canvasAxisLabelRenderer
-//= require jqplot/plugins/barRenderer
+//= require highcharts
+//= require highcharts/highcharts-more
+
 //= require_tree .
