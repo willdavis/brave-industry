@@ -68,7 +68,7 @@ $ ->
           chart:
             type: 'pie'
           title:
-            text: 'Current Buy & Sell Quantities'
+            text: 'Current Buy & Sell Quantity'
           subtitle:
             text: 'Click the slices to view a breakdown by space stations'
           series:[
@@ -140,7 +140,7 @@ $ ->
           chart:
             zoomType: 'x'
           title:
-            text: 'Market Volume History'
+            text: 'Trade Volume History'
           subtitle:
             text: subtitle_text
           xAxis:
