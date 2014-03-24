@@ -18,9 +18,10 @@ $ ->
         console.log current_orders
         
         orders = {}
+        order_data = []
         $(current_orders).find("sell_orders").find("order").each(
           () ->
-            #console.log $(this).find("station_name").text()
+            #console.log $(this).find("station_name").text()            
             if !orders["sell"]
               orders["sell"] = parseInt($(this).find("vol_remain").text())
             else
@@ -35,6 +36,9 @@ $ ->
             else
               orders["buy"] += parseInt($(this).find("vol_remain").text())
         )
+        
+        order_data.push(["Sell Orders", orders["sell"]])
+        order_data.push(["Buy Orders", orders["buy"]])
         
         console.log "Current sell orders: #{orders['sell']}\nCurrent buy orders: #{orders['buy']}"
         
@@ -51,9 +55,24 @@ $ ->
           price_range_history.push([item["date"], item["lowPrice"], item["highPrice"]])
           sell_volume_history.push([item["date"], item["volume"]])
           order_count_history.push([item["date"], item["orderCount"]])
-        
-        $('#price_history_chart').empty()
-        $('#volume_history_chart').empty()
+          
+          
+        $('#current_orders').highcharts(
+          chart:
+            type: 'pie'
+          title:
+            text: 'Current Buy & Sell Quantities'
+          subtitle:
+            text: 'Click the slices to view a breakdown by space stations'
+          series:[
+            {
+              name: 'Quantity'
+              data: order_data
+              tooltip:
+                valueSuffix: ' units'
+            }
+          ]
+        )
         
         $('#price_history_chart').highcharts(
           chart:
