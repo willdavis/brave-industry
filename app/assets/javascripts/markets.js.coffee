@@ -1,7 +1,5 @@
 $ ->
 	if $('.markets-show').length != 0
-    # get info from the HTML page
-    product_id = $('.item-sell-price').attr("id")
     region_id = $('#region-id').text()
     item_id = $('#item-id').text()
 
@@ -19,9 +17,30 @@ $ ->
         console.log market_history
         console.log current_orders
         
-        price_range = []
-        sell_volume = []
-        order_count = []
+        orders = {}
+        $(current_orders).find("sell_orders").find("order").each(
+          () ->
+            #console.log $(this).find("station_name").text()
+            if !orders["sell"]
+              orders["sell"] = parseInt($(this).find("vol_remain").text())
+            else
+              orders["sell"] += parseInt($(this).find("vol_remain").text())
+        )
+        
+        $(current_orders).find("buy_orders").find("order").each(
+          () ->
+            #console.log $(this).find("station_name").text()
+            if !orders["buy"]
+              orders["buy"] = parseInt($(this).find("vol_remain").text())
+            else
+              orders["buy"] += parseInt($(this).find("vol_remain").text())
+        )
+        
+        console.log "Current sell orders: #{orders['sell']}\nCurrent buy orders: #{orders['buy']}"
+        
+        price_range_history = []
+        sell_volume_history = []
+        order_count_history = []
         
         if typeof document.ontouchstart == "undefined"
           subtitle_text = 'Click and drag in the plot area to zoom in'
@@ -29,9 +48,9 @@ $ ->
           subtitle_text = 'Pinch the chart to zoom in'
         
         for item in market_history[0].items
-          price_range.push([item["date"], item["lowPrice"], item["highPrice"]])
-          sell_volume.push([item["date"], item["volume"]])
-          order_count.push([item["date"], item["orderCount"]])
+          price_range_history.push([item["date"], item["lowPrice"], item["highPrice"]])
+          sell_volume_history.push([item["date"], item["volume"]])
+          order_count_history.push([item["date"], item["orderCount"]])
         
         $('#price_history_chart').empty()
         $('#volume_history_chart').empty()
@@ -58,7 +77,7 @@ $ ->
             {
               type: 'arearange'
               name: 'Sell Prices'
-              data: price_range
+              data: price_range_history
             }
           ]
         )
@@ -84,14 +103,14 @@ $ ->
             {
               type: 'column'
               name: 'Units Sold'
-              data: sell_volume
+              data: sell_volume_history
               tooltip:
                 valueSuffix: ' Units'
             }
             {
               type: 'column'
               name: 'Sell Orders'
-              data: order_count
+              data: order_count_history
               tooltip:
                 valueSuffix: ' Orders'
             }
