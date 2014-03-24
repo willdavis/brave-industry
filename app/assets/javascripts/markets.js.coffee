@@ -14,15 +14,20 @@ $ ->
       $.get(current_orders_url)
     ).done(
       (market_history, current_orders) ->
-        console.log market_history
-        console.log current_orders
         
         orders = {}
         order_data = []
+        
+        sell_order_quantity = []
+        buy_order_quantity = []
+        
         $(current_orders).find("sell_orders").find("order").each(
           () ->
             station = $(this).find("station_name").text()
             volume = parseInt($(this).find("vol_remain").text())
+            
+            sell_order_quantity.push([station, volume])
+            
             if !orders["sell"]
               orders["sell"] = volume
             else
@@ -32,15 +37,15 @@ $ ->
         $(current_orders).find("buy_orders").find("order").each(
           () ->
             station = $(this).find("station_name").text()
-            volume = parseInt($(this).find("vol_remain").text())
+            volume = parseInt($(this).find("vol_remain").text())            
+            
+            buy_order_quantity.push([station, volume])
+            
             if !orders["buy"]
               orders["buy"] = volume
             else
               orders["buy"] += volume
         )
-        
-        order_data.push(["Sell Orders", orders["sell"]])
-        order_data.push(["Buy Orders", orders["buy"]])
         
         console.log "Current sell orders: #{orders['sell']}\nCurrent buy orders: #{orders['buy']}"
         
@@ -69,11 +74,39 @@ $ ->
           series:[
             {
               name: 'Quantity'
-              data: order_data
+              data:[
+                {
+                  name: "Sell Orders"
+                  y: orders["sell"]
+                  drilldown: "sell"
+                }
+                {
+                  name: "Buy Orders"
+                  y: orders["buy"]
+                  drilldown: "buy"
+                }
+              ]
               tooltip:
                 valueSuffix: ' units'
             }
           ]
+          drilldown:
+            series:[
+              {
+                name: "Sell Orders"
+                id: "sell"
+                data: sell_order_quantity
+                tooltip:
+                  valueSuffix: " units"
+              }
+              {
+                name: "Buy Orders"
+                id: "buy"
+                data: buy_order_quantity
+                tooltip:
+                  valueSuffix: " units"
+              }
+            ]
         )
         
         $('#price_history_chart').highcharts(
