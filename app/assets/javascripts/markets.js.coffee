@@ -8,12 +8,16 @@ $ ->
     
     current_orders_url = "http://api.eve-central.com/api/quicklook?regionlimit=#{region_id}&typeid=#{item_id}"
     console.log "EveCentral quicklook: #{current_orders_url}"
+    
+    current_market_url = "http://api.eve-central.com/api/marketstat?regionlimit=#{region_id}&typeid=#{item_id}"
+    console.log "EveCentral marketstat: #{current_market_url}"
 
     $.when(
       $.getJSON(market_history_url)
       $.get(current_orders_url)
+      $.get(current_market_url)
     ).done(
-      (market_history, current_orders) ->
+      (market_history, current_orders, current_market) ->
         
         orders = {}
         order_data = []
@@ -52,8 +56,6 @@ $ ->
               orders["buy"] += volume
         )
         
-        console.log "Current sell orders: #{orders['sell']}\nCurrent buy orders: #{orders['buy']}"
-        
         price_range_history = []
         sell_volume_history = []
         order_count_history = []
@@ -68,9 +70,12 @@ $ ->
           sell_volume_history.push([item["date"], item["volume"]])
           order_count_history.push([item["date"], item["orderCount"]])
         
+        
+        $('#sell-orders-lowPrice').text("#{$(current_market).find("sell").find("min").text()} ISK")
         $('#sell-orders-total').text(sell_order_total)
         $('#sell-orders-quantity').text(orders["sell"])
         
+        $('#buy-orders-highPrice').text("#{$(current_market).find("buy").find("max").text()} ISK")
         $('#buy-orders-total').text(buy_order_total)
         $('#buy-orders-quantity').text(orders["buy"])
           
