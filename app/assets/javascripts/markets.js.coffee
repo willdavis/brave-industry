@@ -21,20 +21,22 @@ $ ->
         order_data = []
         $(current_orders).find("sell_orders").find("order").each(
           () ->
-            #console.log $(this).find("station_name").text()            
+            station = $(this).find("station_name").text()
+            volume = parseInt($(this).find("vol_remain").text())
             if !orders["sell"]
-              orders["sell"] = parseInt($(this).find("vol_remain").text())
+              orders["sell"] = volume
             else
-              orders["sell"] += parseInt($(this).find("vol_remain").text())
+              orders["sell"] += volume
         )
         
         $(current_orders).find("buy_orders").find("order").each(
           () ->
-            #console.log $(this).find("station_name").text()
+            station = $(this).find("station_name").text()
+            volume = parseInt($(this).find("vol_remain").text())
             if !orders["buy"]
-              orders["buy"] = parseInt($(this).find("vol_remain").text())
+              orders["buy"] = volume
             else
-              orders["buy"] += parseInt($(this).find("vol_remain").text())
+              orders["buy"] += volume
         )
         
         order_data.push(["Sell Orders", orders["sell"]])
