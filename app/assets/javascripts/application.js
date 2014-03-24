@@ -19,5 +19,6 @@
 
 //= require highcharts
 //= require highcharts/highcharts-more
+//= require highcharts/modules/drilldown
 
 //= require_tree .
