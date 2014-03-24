@@ -63,6 +63,8 @@ $ ->
           sell_volume_history.push([item["date"], item["volume"]])
           order_count_history.push([item["date"], item["orderCount"]])
           
+        $('#sell-orders-quantity').text(orders["sell"])
+        $('#buy-orders-quantity').text(orders["buy"])
           
         $('#current_orders').highcharts(
           chart:
