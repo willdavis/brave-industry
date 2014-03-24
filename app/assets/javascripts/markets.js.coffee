@@ -18,11 +18,15 @@ $ ->
         orders = {}
         order_data = []
         
+        sell_order_total = 0
+        buy_order_total = 0
+        
         sell_order_quantity = []
         buy_order_quantity = []
         
         $(current_orders).find("sell_orders").find("order").each(
           () ->
+            sell_order_total++
             station = $(this).find("station_name").text()
             volume = parseInt($(this).find("vol_remain").text())
             
@@ -36,6 +40,7 @@ $ ->
         
         $(current_orders).find("buy_orders").find("order").each(
           () ->
+            buy_order_total++
             station = $(this).find("station_name").text()
             volume = parseInt($(this).find("vol_remain").text())            
             
@@ -62,8 +67,11 @@ $ ->
           price_range_history.push([item["date"], item["lowPrice"], item["highPrice"]])
           sell_volume_history.push([item["date"], item["volume"]])
           order_count_history.push([item["date"], item["orderCount"]])
-          
+        
+        $('#sell-orders-total').text(sell_order_total)
         $('#sell-orders-quantity').text(orders["sell"])
+        
+        $('#buy-orders-total').text(buy_order_total)
         $('#buy-orders-quantity').text(orders["buy"])
           
         $('#current_orders').highcharts(
