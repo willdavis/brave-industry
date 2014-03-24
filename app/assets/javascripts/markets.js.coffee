@@ -5,14 +5,20 @@ $ ->
     region_id = $('#region-id').text()
     item_id = $('#item-id').text()
 
-    market_url = "http://public-crest.eveonline.com/market/#{region_id}/types/#{item_id}/history/"
-    console.log market_url
+    market_history_url = "http://public-crest.eveonline.com/market/#{region_id}/types/#{item_id}/history/"
+    console.log "EVE Market History (CREST API): #{market_history_url}"
+    
+    current_orders_url = "http://api.eve-central.com/api/quicklook?regionlimit=#{region_id}&typeid=#{item_id}"
+    console.log "EveCentral quicklook: #{current_orders_url}"
 
     $.when(
-      $.getJSON(market_url)
+      $.getJSON(market_history_url)
+      $.get(current_orders_url)
     ).done(
-      (results) ->
-        console.log results
+      (market_history, current_orders) ->
+        console.log market_history
+        console.log current_orders
+        
         price_range = []
         sell_volume = []
         order_count = []
@@ -22,7 +28,7 @@ $ ->
         else
           subtitle_text = 'Pinch the chart to zoom in'
         
-        for item in results.items
+        for item in market_history[0].items
           price_range.push([item["date"], item["lowPrice"], item["highPrice"]])
           sell_volume.push([item["date"], item["volume"]])
           order_count.push([item["date"], item["orderCount"]])
