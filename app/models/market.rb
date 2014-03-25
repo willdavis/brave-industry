@@ -9,7 +9,8 @@ class Market
   def save!; true; end
   
   # ActiveRecord queries
-  def self.find(region_id, type_id); Market.get_market(region_id, type_id); end
+  def self.find_by_region(id, item_id); Market.get_market("region", id, item_id); end
+  def self.find_by_system(id, item_id); Market.get_market("system", id, item_id); end
   
   # Dynamic attributes should match the values supplied by form_for params
   ATTRIBUTES = [:region_id, :solar_id, :solar_name, :type_name, :type_id, :raw_data, :market_in, :location]
@@ -39,10 +40,9 @@ class Market
   
   private
   
-  def self.get_market(r_id, t_id)
-    data = []#Rails.cache.fetch("market.#{r_id}.#{t_id}", expires_in: 1.days, compress: true) { Market.evedata.get("/market/#{r_id}/types/#{t_id}/history/").body }
-    return Market.new(:region_id => r_id, :type_id => t_id, :raw_data => data) if !data.nil?
-    return Market.new if data.nil?
+  def self.get_market(location_type, id, item_id)
+    return Market.new(:location => "region", :region_id => id, :type_id => item_id) if location_type == "region"
+    return Market.new(:location => "system", :solar_id => id, :type_id => item_id) if location_type == "system"
   end
   
   def self.evedata

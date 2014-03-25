@@ -72,21 +72,43 @@ describe Market do
 	  context "by region" do
 	    context "with valid region id" do
 	      it "returns a market" do
-	        market = Market.find(10000002, 622)
-	        expect(market.region_id).to_not be_nil
-	        expect(market.type_id).to_not be_nil
+	        market = Market.find_by_region(10000002, 622)
+	        expect(market.region.id).to_not be_nil
+	        expect(market.item.id).to_not be_nil
 	        
-	        expect(market.region_id).to be_a(Integer)
-	        expect(market.type_id).to be_a(Integer)
+	        expect(market.region.id).to be_a(Integer)
+	        expect(market.item.id).to be_a(Integer)
 	      end
 	    end
 	    
 	    context "with invalid region id" do
 	      it "returns nil" do
-	        market = Market.find(0,0)
+	        market = Market.find_by_region(0,0)
 	        
-	        expect(market.region_id).to eq(0)
-	        expect(market.type_id).to eq(0)
+	        expect(market.region.id).to be_nil
+	        expect(market.item.id).to be_nil
+	      end
+	    end
+	  end
+	  
+	  context "by solar system" do
+	    context "with valid system id" do
+	      it "returns a market" do
+	        market = Market.find_by_system(30000142, 622) #Jita, Stabbers
+	        expect(market.solar_system.id).to_not be_nil
+	        expect(market.item.id).to_not be_nil
+	        
+	        expect(market.solar_system.id).to be_a(Integer)
+	        expect(market.item.id).to be_a(Integer)
+	      end
+	    end
+	    
+	    context "with invalid region id" do
+	      it "returns nil" do
+	        market = Market.find_by_system(0,0)
+	        
+	        expect(market.solar_system.id).to be_nil
+	        expect(market.item.id).to be_nil
 	      end
 	    end
 	  end
