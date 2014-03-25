@@ -4,11 +4,7 @@
   <div class="panel-body">
 
 	  <div class="row">
-	    <% if can_submit and exclude_items and exclude_solar_systems %>
-	    <div class="col-xs-12 col-md-8">
-	    <% else %>
 	    <div class="col-xs-12">
-	    <% end %>
 	    
 	      <div class="form-group">
           <div class="input-group">
@@ -24,16 +20,8 @@
           </div>
         </div>
         
-	    </div>
-	    
-	    <% if can_submit and exclude_items and exclude_solar_systems %>
-	    <div class="col-xs-12 col-md-4">
-	      <div class="form-group">
-          <%= link_to "Update", "/markets/#{item.region_id}/types/#{item.type_id}", :id => "update-region", :class => "btn btn-primary" %>
-	      </div>
-	    </div>
-	    <% end %>
-    </div>
+	    </div> <!-- end column -->
+    </div> <!-- end row -->
     
     <% if !exclude_solar_systems %>
     <div class="row">
@@ -65,10 +53,10 @@
 	  </div>
     <% end %>
     
-    <% if can_submit and !exclude_items and exclude_solar_systems %>
+    <% if can_submit %>
     <div class="col-xs-12">
       <div class="form-group">
-        <%= link_to "Update", "/markets/#{item.region_id}/types/#{item.type_id}", :id => "update-region", :class => "btn btn-primary" %>
+        <%= link_to "Search", "/markets/#{item.region_id}/types/#{item.type_id}", :id => "update-region", :class => "btn btn-success btn-lg btn-block" %>
       </div>
     </div>
     <% end %>
