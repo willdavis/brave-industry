@@ -77,7 +77,16 @@ describe Market do
 	        expect(market.item.id).to_not be_nil
 	        
 	        expect(market.region.id).to be_a(Integer)
+	        expect(market.region.id).to eq(10000002)
+	        
+	        expect(market.region.name).to be_a(String)
+	        expect(market.region.name).to eq("The Forge")
+	        
 	        expect(market.item.id).to be_a(Integer)
+	        expect(market.item.id).to eq(622)
+	        
+	        expect(market.item.name).to be_a(String)
+	        expect(market.item.name).to eq("Stabber")
 	      end
 	    end
 	    
@@ -94,16 +103,25 @@ describe Market do
 	  context "by solar system" do
 	    context "with valid system id" do
 	      it "returns a market" do
-	        market = Market.find_by_system(30000142, 622) #Jita, Stabbers
+	        market = Market.find_by_system(30000142, 622)
 	        expect(market.solar_system.id).to_not be_nil
 	        expect(market.item.id).to_not be_nil
 	        
 	        expect(market.solar_system.id).to be_a(Integer)
+	        expect(market.solar_system.id).to eq(30000142)
+	        
+	        expect(market.solar_system.name).to be_a(String)
+	        expect(market.solar_system.name).to eq("Jita")
+	        
 	        expect(market.item.id).to be_a(Integer)
+	        expect(market.item.id).to eq(622)
+	        
+	        expect(market.item.name).to be_a(String)
+	        expect(market.item.name).to eq("Stabber")
 	      end
 	    end
 	    
-	    context "with invalid region id" do
+	    context "with invalid system id" do
 	      it "returns nil" do
 	        market = Market.find_by_system(0,0)
 	        

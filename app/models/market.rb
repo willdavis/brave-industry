@@ -23,7 +23,7 @@ class Market
   end
   
   def region
-    @region ||= Region.new(:id=>region_id)
+    @region ||= Region.find(region_id)
   end
   
   def solar_system
@@ -31,7 +31,13 @@ class Market
   end
   
   def item
-    @item ||= Item.new(:id=>type_id, :name=>type_name)
+    query = lambda do
+      return Item.find(type_id) if !type_id.nil?
+      return Item.find_by_name(type_name) if type_id.nil? and !type_name.nil?
+      return Item.new if type_id.nil? and type_name.nil?
+    end
+    
+    @item ||= query.call
   end
   
   def raw_data
