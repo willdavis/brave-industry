@@ -12,7 +12,7 @@ class Market
   def self.find(region_id, type_id); Market.get_market(region_id, type_id); end
   
   # Dynamic attributes should match the values supplied by form_for params
-  ATTRIBUTES = [:region_id, :solar_id, :solar_name, :type_name, :type_id, :raw_data, :market_in]
+  ATTRIBUTES = [:region_id, :solar_id, :solar_name, :type_name, :type_id, :raw_data, :market_in, :location]
   attr_accessor *ATTRIBUTES
   
   def initialize(attributes = {})
@@ -23,6 +23,10 @@ class Market
   
   def region
     @region ||= Region.new(:id=>region_id)
+  end
+  
+  def solar_system
+    @solar_system ||= SolarSystem.find_by_id(solar_id)
   end
   
   def item

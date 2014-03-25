@@ -2,6 +2,7 @@
 
 FactoryGirl.define do
   factory :market do
+    location "region"
     region_id 10000002
     type_id 622  #stabber
   end
