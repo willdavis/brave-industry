@@ -28,7 +28,7 @@ lookup_invention_costs = () ->
 	region_id = $('#region_id').val()
 	solar_id = $('#solar_id').text()
 	
-	if $("#market_in_solar_system").is(':checked') and solar_id != ""
+	if $("#location_system").is(':checked') and solar_id != ""
 	  evecentral_url = "http://api.eve-central.com/api/marketstat?usesystem=#{solar_id}"
 	else
 	  evecentral_url = "http://api.eve-central.com/api/marketstat?regionlimit=#{region_id}"
@@ -99,7 +99,7 @@ lookup_production_costs = () ->
 	region_id = $('#region_id').val()
 	solar_id = $('#solar_id').text()
 	
-	if $("#market_in_solar_system").is(':checked') and solar_id != ""
+	if $("#location_system").is(':checked') and solar_id != ""
 	  evecentral_url = "http://api.eve-central.com/api/marketstat?usesystem=#{solar_id}&typeid=#{product_id}"
 	else
 	  evecentral_url = "http://api.eve-central.com/api/marketstat?regionlimit=#{region_id}&typeid=#{product_id}"

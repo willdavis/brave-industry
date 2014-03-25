@@ -10,7 +10,7 @@
           <div class="input-group">
             <% if !exclude_solar_systems %>
             <span class="input-group-addon">
-              <%= radio_button_tag :market_in, :region, item.market_in.nil? || item.market_in == "region" %>
+              <%= radio_button_tag :location, :region, item.location.nil? || item.location == "region" %>
             </span>
             <% end %>
             
@@ -29,7 +29,7 @@
 		    <div class="form-group">
           <div class="input-group">
             <span class="input-group-addon">
-              <%= radio_button_tag :market_in, :solar_system, item.market_in == "solar_system" %>
+              <%= radio_button_tag :location, :system, item.location == "system" %>
             </span>
             <span class="input-group-addon">Solar System</span>
             <span id="solar_id" style="display:none"><%= item.solar_id %></span>
@@ -56,10 +56,8 @@
     <% if can_submit %>
     <div class="col-xs-12">
       <div class="form-group">
-        <% if item.market_in.nil? || item.market_in == "region" %>
-          <%= link_to "Search", "/markets/regions/#{item.region_id}/types/#{item.type_id}", :id => "update-region", :class => "btn btn-success btn-lg btn-block" %>
-        <% else %>
-          <%= link_to "Search", "/markets/systems/#{item.region_id}/types/#{item.type_id}", :id => "update-region", :class => "btn btn-success btn-lg btn-block" %>
+        <% if item.location.nil? || item.location == "region" %>
+          <%= link_to "Search", "/markets/#{item.location}/#{item.region_id}/types/#{item.type_id}", :id => "update-region", :class => "btn btn-success btn-lg btn-block" %>
         <% end %>
       </div>
     </div>

@@ -12,7 +12,7 @@ BraveIndustry::Application.routes.draw do
   end
   
   resources :markets, :only => [:index]
-  get '/markets/:location/:location_id/types/:type_id', to: 'markets#show', as: 'market'
+  get '/markets/:location/:id/types/:type_id', to: 'markets#show', as: 'market'
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
