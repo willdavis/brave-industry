@@ -17,12 +17,6 @@ describe Market do
 	    expect(@market.type_id).to be_a(Integer)
 	    expect(@market.type_id).to eq(622)
 	  end
-	  
-	  it "has raw market data" do
-	    expect(@market.raw_data).to_not be_nil
-	    expect(@market.raw_data).to be_a(Hash)
-	    expect(@market.raw_data["items"]).to be_a(Array)
-	  end
 	end
 	
 	context "region" do
@@ -48,14 +42,9 @@ describe Market do
 	      market = Market.find(10000002, 622)
 	      expect(market.region_id).to_not be_nil
 	      expect(market.type_id).to_not be_nil
-	      expect(market.raw_data).to_not be_nil
 	      
 	      expect(market.region_id).to be_a(Integer)
 	      expect(market.type_id).to be_a(Integer)
-	      
-	      expect(market.raw_data).to be_a(Hash)
-	      expect(market.raw_data["totalCount"]).to be_a(Integer)
-	      expect(market.raw_data["items"]).to be_a(Array)
 	    end
 	  end
 	  
@@ -65,13 +54,6 @@ describe Market do
 	      
 	      expect(market.region_id).to eq(0)
 	      expect(market.type_id).to eq(0)
-	      expect(market.raw_data).to be_a(Hash)
-	      
-	      expect(market.raw_data["exceptionType"]).to be_a(String)
-	      expect(market.raw_data["exceptionType"]).to eq("NotFoundError")
-	      
-	      expect(market.raw_data["message"]).to be_a(String)
-	      expect(market.raw_data["message"]).to eq("Type not listed on market")
 	    end
 	  end
 	end
