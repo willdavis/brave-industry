@@ -9,6 +9,6 @@ class MarketsController < ApplicationController
 	    params[:type_id] = Item.get_item_by_name(params[:type_id]).id
 	  end
 	  
-	  @market = Market.find(params[:region_id], params[:type_id])
+	  @market = Market.find(params[:location_id], params[:type_id])
 	end
 end

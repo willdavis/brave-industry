@@ -56,7 +56,11 @@
     <% if can_submit %>
     <div class="col-xs-12">
       <div class="form-group">
-        <%= link_to "Search", "/markets/#{item.region_id}/types/#{item.type_id}", :id => "update-region", :class => "btn btn-success btn-lg btn-block" %>
+        <% if item.market_in.nil? || item.market_in == "region" %>
+          <%= link_to "Search", "/markets/regions/#{item.region_id}/types/#{item.type_id}", :id => "update-region", :class => "btn btn-success btn-lg btn-block" %>
+        <% else %>
+          <%= link_to "Search", "/markets/systems/#{item.region_id}/types/#{item.type_id}", :id => "update-region", :class => "btn btn-success btn-lg btn-block" %>
+        <% end %>
       </div>
     </div>
     <% end %>

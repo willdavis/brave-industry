@@ -191,12 +191,12 @@ $ ->
     () ->
       region_id = $(this).find("option:selected").val()
       type_id = $('#type_name').val()
-      $('#update-region').prop("href", "/markets/#{region_id}/types/#{type_id}")
+      $('#update-region').prop("href", "/markets/regions/#{region_id}/types/#{type_id}")
   )
   
   $('#type_name').change(
     () ->
       region_id = $('#region_id').find("option:selected").val()
       type_name = $('#type_name').val()
-      $('#update-region').prop("href", "/markets/#{region_id}/types/#{type_name}")
+      $('#update-region').prop("href", "/markets/regions/#{region_id}/types/#{type_name}")
   )
