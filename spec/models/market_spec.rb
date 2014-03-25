@@ -72,7 +72,7 @@ describe Market do
 	  context "by region" do
 	    context "with valid region id" do
 	      it "returns a market" do
-	        market = Market.find_by_region(10000002, 622)
+	        market = Market.find("region", 10000002, 622)
 	        expect(market.region.id).to_not be_nil
 	        expect(market.item.id).to_not be_nil
 	        
@@ -92,7 +92,7 @@ describe Market do
 	    
 	    context "with invalid region id" do
 	      it "returns nil" do
-	        market = Market.find_by_region(0,0)
+	        market = Market.find("region",0,0)
 	        
 	        expect(market.region.id).to be_nil
 	        expect(market.item.id).to be_nil
@@ -103,7 +103,7 @@ describe Market do
 	  context "by solar system" do
 	    context "with valid system id" do
 	      it "returns a market" do
-	        market = Market.find_by_system(30000142, 622)
+	        market = Market.find("system", 30000142, 622)
 	        expect(market.solar_system.id).to_not be_nil
 	        expect(market.item.id).to_not be_nil
 	        
@@ -123,7 +123,7 @@ describe Market do
 	    
 	    context "with invalid system id" do
 	      it "returns nil" do
-	        market = Market.find_by_system(0,0)
+	        market = Market.find("system",0,0)
 	        
 	        expect(market.solar_system.id).to be_nil
 	        expect(market.item.id).to be_nil

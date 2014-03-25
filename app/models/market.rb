@@ -9,8 +9,7 @@ class Market
   def save!; true; end
   
   # ActiveRecord queries
-  def self.find_by_region(id, item_id); Market.get_market("region", id, item_id); end
-  def self.find_by_system(id, item_id); Market.get_market("system", id, item_id); end
+  def self.find(location_type, id, item_id); Market.get_market(location_type, id, item_id); end
   
   # Dynamic attributes should match the values supplied by form_for params
   ATTRIBUTES = [:region_id, :solar_id, :solar_name, :type_name, :type_id, :raw_data, :market_in, :location]
