@@ -4,7 +4,7 @@ FactoryGirl.define do
   factory :market do
     location "region"
     region_id 10000002  #The Forge
-    solar_id 30000142 #Jita
+    system_id 30000142 #Jita
     type_id 622  #stabber
   end
 end

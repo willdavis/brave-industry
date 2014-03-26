@@ -7,10 +7,10 @@ class PriceCheckController < ApplicationController
   	@fitting = @results.xpath("//fitting").first
   	@ship = @results.xpath("//shipType").first
   	
-  	@market = params[:market_in]
+  	@location = params[:location]
   	@region = Region.find(params[:region_id])
-  	@solar_name = params[:solar_name]
-  	@solar_id = SolarSystem.find_by_name(params[:solar_name]).id if params[:solar_name]
+  	@system_name = params[:system_name]
+  	@system_id = SolarSystem.find_by_name(params[:system_name]).id if params[:system_name]
   	
   	ship_data = Rails.cache.fetch("Items.by_name=#{@ship[:value]}") { evedata.get("/items?name=#{@ship[:value]}").body.first }
   	@ship[:id] = ship_data["id"]

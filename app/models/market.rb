@@ -12,7 +12,7 @@ class Market
   def self.find(location_type, id, item_id); Market.get_market(location_type, id, item_id); end
   
   # Dynamic attributes should match the values supplied by form_for params
-  ATTRIBUTES = [:region_id, :solar_id, :solar_name, :type_name, :type_id, :raw_data, :location]
+  ATTRIBUTES = [:region_id, :system_id, :system_name, :type_name, :type_id, :location]
   attr_accessor *ATTRIBUTES
   
   def initialize(attributes = {})
@@ -26,7 +26,7 @@ class Market
   end
   
   def solar_system
-    @solar_system ||= SolarSystem.find_by_id(solar_id)
+    @solar_system ||= SolarSystem.find_by_id(system_id)
   end
   
   def item
@@ -39,15 +39,11 @@ class Market
     @item ||= query.call
   end
   
-  def raw_data
-    @raw_data ||= Rails.cache.fetch("market.#{region_id}.#{type_id}", expires_in: 1.days, compress: true) { Market.evedata.get("/market/#{region_id}/types/#{type_id}/history/").body }
-  end
-  
   private
   
   def self.get_market(location_type, id, item_id)
     return Market.new(:location => "region", :region_id => id, :type_id => item_id) if location_type == "region"
-    return Market.new(:location => "system", :solar_id => id, :type_id => item_id) if location_type == "system"
+    return Market.new(:location => "system", :system_id => id, :type_id => item_id) if location_type == "system"
   end
   
   def self.evedata

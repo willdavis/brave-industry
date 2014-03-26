@@ -7,12 +7,12 @@
 
 	<p>Total Price: <span id="total-price">loading...</span> Isk</p>
 	
-	<% if @market == "region" %>
+	<% if @location == "region" %>
 	  <span id="region-id" style="display:none"><%= @region.id %></span>
 	  <p>Prices gathered from: <%= @region.name %></p>
 	<% else %>
-	  <span id="solar-id" style="display:none"><%= @solar_id %></span>
-	  <p>Prices gathered from: <span id="solar-name"><%= @solar_name %></span></p>
+	  <span id="system-id" style="display:none"><%= @system_id %></span>
+	  <p>Prices gathered from: <span id="system-name"><%= @system_name %></span></p>
 	<% end %>
 
 	<table class="table table-condensed">
