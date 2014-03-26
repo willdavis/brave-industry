@@ -94,11 +94,12 @@ $ ->
           chart:
             type: 'pie'
           title:
-            text: 'Buy & Sell Quantities'
+            text: 'Buy & Sell Order Quantities'
           subtitle:
             text: 'Click the slices to view orders by space station'
           series:[
             {
+              name: "Available Units"
               data:[
                 {
                   name: "Sell Orders"
@@ -111,8 +112,6 @@ $ ->
                   drilldown: "buy"
                 }
               ]
-              tooltip:
-                valueSuffix: ' units'
             }
           ]
           drilldown:
