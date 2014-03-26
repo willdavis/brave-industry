@@ -94,12 +94,11 @@ $ ->
           chart:
             type: 'pie'
           title:
-            text: 'Current Buy & Sell Quantity'
+            text: 'Buy & Sell Quantities'
           subtitle:
-            text: 'Click the slices to view a breakdown by space stations'
+            text: 'Click the slices to view orders by space station'
           series:[
             {
-              name: 'Quantity'
               data:[
                 {
                   name: "Sell Orders"
@@ -119,14 +118,14 @@ $ ->
           drilldown:
             series:[
               {
-                name: "Sell Orders"
+                name: "Sell Order"
                 id: "sell"
                 data: sell_order_quantity
                 tooltip:
                   valueSuffix: " units"
               }
               {
-                name: "Buy Orders"
+                name: "Buy Order"
                 id: "buy"
                 data: buy_order_quantity
                 tooltip:
@@ -139,9 +138,11 @@ $ ->
           chart:
             zoomType: 'x'
           title:
-            text: 'Price History'
+            text: 'Transaction Price History'
           subtitle:
             text: subtitle_text
+          legend:
+            enabled: false
           xAxis:
             type: 'datetime'
             title:
@@ -156,7 +157,7 @@ $ ->
           series: [
             {
               type: 'arearange'
-              name: 'Sell Prices'
+              name: 'Price Range'
               data: price_range_history
             }
           ]
@@ -166,7 +167,7 @@ $ ->
           chart:
             zoomType: 'x'
           title:
-            text: 'Trade Volume History'
+            text: 'Transaction Volume History'
           subtitle:
             text: subtitle_text
           xAxis:
@@ -184,15 +185,11 @@ $ ->
               type: 'column'
               name: 'Units Sold'
               data: sell_volume_history
-              tooltip:
-                valueSuffix: ' Units'
             }
             {
               type: 'column'
-              name: 'Sell Orders'
+              name: 'Transactions'
               data: order_count_history
-              tooltip:
-                valueSuffix: ' Orders'
             }
           ]
         )
