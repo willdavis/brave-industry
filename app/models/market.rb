@@ -9,10 +9,10 @@ class Market
   def save!; true; end
   
   # ActiveRecord queries
-  def self.find(region_id, type_id); Market.get_market(region_id, type_id); end
+  def self.find(location_type, id, item_id); Market.get_market(location_type, id, item_id); end
   
   # Dynamic attributes should match the values supplied by form_for params
-  ATTRIBUTES = [:region_id, :solar_name, :type_name, :type_id, :raw_data, :market_in]
+  ATTRIBUTES = [:region_id, :system_id, :system_name, :type_name, :type_id, :location]
   attr_accessor *ATTRIBUTES
   
   def initialize(attributes = {})
@@ -22,23 +22,28 @@ class Market
   end
   
   def region
-    @region ||= Region.new(:id=>region_id)
+    @region ||= Region.find(region_id)
+  end
+  
+  def solar_system
+    @solar_system ||= SolarSystem.find_by_id(system_id)
   end
   
   def item
-    @item ||= Item.new(:id=>type_id, :name=>type_name)
-  end
-  
-  def raw_data
-    @raw_data ||= Rails.cache.fetch("market.#{region_id}.#{type_id}", expires_in: 1.days, compress: true) { Market.evedata.get("/market/#{region_id}/types/#{type_id}/history/").body }
+    query = lambda do
+      return Item.find(type_id) if !type_id.nil?
+      return Item.find_by_name(type_name) if type_id.nil? and !type_name.nil?
+      return Item.new if type_id.nil? and type_name.nil?
+    end
+    
+    @item ||= query.call
   end
   
   private
   
-  def self.get_market(r_id, t_id)
-    data = []#Rails.cache.fetch("market.#{r_id}.#{t_id}", expires_in: 1.days, compress: true) { Market.evedata.get("/market/#{r_id}/types/#{t_id}/history/").body }
-    return Market.new(:region_id => r_id, :type_id => t_id, :raw_data => data) if !data.nil?
-    return Market.new if data.nil?
+  def self.get_market(location_type, id, item_id)
+    return Market.new(:location => "region", :region_id => id, :type_id => item_id) if location_type == "region"
+    return Market.new(:location => "system", :system_id => id, :type_id => item_id) if location_type == "system"
   end
   
   def self.evedata
