@@ -1,5 +1,5 @@
 <div class="markets-show" id="<%= @market.region_id %>">
-  <h1>Market History</h1>
+  <h1>Market Statistics</h1>
   
   <div class="row">
 		<div class="col-xs-12">
@@ -27,7 +27,9 @@
 	<div class="row">
 	  <div class="col-xs-12">
 	    <div class="panel panel-primary">
-        <div class="panel-heading">Current Market</div>
+        <div class="panel-heading">
+          Current Market in <%= @market.location == "region" ? @market.region.name : @market.solar_system.name %>
+        </div>
         <div class="panel-body">
           <div class="col-xs-12 col-lg-8">
             <div id="current_orders">loading current orders <%= image_tag "loading-big.gif" %></div>
@@ -75,7 +77,7 @@
                 <td id="buy-orders-total" class="text-right"><%= image_tag "loading.gif" %></td>
               </tr>
               <tr>
-                <td>Desired Units</td>
+                <td>Available Units</td>
                 <td id="buy-orders-quantity" class="text-right"><%= image_tag "loading.gif" %></td>
               </tr>
             </table>
@@ -89,7 +91,9 @@
 	<div class="row">
 	  <div class="col-xs-12">
 	    <div class="panel panel-primary">
-        <div class="panel-heading">Market History</div>
+        <div class="panel-heading">
+          Market History in <%= @market.region.name %>
+        </div>
         <div class="panel-body">
           <div class="col-xs-12">
             <div id="price_history_chart">loading price history <%= image_tag "loading-big.gif" %></div>

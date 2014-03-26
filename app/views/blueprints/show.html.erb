@@ -81,14 +81,22 @@
 					</div>
 					
 					<div class="panel panel-primary">
-	          <div class="panel-heading">View Market History</div>
+	          <div class="panel-heading">Market History</div>
 	          <div class="panel-body">
 	            <div class="panel-heading">
-                <%= link_to "#{@blueprint.name} Price History", "/markets/#{@blueprint.region_id}/types/#{@blueprint.id}", :class=>"btn btn-success btn-lg btn-block" %>
+	              <% if @blueprint.location == "region" %>
+                  <%= link_to "Blueprint Product's Market History", "/markets/region/#{@blueprint.region_id}/types/#{@blueprint.product['id']}", :class=>"btn btn-success btn-lg btn-block" %>
+                <% else %>
+                  <%= link_to "Blueprint Product's Market History", "/markets/system/#{@blueprint.system_name}/types/#{@blueprint.product['id']}", :class=>"btn btn-success btn-lg btn-block" %>
+                <% end %>
               </div>
-              
-              <div class="panel-heading">
-                <%= link_to "Product Price History", "/markets/#{@blueprint.region_id}/types/#{@blueprint.product['id']}", :class=>"btn btn-success btn-lg btn-block" %>
+	            
+	            <div class="panel-heading">
+	              <% if @blueprint.location == "region" %>
+                  <%= link_to "Blueprint's Market History", "/markets/region/#{@blueprint.region_id}/types/#{@blueprint.id}", :class=>"btn btn-success btn-lg btn-block" %>
+                <% else %>
+                  <%= link_to "Blueprint's Market History", "/markets/system/#{@blueprint.system_name}/types/#{@blueprint.id}", :class=>"btn btn-success btn-lg btn-block" %>
+                <% end %>
               </div>
 	          </div>
           </div>
