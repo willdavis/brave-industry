@@ -6,7 +6,7 @@
 			<table class="market-header">
 				<tr>
 					<td class="item-image"><img src="<%= @market.item.images['thumb'] %>" width='64' height='64' /></td>
-					<td class="item-name"><h3><%= @market.item.name %> <small>in <%= @market.region.name %></small></h3></td>
+					<td class="item-name"><h3><%= @market.item.name %> <small>in <%= @market.location == "region" ? @market.region.name : @market.solar_system.name %></small></h3></td>
 				</tr>
 			</table>
 		</div>

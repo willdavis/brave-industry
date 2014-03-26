@@ -26,7 +26,7 @@ we_must_go_deeper = () ->
 lookup_invention_costs = () ->
 	total_production_cost = 0
 	region_id = $('#region_id').val()
-	system_id = $('#system-id').text()
+	system_id = $('#system_id').text()
 	
 	if $("#location_system").is(':checked') and system_id != ""
 	  evecentral_url = "http://api.eve-central.com/api/marketstat?usesystem=#{system_id}"
@@ -97,7 +97,7 @@ lookup_production_costs = () ->
 	units_produced = $('.item-units-produced').text()
 	product_id = $('.item-sell-price').attr("id")
 	region_id = $('#region_id').val()
-	system_id = $('#system-id').text()
+	system_id = $('#system_id').text()
 	
 	if $("#location_system").is(':checked') and system_id != ""
 	  evecentral_url = "http://api.eve-central.com/api/marketstat?usesystem=#{system_id}&typeid=#{product_id}"

@@ -1,16 +1,24 @@
 $ ->
 	if $('.markets-show').length != 0
-    region_id = $('#region-id').text()
-    item_id = $('#item-id').text()
+    region_id = $('#region_id').find("option:selected").val()
+    system_id = $('#system_id').text()
+    item_id = $('#type_id').text()
 
     market_history_url = "http://public-crest.eveonline.com/market/#{region_id}/types/#{item_id}/history/"
     console.log "EVE Market History (CREST API): #{market_history_url}"
-    
-    current_orders_url = "http://api.eve-central.com/api/quicklook?regionlimit=#{region_id}&typeid=#{item_id}"
-    console.log "EveCentral quicklook: #{current_orders_url}"
-    
-    current_market_url = "http://api.eve-central.com/api/marketstat?regionlimit=#{region_id}&typeid=#{item_id}"
-    console.log "EveCentral marketstat: #{current_market_url}"
+
+    if $("#location_region").is(':checked')
+      current_orders_url = "http://api.eve-central.com/api/quicklook?regionlimit=#{region_id}&typeid=#{item_id}"
+      console.log "EveCentral quicklook: #{current_orders_url}"
+      
+      current_market_url = "http://api.eve-central.com/api/marketstat?regionlimit=#{region_id}&typeid=#{item_id}"
+      console.log "EveCentral marketstat: #{current_market_url}"
+    else
+      current_orders_url = "http://api.eve-central.com/api/quicklook?usesystem=#{system_id}&typeid=#{item_id}"
+      console.log "EveCentral quicklook: #{current_orders_url}"
+      
+      current_market_url = "http://api.eve-central.com/api/marketstat?usesystem=#{system_id}&typeid=#{item_id}"
+      console.log "EveCentral marketstat: #{current_market_url}"
 
     $.when(
       $.getJSON(market_history_url)
@@ -65,17 +73,18 @@ $ ->
         else
           subtitle_text = 'Pinch the chart to zoom in'
         
-        for item in market_history[0].items
-          price_range_history.push([item["date"], item["lowPrice"], item["highPrice"]])
-          sell_volume_history.push([item["date"], item["volume"]])
-          order_count_history.push([item["date"], item["orderCount"]])
+        if $("#location_region").is(':checked')
+          for item in market_history[0].items
+            price_range_history.push([item["date"], item["lowPrice"], item["highPrice"]])
+            sell_volume_history.push([item["date"], item["volume"]])
+            order_count_history.push([item["date"], item["orderCount"]])
         
         
-        $('#sell-orders-lowPrice').text("#{$(current_market).find("sell").find("min").text()} ISK")
+        $('#sell-orders-lowPrice').text("#{$(current_market).find('sell').find('min').text()} ISK")
         $('#sell-orders-total').text(sell_order_total)
         $('#sell-orders-quantity').text(orders["sell"])
         
-        $('#buy-orders-highPrice').text("#{$(current_market).find("buy").find("max").text()} ISK")
+        $('#buy-orders-highPrice').text("#{$(current_market).find('buy').find('max').text()} ISK")
         $('#buy-orders-total').text(buy_order_total)
         $('#buy-orders-quantity').text(orders["buy"])
           
@@ -187,16 +196,54 @@ $ ->
         )
     )
     
+  $('input[type="radio"]').click(
+    () ->
+      region_id = $('#region_id').find("option:selected").val()
+      system_name = $('#system_name').val()
+      type_name = $('#type_name').val()
+      
+      region_url = "/markets/region/#{region_id}/types/#{type_name}"
+      system_url = "/markets/system/#{system_name}/types/#{type_name}"
+      
+      if $("#location_region").is(':checked')
+        $('#update-market').prop("href", region_url)
+      else
+        $('#update-market').prop("href", system_url)
+  )
+    
   $('#region_id').change(
     () ->
       region_id = $(this).find("option:selected").val()
-      type_id = $('#type_name').val()
-      $('#update-region').prop("href", "/markets/region/#{region_id}/types/#{type_id}")
+      type_name = $('#type_name').val()
+      system_name = $('#system_name').val()
+      url = "/markets/region/#{region_id}/types/#{type_name}"
+      $('#region_url').text(url)
+      
+      if $("#location_region").is(':checked')
+        $('#update-market').prop("href", url)
   )
   
   $('#type_name').change(
     () ->
       region_id = $('#region_id').find("option:selected").val()
+      system_name = $('#system_name').val()
       type_name = $('#type_name').val()
-      $('#update-region').prop("href", "/markets/region/#{region_id}/types/#{type_name}")
+      
+      region_url = "/markets/region/#{region_id}/types/#{type_name}"
+      system_url = "/markets/system/#{system_name}/types/#{type_name}"
+      
+      if $("#location_region").is(':checked')
+        $('#update-market').prop("href", region_url)
+      else
+        $('#update-market').prop("href", system_url)
+  )
+  
+  $('#system_name').change(
+    () ->
+      system_name = $('#system_name').val()
+      type_name = $('#type_name').val()
+      url = "/markets/system/#{system_name}/types/#{type_name}"
+      
+      if $("#location_system").is(':checked')
+        $('#update-market').prop("href", url)
   )

@@ -15,7 +15,6 @@
             <% end %>
             
             <span class="input-group-addon">Region</span>
-            <span id="region-id" style="display:none"><%= item.region_id %></span>
             <%= select_tag(:region_id, options_for_select(Region.all.map{ |r| [r.name, r.id] }, item.region_id), :class=>"form-control") %>
           </div>
         </div>
@@ -32,7 +31,7 @@
               <%= radio_button_tag :location, :system, item.location == "system" %>
             </span>
             <span class="input-group-addon">Solar System</span>
-            <span id="system-id" style="display:none"><%= item.system_id %></span>
+            <span id="system_id" style="display:none"><%= item.system_id %></span>
             <%= text_field_tag :system_name, item.system_name, :placeholder => "Name", :autocomplete => :off, :data => { :provide =>"typeahead", :source => SolarSystem.all.map{ |s| s.name } }, :class=>"form-control" %>
           </div>
         </div>
@@ -46,7 +45,7 @@
 		    <div class="form-group">
           <div class="input-group">
             <span class="input-group-addon">Item</span>
-            <span id="item-id" style="display:none"><%= item.item.id %></span>
+            <span id="type_id" style="display:none"><%= item.item.id %></span>
             <%= text_field_tag :type_name, item.item.name, :placeholder => "Name", :autocomplete => :off, :data => { :provide =>"typeahead", :source => Item.all.map{ |i| i.name } }, :class=>"form-control" %>
           </div>
         </div>
@@ -57,7 +56,13 @@
     <% if can_submit %>
     <div class="col-xs-12">
       <div class="form-group">
-        <%= link_to "Search", "/markets/#{item.location}/#{item.region_id}/types/#{item.type_id}", :id => "update-region", :class => "btn btn-success btn-lg btn-block" %>
+        <span id="region_url" style="display:none" ></span>
+        <span id="system_url" style="display:none" ></span>
+        <% if item.location == "region" %>
+          <%= link_to "Search", "/markets/#{item.location}/#{item.region_id}/types/#{item.type_id}", :id => "update-market", :class => "btn btn-success btn-lg btn-block" %>
+        <% else %>
+          <%= link_to "Search", "/markets/#{item.location}/#{item.system_name}/types/#{item.type_id}", :id => "update-market", :class => "btn btn-success btn-lg btn-block" %>
+        <% end %>
       </div>
     </div>
     <% end %>
