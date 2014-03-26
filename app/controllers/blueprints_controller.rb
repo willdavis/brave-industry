@@ -15,6 +15,7 @@ class BlueprintsController < ApplicationController
     params["material_efficiency"] = params["ME"].to_i
     params["system_id"] = SolarSystem.find_by_name(params["system_name"]).id if !params["system_name"].nil?
     params["region_id"] = 10000002 if params["region_id"].nil?
+    params["location"] = "region" if params["location"].nil?
     @blueprint = Blueprint.new(params)
   	
     #adjust material efficiency if :ME param is nil
