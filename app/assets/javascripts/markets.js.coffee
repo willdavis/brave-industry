@@ -80,11 +80,13 @@ $ ->
             order_count_history.push([item["date"], item["orderCount"]])
         
         
+        $('#sell-orders-highPrice').text("#{$(current_market).find('sell').find('max').text()} ISK")
         $('#sell-orders-lowPrice').text("#{$(current_market).find('sell').find('min').text()} ISK")
         $('#sell-orders-total').text(sell_order_total)
         $('#sell-orders-quantity').text(orders["sell"])
         
         $('#buy-orders-highPrice').text("#{$(current_market).find('buy').find('max').text()} ISK")
+        $('#buy-orders-lowPrice').text("#{$(current_market).find('buy').find('min').text()} ISK")
         $('#buy-orders-total').text(buy_order_total)
         $('#buy-orders-quantity').text(orders["buy"])
           

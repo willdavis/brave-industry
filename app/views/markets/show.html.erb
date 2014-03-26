@@ -36,11 +36,15 @@
           <div class="col-xs-12 col-lg-4">	    
             <table class="table table-condensed">
               <tr>
-                <th>Current Sell Orders</th>
+                <th>Sell Orders</th>
                 <th></th>
               </tr>
               <tr>
-                <td>Minimum Price</td>
+                <td>Highest Price</td>
+                <td id="sell-orders-highPrice" class="text-right"><%= image_tag "loading.gif" %></td>
+              </tr>
+              <tr>
+                <td>Lowest Price</td>
                 <td id="sell-orders-lowPrice" class="text-right"><%= image_tag "loading.gif" %></td>
               </tr>
               <tr>
@@ -55,19 +59,23 @@
             
             <table class="table table-condensed">
               <tr>
-                <th>Current Buy Orders</th>
+                <th>Buy Orders</th>
                 <th></th>
               </tr>
               <tr>
-                <td>Maximum Price</td>
+                <td>Highest Price</td>
                 <td id="buy-orders-highPrice" class="text-right"><%= image_tag "loading.gif" %></td>
+              </tr>
+              <tr>
+                <td>Lowest Price</td>
+                <td id="buy-orders-lowPrice" class="text-right"><%= image_tag "loading.gif" %></td>
               </tr>
               <tr>
                 <td>Total Orders</td>
                 <td id="buy-orders-total" class="text-right"><%= image_tag "loading.gif" %></td>
               </tr>
               <tr>
-                <td>Available Units</td>
+                <td>Desired Units</td>
                 <td id="buy-orders-quantity" class="text-right"><%= image_tag "loading.gif" %></td>
               </tr>
             </table>
