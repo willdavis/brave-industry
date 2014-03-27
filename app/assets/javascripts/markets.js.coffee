@@ -28,6 +28,8 @@ $ ->
       (market_history, current_orders, current_market) ->
         
         orders = {}
+        orders["sell"] = 0
+        orders["buy"] = 0
         order_data = []
         
         sell_order_total = 0
