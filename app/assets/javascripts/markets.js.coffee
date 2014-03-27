@@ -108,21 +108,21 @@ $ ->
           chart:
             type: 'pie'
           title:
-            text: 'Buy & Sell Order Quantities'
+            text: 'Buy & Sell Orders'
           subtitle:
             text: 'Click the slices to view orders by space station'
           series:[
             {
-              name: "Available Units"
+              name: "Orders"
               data:[
                 {
                   name: "Sell Orders"
-                  y: orders["sell"]
+                  y: sell_order_total
                   drilldown: "sell"
                 }
                 {
                   name: "Buy Orders"
-                  y: orders["buy"]
+                  y: buy_order_total
                   drilldown: "buy"
                 }
               ]
