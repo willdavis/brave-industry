@@ -75,9 +75,14 @@ $ ->
         
         if $("#location_region").is(':checked')
           for item in market_history[0].items
-            price_range_history.push([item["date"], item["lowPrice"], item["highPrice"]])
-            sell_volume_history.push([item["date"], item["volume"]])
-            order_count_history.push([item["date"], item["orderCount"]])
+            year = item["date"].match(/^\d+/g)
+            month = parseInt(item["date"].match(/\b\d{2}(?=-)/g))-1
+            day = item["date"].match(/\b\d{2}(?=T)/g)
+          
+            timestamp = Date.UTC(year, month, day)
+            price_range_history.push([timestamp, item["lowPrice"], item["highPrice"]])
+            sell_volume_history.push([timestamp, item["volume"]])
+            order_count_history.push([timestamp, item["orderCount"]])
         
         sell_highPrice = $(current_market).find('sell').find('max').text().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
         sell_lowPrice = $(current_market).find('sell').find('min').text().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
