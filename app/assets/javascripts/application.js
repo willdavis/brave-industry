@@ -17,7 +17,7 @@
 
 //= require markets
 
-//= require highcharts
+//= require highstock
 //= require highcharts/highcharts-more
 //= require highcharts/modules/drilldown
 
