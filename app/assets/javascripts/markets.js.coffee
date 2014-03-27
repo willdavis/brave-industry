@@ -108,21 +108,21 @@ $ ->
           chart:
             type: 'pie'
           title:
-            text: 'Buy & Sell Order Quantities'
+            text: 'Buy & Sell Orders'
           subtitle:
-            text: 'Click the slices to view orders by space station'
+            text: 'Click on the slices to view orders by space station'
           series:[
             {
-              name: "Available Units"
+              name: "Orders"
               data:[
                 {
                   name: "Sell Orders"
-                  y: orders["sell"]
+                  y: sell_order_total
                   drilldown: "sell"
                 }
                 {
                   name: "Buy Orders"
-                  y: orders["buy"]
+                  y: buy_order_total
                   drilldown: "buy"
                 }
               ]
@@ -155,7 +155,7 @@ $ ->
           chart:
             zoomType: 'x'
           title:
-            text: 'Transaction Price History'
+            text: 'Transaction Prices'
           subtitle:
             text: subtitle_text
           legend:
@@ -188,9 +188,11 @@ $ ->
           chart:
             zoomType: 'x'
           title:
-            text: 'Transaction Volume History'
+            text: 'Transaction Volume'
           subtitle:
             text: subtitle_text
+          legend:
+            enabled: true
           xAxis:
             type: 'datetime'
             title:
