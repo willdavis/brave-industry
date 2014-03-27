@@ -110,7 +110,7 @@ $ ->
           title:
             text: 'Buy & Sell Orders'
           subtitle:
-            text: 'Click the slices to view orders by space station'
+            text: 'Click on the slices to view orders by space station'
           series:[
             {
               name: "Orders"
@@ -155,7 +155,7 @@ $ ->
           chart:
             zoomType: 'x'
           title:
-            text: 'Transaction Price History'
+            text: 'Transaction Prices'
           subtitle:
             text: subtitle_text
           legend:
@@ -188,9 +188,11 @@ $ ->
           chart:
             zoomType: 'x'
           title:
-            text: 'Transaction Volume History'
+            text: 'Transaction Volume'
           subtitle:
             text: subtitle_text
+          legend:
+            enabled: true
           xAxis:
             type: 'datetime'
             title:
