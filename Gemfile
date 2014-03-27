@@ -30,6 +30,7 @@ gem 'bootstrap-sass', github: 'thomas-mcdonald/bootstrap-sass'
 
 # Highcharts for pretty graphs
 gem "highcharts-rails", "~> 3.0.0"
+gem 'highstock-rails'
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'

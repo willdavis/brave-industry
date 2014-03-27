@@ -148,6 +148,10 @@ $ ->
         )
         
         $('#price_history_chart').highcharts(
+          'StockChart'
+          rangeSelector:
+            inputEnabled: $('#price_history_chart').width() > 480
+            selected: 2
           chart:
             zoomType: 'x'
           title:
@@ -177,6 +181,10 @@ $ ->
         )
         
         $('#volume_history_chart').highcharts(
+          'StockChart'
+          rangeSelector:
+            inputEnabled: $('#volume_history_chart').width() > 480
+            selected: 2
           chart:
             zoomType: 'x'
           title:
