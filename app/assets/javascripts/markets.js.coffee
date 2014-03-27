@@ -149,75 +149,77 @@ $ ->
             ]
         )
         
-        $('#price_history_chart').highcharts(
-          'StockChart'
-          rangeSelector:
-            inputEnabled: $('#price_history_chart').width() > 480
-            selected: 2
-          chart:
-            zoomType: 'x'
-          title:
-            text: 'Transaction Prices'
-          subtitle:
-            text: subtitle_text
-          legend:
-            enabled: false
-          xAxis:
-            type: 'datetime'
+        # only render history graphs if the search is by region
+        if $("#location_region").is(':checked')
+          $('#price_history_chart').highcharts(
+            'StockChart'
+            rangeSelector:
+              inputEnabled: $('#price_history_chart').width() > 480
+              selected: 2
+            chart:
+              zoomType: 'x'
             title:
-              text: null
-          yAxis:
+              text: 'Transaction Prices'
+            subtitle:
+              text: subtitle_text
+            legend:
+              enabled: false
+            xAxis:
+              type: 'datetime'
+              title:
+                text: null
+            yAxis:
+              title:
+                text: null
+            tooltip:
+              crosshairs: true
+              shared: true
+              valueSuffix: ' ISK'
+            series: [
+              {
+                type: 'arearange'
+                name: 'Price Range'
+                data: price_range_history
+              }
+            ]
+          )
+          
+          $('#volume_history_chart').highcharts(
+            'StockChart'
+            rangeSelector:
+              inputEnabled: $('#volume_history_chart').width() > 480
+              selected: 2
+            chart:
+              zoomType: 'x'
             title:
-              text: null
-          tooltip:
-            crosshairs: true
-            shared: true
-            valueSuffix: ' ISK'
-          series: [
-            {
-              type: 'arearange'
-              name: 'Price Range'
-              data: price_range_history
-            }
-          ]
-        )
-        
-        $('#volume_history_chart').highcharts(
-          'StockChart'
-          rangeSelector:
-            inputEnabled: $('#volume_history_chart').width() > 480
-            selected: 2
-          chart:
-            zoomType: 'x'
-          title:
-            text: 'Transaction Volume'
-          subtitle:
-            text: subtitle_text
-          legend:
-            enabled: true
-          xAxis:
-            type: 'datetime'
-            title:
-              text: null
-          yAxis:
-            title:
-              text: null
-          tooltip:
-            crosshairs: true
-            shared: true
-          series: [
-            {
-              type: 'column'
-              name: 'Units Sold'
-              data: sell_volume_history
-            }
-            {
-              type: 'column'
-              name: 'Transactions'
-              data: order_count_history
-            }
-          ]
-        )
+              text: 'Transaction Volume'
+            subtitle:
+              text: subtitle_text
+            legend:
+              enabled: true
+            xAxis:
+              type: 'datetime'
+              title:
+                text: null
+            yAxis:
+              title:
+                text: null
+            tooltip:
+              crosshairs: true
+              shared: true
+            series: [
+              {
+                type: 'column'
+                name: 'Units Sold'
+                data: sell_volume_history
+              }
+              {
+                type: 'column'
+                name: 'Transactions'
+                data: order_count_history
+              }
+            ]
+          )
     )
     
   $('input[type="radio"]').click(
