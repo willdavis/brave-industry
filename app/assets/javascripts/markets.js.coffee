@@ -79,16 +79,25 @@ $ ->
             sell_volume_history.push([item["date"], item["volume"]])
             order_count_history.push([item["date"], item["orderCount"]])
         
+        sell_highPrice = $(current_market).find('sell').find('max').text().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        sell_lowPrice = $(current_market).find('sell').find('min').text().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        sell_total = sell_order_total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        sell_quantity = orders["sell"].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
         
-        $('#sell-orders-highPrice').text("#{$(current_market).find('sell').find('max').text()} ISK")
-        $('#sell-orders-lowPrice').text("#{$(current_market).find('sell').find('min').text()} ISK")
-        $('#sell-orders-total').text(sell_order_total)
-        $('#sell-orders-quantity').text(orders["sell"])
+        $('#sell-orders-highPrice').text("#{sell_highPrice} ISK")
+        $('#sell-orders-lowPrice').text("#{sell_lowPrice} ISK")
+        $('#sell-orders-total').text(sell_total)
+        $('#sell-orders-quantity').text(sell_quantity)
         
-        $('#buy-orders-highPrice').text("#{$(current_market).find('buy').find('max').text()} ISK")
-        $('#buy-orders-lowPrice').text("#{$(current_market).find('buy').find('min').text()} ISK")
-        $('#buy-orders-total').text(buy_order_total)
-        $('#buy-orders-quantity').text(orders["buy"])
+        buy_highPrice = $(current_market).find('buy').find('max').text().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        buy_lowPrice = $(current_market).find('buy').find('min').text().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        buy_total = buy_order_total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        buy_quantity = orders["buy"].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        
+        $('#buy-orders-highPrice').text("#{buy_highPrice} ISK")
+        $('#buy-orders-lowPrice').text("#{buy_lowPrice} ISK")
+        $('#buy-orders-total').text(buy_total)
+        $('#buy-orders-quantity').text(buy_quantity)
           
         $('#current_orders').highcharts(
           chart:
