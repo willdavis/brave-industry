@@ -10,60 +10,71 @@ $ ->
     if $("#location_region").is(':checked')
       current_orders_url = "http://api.eve-central.com/api/quicklook?regionlimit=#{region_id}&typeid=#{item_id}"
       console.log "EveCentral quicklook: #{current_orders_url}"
-      
-      current_market_url = "http://api.eve-central.com/api/marketstat?regionlimit=#{region_id}&typeid=#{item_id}"
-      console.log "EveCentral marketstat: #{current_market_url}"
     else
       current_orders_url = "http://api.eve-central.com/api/quicklook?usesystem=#{system_id}&typeid=#{item_id}"
       console.log "EveCentral quicklook: #{current_orders_url}"
-      
-      current_market_url = "http://api.eve-central.com/api/marketstat?usesystem=#{system_id}&typeid=#{item_id}"
-      console.log "EveCentral marketstat: #{current_market_url}"
 
     $.when(
       $.getJSON(market_history_url)
       $.get(current_orders_url)
-      $.get(current_market_url)
     ).done(
-      (market_history, current_orders, current_market) ->
+      (market_history, current_orders) ->
         
-        orders = {}
-        orders["sell"] = 0
-        orders["buy"] = 0
-        order_data = []
+        total_sell_orders = 0
+        total_sell_quantity = 0
+        highest_sell_price = 0
+        lowest_sell_price = 0
         
-        sell_order_total = 0
-        buy_order_total = 0
+        total_buy_orders = 0
+        total_buy_quantity = 0
+        highest_buy_price = 0
+        lowest_buy_price = 0
         
-        sell_order_quantity = []
-        buy_order_quantity = []
+        sell_order_drilldown = []
+        buy_order_drilldown = []
         
         $(current_orders).find("sell_orders").find("order").each(
           () ->
-            sell_order_total++
             station = $(this).find("station_name").text()
             volume = parseInt($(this).find("vol_remain").text())
+            price = parseFloat($(this).find("price").text())
             
-            sell_order_quantity.push([station, volume])
+            #find highest price
+            if price > highest_sell_price
+              highest_sell_price = price
+              
+            #find lowest price
+            if lowest_sell_price == 0 and price > 0
+              lowest_sell_price = price
             
-            if !orders["sell"]
-              orders["sell"] = volume
-            else
-              orders["sell"] += volume
+            if price < lowest_sell_price and lowest_sell_price > 0
+              lowest_sell_price = price
+            
+            total_sell_orders++
+            total_sell_quantity += volume
+            sell_order_drilldown.push([station, volume])
         )
         
         $(current_orders).find("buy_orders").find("order").each(
           () ->
-            buy_order_total++
             station = $(this).find("station_name").text()
             volume = parseInt($(this).find("vol_remain").text())            
+            price = parseFloat($(this).find("price").text())
             
-            buy_order_quantity.push([station, volume])
+            #find highest price
+            if price > highest_buy_price
+              highest_buy_price = price
+              
+            #find lowest price
+            if lowest_buy_price == 0 and price > 0
+              lowest_buy_price = price
             
-            if !orders["buy"]
-              orders["buy"] = volume
-            else
-              orders["buy"] += volume
+            if price < lowest_buy_price and lowest_buy_price > 0
+              lowest_buy_price = price
+            
+            total_buy_orders++
+            total_buy_quantity += volume
+            buy_order_drilldown.push([station, volume])
         )
         
         price_range_history = []
@@ -86,20 +97,20 @@ $ ->
             sell_volume_history.push([timestamp, item["volume"]])
             order_count_history.push([timestamp, item["orderCount"]])
         
-        sell_highPrice = $(current_market).find('sell').find('max').text().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-        sell_lowPrice = $(current_market).find('sell').find('min').text().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-        sell_total = sell_order_total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-        sell_quantity = orders["sell"].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        sell_highPrice = highest_sell_price.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        sell_lowPrice = lowest_sell_price.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        sell_total = total_sell_orders.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        sell_quantity = total_sell_quantity.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
         
         $('#sell-orders-highPrice').text("#{sell_highPrice} ISK")
         $('#sell-orders-lowPrice').text("#{sell_lowPrice} ISK")
         $('#sell-orders-total').text(sell_total)
         $('#sell-orders-quantity').text(sell_quantity)
         
-        buy_highPrice = $(current_market).find('buy').find('max').text().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-        buy_lowPrice = $(current_market).find('buy').find('min').text().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-        buy_total = buy_order_total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-        buy_quantity = orders["buy"].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        buy_highPrice = highest_buy_price.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        buy_lowPrice = lowest_buy_price.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        buy_total = total_buy_orders.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        buy_quantity = total_buy_quantity.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
         
         $('#buy-orders-highPrice').text("#{buy_highPrice} ISK")
         $('#buy-orders-lowPrice').text("#{buy_lowPrice} ISK")
@@ -119,12 +130,12 @@ $ ->
               data:[
                 {
                   name: "Sell Orders"
-                  y: sell_order_total
+                  y: total_sell_orders
                   drilldown: "sell"
                 }
                 {
                   name: "Buy Orders"
-                  y: buy_order_total
+                  y: total_buy_orders
                   drilldown: "buy"
                 }
               ]
@@ -135,14 +146,14 @@ $ ->
               {
                 name: "Sell Order"
                 id: "sell"
-                data: sell_order_quantity
+                data: sell_order_drilldown
                 tooltip:
                   valueSuffix: " units"
               }
               {
                 name: "Buy Order"
                 id: "buy"
-                data: buy_order_quantity
+                data: buy_order_drilldown
                 tooltip:
                   valueSuffix: " units"
               }
